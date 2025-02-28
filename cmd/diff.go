@@ -22,40 +22,60 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"os"
 
+	"github.com/sfborg/sf/internal/ent/io/diffio"
+	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
 
 // diffCmd represents the diff command
 var diffCmd = &cobra.Command{
-	Use:   "diff",
+	Use:   "diff sfga1 sfga2",
 	Short: "Compares data from two SFGA files",
 	Long: `Compares data from two SFGA files. It is possible to do comparison
 between specific taxon in the files, providing either name or taxon.id,
 for example:
 
-	sf diff sfga1.sqlite.zip sfga2.sqlite.zip --taxon1 Plantae --taxon2 Plantae
+  sf diff sfga1.sqlite.zip sfga2.sqlite.zip --taxon1 Plantae --taxon2 Plantae
 
-	or
+  or
 
-	sf diff sfga1.sqlite.zip sfga2.sqlite.zip --taxon1 293874 --taxon2 taxon-3343
+  sf diff sfga1.sqlite.zip sfga2.sqlite.zip --taxon1 2938 --taxon2 taxon-3343
+
+Files can be local or remote. Remote files can be accessed via HTTP URL.
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("diff called")
+		versionFlag(cmd)
+		flags := []flagFunc{
+			srcTaxonFlag, trgTaxonFlag,
+		}
+		for _, v := range flags {
+			v(cmd)
+		}
+
+		if len(args) != 2 {
+			cmd.Help()
+			os.Exit(0)
+		}
+
+		src := args[0]
+		dst := args[1]
+
+		cfg := config.New(opts...)
+		diff := diffio.New(cfg)
+		diff.Compare(src, dst)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(diffCmd)
 
-	// Here you will define your flags and configuration settings.
+	diffCmd.Flags().StringP("source-taxon", "s", "",
+		"source's highest taxon to compare",
+	)
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// diffCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// diffCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	diffCmd.Flags().StringP("target-taxon", "t", "",
+		"target's highest taxon to compare",
+	)
 }

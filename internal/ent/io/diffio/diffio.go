@@ -11,7 +11,7 @@ type diffio struct {
 	src, trg sfga.Archive
 }
 
-func New(cfg config.Config, src, trg sfga.Archive) diff.Diff {
-	res := diffio{cfg: cfg, src: src, trg: trg}
+func New(cfg config.Config) diff.Diff {
+	res := diffio{cfg: cfg}
 	return &res
 }

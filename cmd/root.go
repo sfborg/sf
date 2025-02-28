@@ -30,16 +30,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var opts []config.Option
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "sf",
 	Short: "Manages conversions between SFGA and other formats",
-	Long: `Allows to convert a variety of formats often used in biodiversity
+	Long: `Converts a variety of formats often used in biodiversity
 informatics to and from the Species File Group Archive (SFGA) format.
 
-It also allows comparison of data between datasets.`,
+Compares data from two SFGA files.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		versionFlag(cmd)
+		_ = cmd.Help()
 	},
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		err := prepareFileStructure()
