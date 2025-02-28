@@ -22,26 +22,32 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"log/slog"
 	"os"
 
+	"github.com/gnames/gnsys"
+	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
-
-
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "sf",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "Manages conversions between SFGA and other formats",
+	Long: `Allows to convert a variety of formats often used in biodiversity
+informatics to and from the Species File Group Archive (SFGA) format.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+It also allows comparison of data between datasets.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		versionFlag(cmd)
+	},
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		err := prepareFileStructure()
+		if err != nil {
+			slog.Error("Unable do create cache directories", "error", err)
+			os.Exit(1)
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -54,15 +60,32 @@ func Execute() {
 }
 
 func init() {
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.sf.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.Flags().BoolP("version", "V", false, "Show harvester's version")
 }
 
+func prepareFileStructure() error {
+	var err error
+	cfg := config.New()
+	root := cfg.CacheDir
+	err = gnsys.MakeDir(root)
+	if err != nil {
+		return err
+	}
+	err = gnsys.CleanDir(root)
+	if err != nil {
+		return err
+	}
+	dirs := []string{
+		cfg.DiffSrcDir,
+		cfg.DiffTrgDir,
+		cfg.DiffWorkDir,
+	}
+	for _, v := range dirs {
+		err = gnsys.MakeDir(v)
+		if err != nil {
+			return err
+		}
+	}
 
+	return nil
+}
