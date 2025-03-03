@@ -74,6 +74,12 @@ func prepareFileStructure() error {
 	if err != nil {
 		return err
 	}
+	// create cfg.DiffWorkDir if does not exist
+	err = gnsys.MakeDir(cfg.DiffWorkDir)
+	if err != nil {
+		return err
+	}
+
 	err = gnsys.CleanDir(root)
 	if err != nil {
 		return err
@@ -81,7 +87,6 @@ func prepareFileStructure() error {
 	dirs := []string{
 		cfg.DiffSrcDir,
 		cfg.DiffTrgDir,
-		cfg.DiffWorkDir,
 	}
 	for _, v := range dirs {
 		err = gnsys.MakeDir(v)

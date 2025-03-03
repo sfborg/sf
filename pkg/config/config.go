@@ -60,10 +60,12 @@ func New(opts ...Option) Config {
 		cacheDir = tmpDir
 	}
 
+	workDir := filepath.Join(cacheDir, "sfborg", "sf-keep")
 	cacheDir = filepath.Join(cacheDir, "sfborg", "sf")
 
 	res := Config{
-		CacheDir: cacheDir,
+		CacheDir:    cacheDir,
+		DiffWorkDir: workDir,
 	}
 
 	for _, opt := range opts {
@@ -72,7 +74,6 @@ func New(opts ...Option) Config {
 
 	res.DiffSrcDir = filepath.Join(res.CacheDir, "diff", "src")
 	res.DiffTrgDir = filepath.Join(res.CacheDir, "diff", "trg")
-	res.DiffWorkDir = filepath.Join(res.CacheDir, "diff", "work")
 
 	return res
 }
