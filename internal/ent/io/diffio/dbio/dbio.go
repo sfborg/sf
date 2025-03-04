@@ -21,7 +21,7 @@ func (d *dbio) Init(db *sql.DB) {
 func (d *dbio) Select(canonical string) ([]diff.Record, error) {
 	q := `
 SELECT col__id, col__scientific_name, gn__canonical_simple,
-	gn__canonical_full, gn__canonical_stemmed, col__authorship
+	gn__canonical_full, gn__canonical_stemmed
 	FROM name
 	WHERE gn__canonical_simple = ?
 `
@@ -35,7 +35,7 @@ SELECT col__id, col__scientific_name, gn__canonical_simple,
 	for rows.Next() {
 		var r diff.Record
 		err = rows.Scan(&r.ID, &r.Name, &r.CanonicalSimple,
-			&r.CanonicalFull, &r.CanonicalStemmed, &r.Authors,
+			&r.CanonicalFull, &r.CanonicalStemmed,
 		)
 		if err != nil {
 			return nil, err

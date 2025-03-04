@@ -1,6 +1,7 @@
 package diffio
 
 import (
+	"fmt"
 	"io"
 	"log/slog"
 	"os"
@@ -13,6 +14,13 @@ import (
 	"github.com/sfborg/sflib/ent/sfga"
 	"github.com/sfborg/sflib/io/sfgaio"
 )
+
+var recQ = `
+SELECT
+	col__id, gn__scientific_name_string, gn__canonical_simple,
+	gn__canonical_stemmed
+FROM name
+`
 
 func (d *diffio) Compare(src, ref string) error {
 	var err error
@@ -42,18 +50,55 @@ func (d *diffio) Compare(src, ref string) error {
 	)
 
 	d.workDir = filepath.Join(d.cfg.DiffWorkDir, d.refUUID.String())
-	dirState := gnsys.GetDirState(d.workDir)
-	if dirState != gnsys.DirNotEmpty || true {
-		d.setWorkRef()
-	}
+	// dirState := gnsys.GetDirState(d.workDir)
+	// if dirState != gnsys.DirNotEmpty {
+	d.setRefSpace()
+	// }
 
 	defer d.src.Close()
 	defer d.ref.Close()
 
+	srcRec, err := d.sourceRecords()
+	for _, v := range srcRec {
+		res, err := d.matcher.Match(v)
+		if err != nil {
+			return err
+		}
+		l := len(res)
+		if l == 0 {
+			fmt.Printf("%s: %s\n", v.ID, v.Name)
+		} else {
+			for i := range res {
+				fmt.Printf("%s: %s => %s: %s (%s)\n", v.ID, v.Name, res[i].ID, res[i].Name, res[i].MatchType)
+			}
+		}
+	}
+
 	return nil
 }
 
-func (d *diffio) setWorkRef() error {
+func (d *diffio) sourceRecords() ([]diff.Record, error) {
+	rows, err := d.src.Db().Query(recQ)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var res []diff.Record
+	for rows.Next() {
+		var r diff.Record
+		err = rows.Scan(
+			&r.ID, &r.Name, &r.CanonicalSimple, &r.CanonicalStemmed,
+		)
+		if err != nil {
+			return nil, err
+		}
+		res = append(res, r)
+	}
+	return res, nil
+}
+
+func (d *diffio) setRefSpace() error {
 	dir := d.workDir
 	var err error
 	_ = os.RemoveAll(dir)
@@ -70,18 +115,16 @@ func (d *diffio) setWorkRef() error {
 		return err
 	}
 
-	d.setMatcher()
+	err = d.setMatcher()
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
 func (d *diffio) setMatcher() error {
-	m := matchio.New()
-	q := `
-SELECT
-	col__id, gn__scientific_name_string, gn__canonical_stemmed
-FROM name
-`
-	rows, err := d.ref.Db().Query(q)
+	d.matcher = matchio.New()
+	rows, err := d.ref.Db().Query(recQ)
 	if err != nil {
 		return err
 	}
@@ -89,13 +132,13 @@ FROM name
 	var recs []diff.Record
 	for rows.Next() {
 		var r diff.Record
-		err = rows.Scan(&r.ID, &r.Name, &r.CanonicalStemmed)
+		err = rows.Scan(&r.ID, &r.Name, &r.CanonicalSimple, &r.CanonicalStemmed)
 		if err != nil {
 			return err
 		}
 		recs = append(recs, r)
 	}
-	err = m.Init(d.ref.Db(), recs)
+	err = d.matcher.Init(d.ref.Db(), recs)
 	if err != nil {
 		return err
 	}

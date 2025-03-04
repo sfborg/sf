@@ -12,6 +12,7 @@ type diffio struct {
 	src, ref sfga.Archive
 	refUUID  uuid.UUID
 	workDir  string
+	matcher  diff.Matcher
 }
 
 func New(cfg config.Config) diff.Diff {

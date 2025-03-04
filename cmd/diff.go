@@ -22,6 +22,7 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"log/slog"
 	"os"
 
 	"github.com/sfborg/sf/internal/ent/io/diffio"
@@ -64,7 +65,11 @@ Files can be local or remote. Remote files can be accessed via HTTP URL.
 
 		cfg := config.New(opts...)
 		diff := diffio.New(cfg)
-		diff.Compare(src, dst)
+		err := diff.Compare(src, dst)
+		if err != nil {
+			slog.Error("Cannot compare files", "src", src, "ref", dst, "error", err)
+			os.Exit(1)
+		}
 	},
 }
 

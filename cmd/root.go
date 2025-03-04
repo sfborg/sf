@@ -25,7 +25,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/gnames/gnsys"
+	"github.com/sfborg/sf/internal/ent/io/sysio"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -45,7 +45,8 @@ Compares data from two SFGA files.`,
 		_ = cmd.Help()
 	},
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		err := prepareFileStructure()
+		cfg := config.New()
+		err := sysio.PrepareFileStructure(cfg)
 		if err != nil {
 			slog.Error("Unable do create cache directories", "error", err)
 			os.Exit(1)
@@ -64,36 +65,4 @@ func Execute() {
 
 func init() {
 	rootCmd.Flags().BoolP("version", "V", false, "Show harvester's version")
-}
-
-func prepareFileStructure() error {
-	var err error
-	cfg := config.New()
-	root := cfg.CacheDir
-	err = gnsys.MakeDir(root)
-	if err != nil {
-		return err
-	}
-	// create cfg.DiffWorkDir if does not exist
-	err = gnsys.MakeDir(cfg.DiffWorkDir)
-	if err != nil {
-		return err
-	}
-
-	err = gnsys.CleanDir(root)
-	if err != nil {
-		return err
-	}
-	dirs := []string{
-		cfg.DiffSrcDir,
-		cfg.DiffTrgDir,
-	}
-	for _, v := range dirs {
-		err = gnsys.MakeDir(v)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
 }
