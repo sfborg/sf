@@ -10,6 +10,7 @@ require (
 	github.com/gnames/gnlib v0.46.0
 	github.com/gnames/gnsys v0.3.8
 	github.com/gnames/gnuuid v0.2.0
+	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.0.7
 	github.com/sfborg/sflib v0.2.5

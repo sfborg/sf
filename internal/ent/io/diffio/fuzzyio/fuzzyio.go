@@ -34,5 +34,27 @@ func (f *fuzzyio) Init(recs []diff.Record) error {
 	return nil
 }
 
-func (f *fuzzyio) FindExact(string) []string { return nil }
-func (f *fuzzyio) FindFuzzy(string) []string { return nil }
+func (f *fuzzyio) FindExact(stem string) []string {
+	return f.find(stem, 0)
+}
+func (f *fuzzyio) FindFuzzy(stem string) []string {
+	return f.find(stem, 1)
+}
+
+func (f *fuzzyio) find(stem string, maxDist int) []string {
+	stems := f.trie.FuzzyMatches(stem, maxDist)
+	resMap := make(map[string]struct{})
+	for i := range stems {
+		cs := f.canonicals[stems[i]]
+		for i := range cs {
+			resMap[cs[i]] = struct{}{}
+		}
+	}
+	res := make([]string, len(resMap))
+	var i int
+	for k := range resMap {
+		res[i] = k
+		i++
+	}
+	return res
+}

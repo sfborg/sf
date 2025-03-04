@@ -36,6 +36,9 @@ func (e *exactio) Init(recs []diff.Record) {
 	e.canonical = bf
 }
 
-func (e *exactio) Find(string) bool {
-	return false
+func (e *exactio) Find(s string) bool {
+	e.mux.Lock()
+	isIn := e.canonical.Check([]byte(s))
+	e.mux.Unlock()
+	return isIn
 }
