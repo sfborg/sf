@@ -2,8 +2,6 @@ module github.com/sfborg/sf
 
 go 1.23.6
 
-replace github.com/sfborg/sflib => ../sflib
-
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
@@ -13,7 +11,7 @@ require (
 	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.0.7
-	github.com/sfborg/sflib v0.2.5
+	github.com/sfborg/sflib v0.2.6
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/cobra-cli v1.3.0
 	github.com/stretchr/testify v1.10.0
@@ -27,7 +25,7 @@ require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
-	github.com/gnames/coldp v0.3.11 // indirect
+	github.com/gnames/coldp v0.3.12 // indirect
 	github.com/gnames/gnfmt v0.5.4 // indirect
 	github.com/gnames/gnparser v1.11.2 // indirect
 	github.com/gnames/gnstats v0.2.1 // indirect
@@ -56,18 +54,18 @@ require (
 	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/spf13/viper v1.19.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
-	github.com/tmthrgd/atomics v0.0.0-20180217065130-6910de195248 // indirect
-	github.com/tmthrgd/go-bitset v0.0.0-20180828125936-62ad9ed7ff29 // indirect
-	github.com/tmthrgd/go-bitwise v0.0.0-20170218093117-01bef038b6bd // indirect
-	github.com/tmthrgd/go-byte-test v0.0.0-20170223110042-2eb5216b83f7 // indirect
-	github.com/tmthrgd/go-hex v0.0.0-20180828131331-d1fb3dbb16a1 // indirect
-	github.com/tmthrgd/go-memset v0.0.0-20180828131805-6f4e59bf1e1d // indirect
-	github.com/tmthrgd/go-popcount v0.0.0-20180111143836-3918361d3e97 // indirect
+	github.com/tmthrgd/atomics v0.0.0-20190904060638-dc7a5fcc7e0d // indirect
+	github.com/tmthrgd/go-bitset v0.0.0-20190904054048-394d9a556c05 // indirect
+	github.com/tmthrgd/go-bitwise v0.0.0-20190904053232-1430ee983fca // indirect
+	github.com/tmthrgd/go-byte-test v0.0.0-20190904060354-2794345b9929 // indirect
+	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
+	github.com/tmthrgd/go-memset v0.0.0-20190904060434-6fb7a21f88f1 // indirect
+	github.com/tmthrgd/go-popcount v0.0.0-20190904054823-afb1ace8b04f // indirect
 	github.com/ulikunitz/xz v0.5.12 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20250228200357-dead58393ab7 // indirect
-	golang.org/x/net v0.35.0 // indirect
-	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
