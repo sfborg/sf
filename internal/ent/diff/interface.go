@@ -6,7 +6,7 @@ import "database/sql"
 type Diff interface {
 	// Compare takes two SFGA archives and compares their data.
 	// The result is saved internally to SFGA database.
-	Compare(src, dst string) error
+	Compare(src, ref, out string) error
 }
 
 type Matcher interface {

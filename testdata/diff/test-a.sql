@@ -1,7 +1,7 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 CREATE TABLE version (id TEXT NOT NULL) STRICT;
-INSERT INTO version VALUES('v0.3.26');
+INSERT INTO version VALUES('v0.3.27');
 CREATE TABLE metadata (
   col__id INTEGER PRIMARY KEY AUTOINCREMENT,
   col__doi TEXT DEFAULT '',
@@ -413,6 +413,21 @@ CREATE TABLE taxon_concept_relation (
   col__modified TEXT DEFAULT '',
   col__modified_by TEXT DEFAULT ''
 ) STRICT;
+CREATE TABLE name_match (
+  col__name_id TEXT REFERENCES name DEFAULT '',
+  gn__scientific_name_string TEXT DEFAULT '',
+  ref_col__name_id TEXT DEFAULT '',
+  ref_gn__scientific_name_string TEXT DEFAULT '',
+  ref_col__scientific_name TEXT DEFAULT '',
+  ref_col__authorship TEXT DEFAULT '',
+  gn__match_id TEXT REFERENCES match_type DEFAULT ''
+) STRICT;
+CREATE TABLE match_type (id TEXT PRIMARY KEY) STRICT;
+INSERT INTO match_type VALUES('');
+INSERT INTO match_type VALUES('EXACT');
+INSERT INTO match_type VALUES('EXACT_PARTIAL');
+INSERT INTO match_type VALUES('FUZZY');
+INSERT INTO match_type VALUES('FUZZY_PARTIAL');
 CREATE TABLE nom_code (id TEXT PRIMARY KEY) STRICT;
 INSERT INTO nom_code VALUES('');
 INSERT INTO nom_code VALUES('BACTERIAL');
@@ -963,7 +978,8 @@ INSERT INTO geo_time VALUES('HOLOCENE','QUATERNARY','Holocene','epoch',0.0117000
 INSERT INTO geo_time VALUES('GREENLANDIAN','HOLOCENE','Greenlandian','age',0.01170000000000000033,0.008200000000000000692);
 INSERT INTO geo_time VALUES('NORTHGRIPPIAN','HOLOCENE','Northgrippian','age',0.008200000000000000692,0.00419999999999999974);
 INSERT INTO geo_time VALUES('MEGHALAYAN','HOLOCENE','Meghalayan','age',0.00419999999999999974,0.0);
-CREATE INDEX idx_name_canonical_stemmed ON name (gn__canonical_stemmed);
+CREATE INDEX idx_name_scientific_name ON name (col__scientific_name);
+CREATE INDEX idx_name_canonical_simple ON name (gn__canonical_simple);
 CREATE INDEX idx_synonym_id ON synonym (col__id);
 CREATE INDEX idx_synonym_taxon_id ON synonym (col__taxon_id);
 CREATE INDEX idx_vernacular_taxon_id ON vernacular (col__taxon_id);

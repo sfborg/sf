@@ -1,0 +1,20 @@
+taxonID,scientificName,kingdom,phylum,class,order,family,nomenclaturalCode
+a1,Rhea americana,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a2,Struthio camelus syryacus,Animalia,Chordata,Aves,Struthioniformes,Struthionidae (Ostriches),ICZN
+a3,Rhea americana nobilis,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a4,Rhea pennata,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a5,Struthio camelus camelus,Animalia,Chordata,Aves,Struthioniformes,Struthionidae (Ostriches),ICZN
+a6,Nothocercus bonapartei intercedens,Animalia,Chordata,Aves,Tinamiformes,Tinamidae (Tinamous),ICZN
+a7,Rhea americana intermedia,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a8,Nothocercus bonaparteus,Animalia,Chordata,Aves,Tinamiformes,Tinamidae (Tinamous),ICZN
+a9,Rhea pennata tarapacensis/garleppi,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a10,Rhea pennata pennata,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a11,Rhea pennata garleppi,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a12,Nothocercus bonapartei,Animalia,Chordata,Aves,Tinamiformes,Tinamidae (Tinamous),ICZN
+a13,Rhea pennata tarapacensis,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN
+a14,Struthio molybdophanes,Animalia,Chordata,Aves,Struthioniformes,Struthionidae (Ostriches),ICZN
+a15,Struthio camelus,Animalia,Chordata,Aves,Struthioniformes,Struthionidae (Ostriches),ICZN
+a16,Nothocercus bonapartei discrepans,Animalia,Chordata,Aves,Tinamiformes,Tinamidae (Tinamous),ICZN
+a17,Nothocercus julius,Animalia,Chordata,Aves,Tinamiformes,Tinamidae (Tinamous),ICZN
+a18,Struthio camelus massaieus,Animalia,Chordata,Aves,Struthioniformes,Struthionidae (Ostriches),ICZN
+a19,Rhea americana araneipes,Animalia,Chordata,Aves,Rheiformes,Rheidae (Rheas),ICZN

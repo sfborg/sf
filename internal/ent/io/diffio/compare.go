@@ -22,7 +22,7 @@ SELECT
 FROM name
 `
 
-func (d *diffio) Compare(src, ref string) error {
+func (d *diffio) Compare(src, ref, out string) error {
 	var err error
 	slog.Info("Getting reference file", "path", src)
 	d.src, err = d.initSfga(src, d.cfg.DiffSrcDir)
@@ -58,23 +58,77 @@ func (d *diffio) Compare(src, ref string) error {
 	defer d.src.Close()
 	defer d.ref.Close()
 
+	file := filepath.Base(out) + ".sqlite"
+	slog.Info("Comparing, saving results to name_match table", "output", file)
 	srcRec, err := d.sourceRecords()
-	for _, v := range srcRec {
-		res, err := d.matcher.Match(v)
+	qRes := `
+INSERT INTO name_match
+  (
+    col__name_id, gn__scientific_name_string,
+		ref_col__name_id, ref_gn__scientific_name_string,
+    gn__match_id
+  )
+  VALUES (?, ?, ?, ?, ?)
+`
+	qEmpty := `
+INSERT INTO name_match
+  (
+    col__name_id, gn__scientific_name_string
+  )
+  VALUES (?, ?)
+`
+
+	for i, v := range srcRec {
+		if (i+1)%100_000 == 0 {
+			fmt.Printf("Processed %d names\n", i+1)
+		}
+		var res []diff.Record
+		if v.CanonicalSimple == "" {
+			continue
+		}
+		res, err = d.matcher.Match(v)
 		if err != nil {
 			return err
 		}
 		l := len(res)
 		if l == 0 {
-			fmt.Printf("%s: %s\n", v.ID, v.Name)
+			_, err = d.src.Db().Exec(qEmpty, v.ID, v.Name)
+			if err != nil {
+				return err
+			}
 		} else {
 			for i := range res {
-				fmt.Printf("%s: %s => %s: %s (%s)\n", v.ID, v.Name, res[i].ID, res[i].Name, res[i].MatchType)
+				match := matchTypeID(res[i].MatchType.String())
+				_, err := d.src.Db().Exec(qRes,
+					v.ID, v.Name,
+					res[i].ID, res[i].Name, match,
+				)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
-
+	err = d.src.Export(out, false)
+	if err != nil {
+		return err
+	}
 	return nil
+}
+
+func matchTypeID(s string) string {
+	switch s {
+	case "Exact", "ExactSpeciesGroup", "Virus":
+		return "EXACT"
+	case "PartialExact":
+		return "EXACT_PARTIAL"
+	case "Fuzzy", "FuzzyRelaxed", "FuzzySpeciesGroup", "FuzzySpeciesGroupRelaxed":
+		return "FUZZY"
+	case "PartialFuzzy", "PartialFuzzyRelaxed":
+		return "FUZZY_PARTIAL"
+	default:
+		return ""
+	}
 }
 
 func (d *diffio) sourceRecords() ([]diff.Record, error) {
