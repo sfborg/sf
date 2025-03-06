@@ -25,7 +25,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/sfborg/sf/internal/ent/io/sysio"
+	"github.com/sfborg/sf/internal/io/sysio"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )

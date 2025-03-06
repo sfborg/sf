@@ -5,6 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.1.0] - 2025-03-06 Thu
+
+Add [#9]: add "from xsv" funcionality.
+Add [#8]: save diff to a table.
+Add [#7]: diff with stdout output.
+Add [#6]: compare two SFGA files.
+Add [#5]: match functions are in place.
+Add [#4]: prepare reference for init.
+Add [#3]: prepare source and target SFGA's for diff.
 Add [#2]: create cache dirs for diff.
 
 ## [v0.0.0] - 2025-02-28 Fri
@@ -16,8 +25,18 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
-[v0.0.1]: https://github.com/sfborg/sf/compare/v0.0.0...v0.0.1
+[v0.1.0]: https://github.com/sfborg/sf/compare/v0.0.0...v0.1.0
 [v0.0.0]: https://github.com/sfborg/sf/tree/v0.0.0
+[#20]: https://github.com/sfborg/sf/issues/20
+[#19]: https://github.com/sfborg/sf/issues/19
+[#18]: https://github.com/sfborg/sf/issues/18
+[#17]: https://github.com/sfborg/sf/issues/17
+[#16]: https://github.com/sfborg/sf/issues/16
+[#15]: https://github.com/sfborg/sf/issues/15
+[#14]: https://github.com/sfborg/sf/issues/14
+[#13]: https://github.com/sfborg/sf/issues/13
+[#12]: https://github.com/sfborg/sf/issues/12
+[#11]: https://github.com/sfborg/sf/issues/11
 [#10]: https://github.com/sfborg/sf/issues/10
 [#9]: https://github.com/sfborg/sf/issues/9
 [#8]: https://github.com/sfborg/sf/issues/8

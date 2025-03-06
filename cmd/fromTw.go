@@ -33,7 +33,8 @@ var fromTwCmd = &cobra.Command{
 	Short: "Converts a TaxonWorks project data to SFGA file.",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("fromTw called")
+		fmt.Println("from tw called")
+		fmt.Println("not implemented yet")
 	},
 }
 

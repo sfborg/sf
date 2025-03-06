@@ -5,9 +5,9 @@ import (
 
 	"github.com/gnames/gnlib/ent/verifier"
 	"github.com/sfborg/sf/internal/ent/diff"
-	"github.com/sfborg/sf/internal/ent/io/diffio/dbio"
-	"github.com/sfborg/sf/internal/ent/io/diffio/exactio"
-	"github.com/sfborg/sf/internal/ent/io/diffio/fuzzyio"
+	"github.com/sfborg/sf/internal/io/diffio/dbio"
+	"github.com/sfborg/sf/internal/io/diffio/exactio"
+	"github.com/sfborg/sf/internal/io/diffio/fuzzyio"
 )
 
 type matchio struct {

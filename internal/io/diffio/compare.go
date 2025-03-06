@@ -10,7 +10,7 @@ import (
 	"github.com/gnames/gnsys"
 	"github.com/gnames/gnuuid"
 	"github.com/sfborg/sf/internal/ent/diff"
-	"github.com/sfborg/sf/internal/ent/io/diffio/matchio"
+	"github.com/sfborg/sf/internal/io/diffio/matchio"
 	"github.com/sfborg/sflib/ent/sfga"
 	"github.com/sfborg/sflib/io/sfgaio"
 )

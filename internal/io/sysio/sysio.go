@@ -25,6 +25,8 @@ func PrepareFileStructure(cfg config.Config) error {
 	dirs := []string{
 		cfg.DiffSrcDir,
 		cfg.DiffTrgDir,
+		cfg.ImporterSrcDir,
+		cfg.ImporterSfgaDir,
 	}
 	for _, v := range dirs {
 		err = gnsys.MakeDir(v)
