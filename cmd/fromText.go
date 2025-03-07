@@ -22,8 +22,12 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"log/slog"
+	"os"
+	"path/filepath"
 
+	"github.com/sfborg/sf/internal/io/text"
+	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
 
@@ -41,7 +45,22 @@ Names with authorship would perform better for further comparison with
 other checklists.
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("fromText called")
+		if len(args) != 2 {
+			cmd.Help()
+			os.Exit(0)
+		}
+		src := args[0]
+		out := args[1]
+
+		cfg := config.New()
+		txt := text.New(cfg)
+
+		err := txt.Import(src, out)
+		if err != nil {
+			file := filepath.Base(src)
+			slog.Error("Cannot import text file", "file", file, "error", err)
+			os.Exit(1)
+		}
 	},
 }
 
