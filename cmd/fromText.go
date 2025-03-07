@@ -29,14 +29,17 @@ import (
 
 // fromTextCmd represents the fromText command
 var fromTextCmd = &cobra.Command{
-	Use:   "text",
+	Use:   "text text-file output-file",
 	Short: "Converts a list of scientific names to SFGA format",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Long: `This command imports a list of scientific names from a plain text
+file and converts it into the Species File Group Archive (SFGA) format. Each
+line in the input text file should contain a single scientific name. The
+output of this command will be a new SFGA database containing the
+supplied names and parsed information.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Names with authorship would perform better for further comparison with 
+other checklists.
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("fromText called")
 	},
@@ -44,14 +47,4 @@ to quickly create a Cobra application.`,
 
 func init() {
 	fromCmd.AddCommand(fromTextCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// fromTextCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// fromTextCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
