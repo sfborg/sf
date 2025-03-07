@@ -1,4 +1,4 @@
-package xsv
+package text
 
 import (
 	"fmt"
@@ -6,10 +6,10 @@ import (
 	"github.com/gnames/gnsys"
 )
 
-func (x *xsv) Import(src, out string) error {
+func (t *text) Import(src, out string) error {
 	var err error
 
-	src, err = x.Download(src)
+	src, err = t.Download(src)
 	if err != nil {
 		return err
 	}
@@ -20,19 +20,19 @@ func (x *xsv) Import(src, out string) error {
 		return fmt.Errorf("file does not exist '%s'", src)
 	}
 
-	x.csvPath = src
+	t.textPath = src
 
-	x.sfga, err = x.InitSfga()
+	t.sfga, err = t.InitSfga()
 	if err != nil {
 		return err
 	}
 
-	err = x.importNamesUsage()
+	err = t.importNamesUsage()
 	if err != nil {
 		return err
 	}
 
-	err = x.sfga.Export(out, x.cfg.WithZipOutput)
+	err = t.sfga.Export(out, t.cfg.WithZipOutput)
 	if err != nil {
 		return err
 	}

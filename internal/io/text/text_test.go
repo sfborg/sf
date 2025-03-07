@@ -1,4 +1,4 @@
-package xsv_test
+package text_test
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/gnames/gnsys"
 	"github.com/sfborg/sf/internal/io/sysio"
-	"github.com/sfborg/sf/internal/io/xsv"
+	"github.com/sfborg/sf/internal/io/text"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/sfborg/sflib/io/sfgaio"
 	"github.com/stretchr/testify/assert"
@@ -23,36 +23,26 @@ func TestImport(t *testing.T) {
 		errNotNil bool
 	}{
 		{
-			name:      "csv",
-			src:       "ioc-bird.csv",
-			errNotNil: false,
-		},
-		{
-			name:      "tsv",
-			src:       "ioc-bird.tsv",
-			errNotNil: false,
-		},
-		{
-			name:      "psv",
-			src:       "ioc-bird.psv",
+			name:      "txt",
+			src:       "names.txt",
 			errNotNil: false,
 		},
 		{
 			name:      "non-existing-file",
-			src:       "non-existing.csv",
+			src:       "non-existing.txt",
 			errNotNil: true,
 		},
 	}
 
-	dir, err := os.MkdirTemp("", "xsv-")
+	dir, err := os.MkdirTemp("", "txt-")
 	assert.Nil(err)
 	defer os.RemoveAll(dir)
 
 	out := filepath.Join(dir, "test")
 	for _, v := range tests {
-		src := filepath.Join("..", "..", "..", "testdata", "csv", v.src)
+		src := filepath.Join("..", "..", "..", "testdata", "text", v.src)
 		cfg := config.New()
-		x := xsv.New(cfg)
+		x := text.New(cfg)
 		err := sysio.PrepareFileStructure(cfg)
 		assert.Nil(err)
 

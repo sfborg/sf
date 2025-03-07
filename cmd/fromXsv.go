@@ -33,13 +33,27 @@ import (
 
 // fromXsvCmd represents the fromXsv command
 var fromXsvCmd = &cobra.Command{
-	Use:   "xsv src-file-or-url output",
+	Use:   "xsv src-file-or-url output-file",
 	Short: "Converts CSV/TSV/PSV fiels to SFGA format",
-	Long: `Takes a Comma/Tab/Pipe Separated Value (XSV) file and converts it to
-a Species File Group Archive file. The file must have headers where at least
-some DarwinCore or CoLDP terms are provided. The "ScientificName" field is
-required. The resuting SFGA file can later be used to compare it with other
-SFGA files, or be converted to other common formats.
+	Long: `Imports data from Comma-Separated Value (CSV), Tab-Separated
+Value (TSV), or Pipe-Separated Value (PSV) files and converts it into
+the Species File Group Archive (SFGA) format.
+
+This command is designed for transforming tabular data, commonly used in
+biological and taxonomic datasets, into a structured SFGA database.
+
+INPUT REQUIREMENTS:
+
+Header Row: The XSV file *must* include a header row as the first line.
+  This row defines the column names for the data.
+
+Column Names: Column names should correspond to either Darwin Core or
+  CoLDP (Catalogue of Life Data Package) terms. This ensures the data is
+  correctly mapped into the SFGA structure.
+
+ScientificName Field: A column named "ScientificName" is *mandatory*.
+  This field contains the scientific names of taxa. Other columns, while
+  optional, allow for a more comprehensive dataset.
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {
@@ -49,7 +63,14 @@ SFGA files, or be converted to other common formats.
 		src := args[0]
 		out := args[1]
 
-		cfg := config.New()
+		flags := []flagFunc{
+			zipFlag, detailsFlag,
+		}
+		// append opts using flags input
+		for _, v := range flags {
+			v(cmd)
+		}
+		cfg := config.New(opts...)
 		xsv := xsv.New(cfg)
 
 		err := xsv.Import(src, out)

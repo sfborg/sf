@@ -23,10 +23,11 @@ func PrepareFileStructure(cfg config.Config) error {
 		return err
 	}
 	dirs := []string{
+		cfg.DownloadDir,
 		cfg.DiffSrcDir,
-		cfg.DiffTrgDir,
-		cfg.ImporterSrcDir,
-		cfg.ImporterSfgaDir,
+		cfg.DiffRefDir,
+		cfg.DataDir,
+		cfg.SfgaDir,
 	}
 	for _, v := range dirs {
 		err = gnsys.MakeDir(v)

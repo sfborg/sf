@@ -4,17 +4,22 @@ go 1.23.6
 
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
+	github.com/dustin/go-humanize v1.0.1
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
+	github.com/gnames/coldp v0.3.14
+	github.com/gnames/gnfmt v0.5.5
 	github.com/gnames/gnlib v0.46.0
+	github.com/gnames/gnparser v1.11.4
 	github.com/gnames/gnsys v0.3.8
 	github.com/gnames/gnuuid v0.2.0
 	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.0.7
-	github.com/sfborg/sflib v0.2.6
+	github.com/sfborg/sflib v0.2.8
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/cobra-cli v1.3.0
 	github.com/stretchr/testify v1.10.0
+	golang.org/x/sync v0.12.0
 )
 
 require (
@@ -22,12 +27,8 @@ require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/cheggaaa/pb/v3 v3.1.7 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
-	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
-	github.com/gnames/coldp v0.3.12 // indirect
-	github.com/gnames/gnfmt v0.5.4 // indirect
-	github.com/gnames/gnparser v1.11.2 // indirect
 	github.com/gnames/gnstats v0.2.1 // indirect
 	github.com/gnames/organizer v0.1.1 // indirect
 	github.com/gnames/tribool v0.1.1 // indirect
@@ -63,10 +64,10 @@ require (
 	github.com/tmthrgd/go-popcount v0.0.0-20190904054823-afb1ace8b04f // indirect
 	github.com/ulikunitz/xz v0.5.12 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/exp v0.0.0-20250228200357-dead58393ab7 // indirect
-	golang.org/x/net v0.36.0 // indirect
+	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394 // indirect
+	golang.org/x/net v0.37.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/text v0.22.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.61.13 // indirect

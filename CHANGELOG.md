@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Add: refactor "from xsv" to have a better concurrency.
+Add [#11]: add "from text" functionality.
+
 ## [v0.1.0] - 2025-03-06 Thu
 
 Add [#9]: add "from xsv" funcionality.

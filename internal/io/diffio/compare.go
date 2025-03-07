@@ -30,7 +30,7 @@ func (d *diffio) Compare(src, ref, out string) error {
 		return err
 	}
 	slog.Info("Getting comparison file", "path", ref)
-	d.ref, err = d.initSfga(ref, d.cfg.DiffTrgDir)
+	d.ref, err = d.initSfga(ref, d.cfg.DiffRefDir)
 	if err != nil {
 		return err
 	}
