@@ -66,6 +66,7 @@ func (x *xsv) reader(
 	wg *sync.WaitGroup,
 ) {
 	p := gnparser.New(gnparser.NewConfig(gnparser.OptWithDetails(true)))
+
 	defer wg.Done()
 	var ids = make(map[string]struct{})
 	for row := range chIn {
@@ -76,6 +77,7 @@ func (x *xsv) reader(
 		} else {
 			ids[id] = struct{}{}
 		}
+
 		nu := coldp.NameUsage{
 			ID:                id,
 			AlternativeID:     fieldVal(headers, row, "alternativeid"),
@@ -147,17 +149,18 @@ func (x *xsv) reader(
 			Modified:                  fieldVal(headers, row, "modified"),
 			ModifiedBy:                fieldVal(headers, row, "modifiedby"),
 		}
+
 		nu.ScientificNameString = nu.ScientificName
 
 		if nu.Authorship != "" &&
 			!strings.HasSuffix(nu.ScientificName, nu.Authorship) {
 			nu.ScientificNameString += " " + nu.Authorship
 		}
-		pres := p.ParseName(nu.ScientificNameString)
-		if pres.Parsed {
-			nu.CanonicalSimple = pres.Canonical.Simple
-			nu.CanonicalFull = pres.Canonical.Full
-			nu.CanonicalStemmed = pres.Canonical.Stemmed
+		prsd := p.ParseName(nu.ScientificNameString).Flatten()
+		if prsd.Parsed {
+			nu.CanonicalSimple = prsd.CanonicalSimple
+			nu.CanonicalFull = prsd.CanonicalFull
+			nu.CanonicalStemmed = prsd.CanonicalStemmed
 		}
 
 		chOut <- nu

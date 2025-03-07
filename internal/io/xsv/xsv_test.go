@@ -1,12 +1,14 @@
-package xsv
+package xsv_test
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
 
 	"github.com/gnames/gnsys"
 	"github.com/sfborg/sf/internal/io/sysio"
+	"github.com/sfborg/sf/internal/io/xsv"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/stretchr/testify/assert"
 )
@@ -49,13 +51,14 @@ func TestImport(t *testing.T) {
 	for _, v := range tests {
 		src := filepath.Join("..", "..", "..", "testdata", "csv", v.src)
 		cfg := config.New()
-		x := &xsv{
-			cfg: cfg,
-		}
+		x := xsv.New(cfg)
 		err := sysio.PrepareFileStructure(cfg)
 		assert.Nil(err)
 
 		err = x.Import(src, out)
+		if err != nil {
+			fmt.Printf("ERR: %v", err)
+		}
 		assert.Equal(v.errNotNil, err != nil)
 
 		exists, err := gnsys.FileExists(out + ".sqlite")

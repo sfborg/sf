@@ -13,21 +13,25 @@ type Config struct {
 	// are cleaned up before each use of the app.
 	CacheDir string
 
-	// ImporterSrcDir is a path to a directory where source files are moved
-	// or extracted to.
-	ImporterSrcDir string
+	// DownloadDir is the path to the directory where downloaded files are
+	// stored
+	DownloadDir string
 
-	// ImporterSfgaDir is a path where SFGA database is created. When
+	// DataDir is a path to a directory where source files are moved
+	// or extracted to.
+	DataDir string
+
+	// SfgaDir is a path where SFGA database is created. When
 	// the database is ready it is exported to output file.
-	ImporterSfgaDir string
+	SfgaDir string
 
 	// DiffSrcDir is a path of a directory where the source SFGA file resides.
 	// This file is to be compared with the target SFGA file.
 	DiffSrcDir string
 
-	// DiffTrgDir is a path to a directory where the target SFGA file resides.
+	// DiffRefDir is a path to a directory where the target SFGA file resides.
 	// This source SFGA file will be compared with the target file.
-	DiffTrgDir string
+	DiffRefDir string
 
 	// DiffWorkDir contains data necessary for comparing data of source and
 	// target SFGA files. It can be a suffix trie data, bloom filter backup etc.
@@ -117,10 +121,11 @@ func New(opts ...Option) Config {
 		opt(&res)
 	}
 
-	res.ImporterSrcDir = filepath.Join(res.CacheDir, "import", "src")
-	res.ImporterSfgaDir = filepath.Join(res.CacheDir, "import", "sfga")
+	res.DownloadDir = filepath.Join(res.CacheDir, "import", "download")
+	res.DataDir = filepath.Join(res.CacheDir, "import", "src")
+	res.SfgaDir = filepath.Join(res.CacheDir, "import", "sfga")
 	res.DiffSrcDir = filepath.Join(res.CacheDir, "diff", "src")
-	res.DiffTrgDir = filepath.Join(res.CacheDir, "diff", "trg")
+	res.DiffRefDir = filepath.Join(res.CacheDir, "diff", "trg")
 
 	return res
 }

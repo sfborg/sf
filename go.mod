@@ -5,7 +5,10 @@ go 1.23.6
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
+	github.com/gnames/coldp v0.3.12
+	github.com/gnames/gnfmt v0.5.4
 	github.com/gnames/gnlib v0.46.0
+	github.com/gnames/gnparser v1.11.3
 	github.com/gnames/gnsys v0.3.8
 	github.com/gnames/gnuuid v0.2.0
 	github.com/gnames/levenshtein v0.4.0
@@ -25,9 +28,6 @@ require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
-	github.com/gnames/coldp v0.3.12 // indirect
-	github.com/gnames/gnfmt v0.5.4 // indirect
-	github.com/gnames/gnparser v1.11.2 // indirect
 	github.com/gnames/gnstats v0.2.1 // indirect
 	github.com/gnames/organizer v0.1.1 // indirect
 	github.com/gnames/tribool v0.1.1 // indirect
