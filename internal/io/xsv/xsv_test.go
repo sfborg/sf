@@ -10,6 +10,7 @@ import (
 	"github.com/sfborg/sf/internal/io/sysio"
 	"github.com/sfborg/sf/internal/io/xsv"
 	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sflib/io/sfgaio"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -61,8 +62,19 @@ func TestImport(t *testing.T) {
 		}
 		assert.Equal(v.errNotNil, err != nil)
 
-		exists, err := gnsys.FileExists(out + ".sqlite")
-		assert.Nil(err)
-		assert.True(exists)
+		if err == nil {
+			exists, err := gnsys.FileExists(out + ".sqlite")
+			assert.Nil(err)
+			assert.True(exists)
+
+			sfga := sfgaio.New()
+			sfga.SetDb(out + ".sqlite")
+			db, err := sfga.Connect()
+			assert.Nil(err)
+			var count int
+			err = db.QueryRow("SELECT count(*) FROM name").Scan(&count)
+			assert.Nil(err)
+			assert.Greater(count, 5, v.name)
+		}
 	}
 }

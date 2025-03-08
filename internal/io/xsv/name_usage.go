@@ -51,10 +51,10 @@ func (x *xsv) importNamesUsage() error {
 	return nil
 }
 
-func fieldVal(headers map[string]int, row []string, field string) string {
+func getVal(headers map[string]int, row []string, field string) string {
 	if idx, ok := headers[field]; ok {
 		res := row[idx]
-		return res
+		return strings.TrimSpace(res)
 	}
 	return ""
 }
@@ -70,7 +70,7 @@ func (x *xsv) reader(
 	defer wg.Done()
 	var ids = make(map[string]struct{})
 	for row := range chIn {
-		id := fieldVal(headers, row, "id")
+		id := getVal(headers, row, "id")
 		if _, ok := ids[id]; ok {
 			slog.Error("Duplicate ID", "ID", id)
 			continue
@@ -80,74 +80,74 @@ func (x *xsv) reader(
 
 		nu := coldp.NameUsage{
 			ID:                id,
-			AlternativeID:     fieldVal(headers, row, "alternativeid"),
-			NameAlternativeID: fieldVal(headers, row, "namealternativeid"),
-			LocalID:           fieldVal(headers, row, "localid"),
-			GlobalID:          fieldVal(headers, row, "globalid"),
-			SourceID:          fieldVal(headers, row, "sourceid"),
-			ParentID:          fieldVal(headers, row, "parentid"),
-			BasionymID:        fieldVal(headers, row, "basyonymid"),
+			AlternativeID:     getVal(headers, row, "alternativeid"),
+			NameAlternativeID: getVal(headers, row, "namealternativeid"),
+			LocalID:           getVal(headers, row, "localid"),
+			GlobalID:          getVal(headers, row, "globalid"),
+			SourceID:          getVal(headers, row, "sourceid"),
+			ParentID:          getVal(headers, row, "parentid"),
+			BasionymID:        getVal(headers, row, "basyonymid"),
 			TaxonomicStatus: coldp.NewTaxonomicStatus(
-				fieldVal(headers, row, "taxonomicstatus"),
+				getVal(headers, row, "taxonomicstatus"),
 			),
-			ScientificName:            fieldVal(headers, row, "scientificname"),
-			Authorship:                fieldVal(headers, row, "authorship"),
-			ScientificNameString:      fieldVal(headers, row, "scientificnamestring"),
-			Rank:                      coldp.NewRank(fieldVal(headers, row, "rank")),
-			Notho:                     coldp.NewNamePart(fieldVal(headers, row, "notho")),
-			Uninomial:                 fieldVal(headers, row, "uninomial"),
-			GenericName:               fieldVal(headers, row, "genericname"),
-			InfragenericEpithet:       fieldVal(headers, row, "infragenericepithet"),
-			SpecificEpithet:           fieldVal(headers, row, "specificepithet"),
-			InfraspecificEpithet:      fieldVal(headers, row, "infraspecificepithet"),
-			CultivarEpithet:           fieldVal(headers, row, "cultivarepithet"),
-			CombinationAuthorship:     fieldVal(headers, row, "combinationauthorship"),
-			CombinationAuthorshipID:   fieldVal(headers, row, "combinationauthorshipid"),
-			CombinationExAuthorship:   fieldVal(headers, row, "combinationexauthorship"),
-			CombinationExAuthorshipID: fieldVal(headers, row, "combinationexauthorshipid"),
-			CombinationAuthorshipYear: fieldVal(headers, row, "combinationauthorshipyear"),
-			BasionymAuthorship:        fieldVal(headers, row, "basionymauthorship"),
-			BasionymAuthorshipID:      fieldVal(headers, row, "basionymauthorshipid"),
-			BasionymExAuthorship:      fieldVal(headers, row, "basionymexauthorship"),
-			BasionymExAuthorshipID:    fieldVal(headers, row, "basionymexauthorshipid"),
-			BasionymAuthorshipYear:    fieldVal(headers, row, "basionymauthorshipyear"),
-			NamePhrase:                fieldVal(headers, row, "namephrase"),
-			NameReferenceID:           fieldVal(headers, row, "namereferenceid"),
-			PublishedInYear:           fieldVal(headers, row, "publishedinyear"),
-			PublishedInPage:           fieldVal(headers, row, "publishedinpage"),
-			PublishedInPageLink:       fieldVal(headers, row, "publishedinpagelink"),
-			Gender:                    coldp.NewGender(fieldVal(headers, row, "gender")),
-			Etymology:                 fieldVal(headers, row, "etymology"),
-			Code:                      coldp.NewNomCode(fieldVal(headers, row, "code")),
-			NameStatus:                coldp.NewNomStatus(fieldVal(headers, row, "namestatus")),
-			AccordingToID:             fieldVal(headers, row, "accordingtoid"),
-			AccordingToPage:           fieldVal(headers, row, "accordingtopage"),
-			AccordingToPageLink:       fieldVal(headers, row, "accordingtopagelink"),
-			ReferenceID:               fieldVal(headers, row, "referenceid"),
-			Scrutinizer:               fieldVal(headers, row, "scrutinizer"),
-			ScrutinizerID:             fieldVal(headers, row, "scrutinizerid"),
-			ScrutinizerDate:           fieldVal(headers, row, "scrutinizerdate"),
-			Species:                   fieldVal(headers, row, "species"),
-			Section:                   fieldVal(headers, row, "section"),
-			Subgenus:                  fieldVal(headers, row, "subgenus"),
-			Genus:                     fieldVal(headers, row, "genus"),
-			Subtribe:                  fieldVal(headers, row, "subtribe"),
-			Tribe:                     fieldVal(headers, row, "tribe"),
-			Subfamily:                 fieldVal(headers, row, "subfamily"),
-			Family:                    fieldVal(headers, row, "family"),
-			Superfamily:               fieldVal(headers, row, "superfamily"),
-			Suborder:                  fieldVal(headers, row, "suborder"),
-			Order:                     fieldVal(headers, row, "order"),
-			Subclass:                  fieldVal(headers, row, "subclass"),
-			Class:                     fieldVal(headers, row, "class"),
-			Subphylum:                 fieldVal(headers, row, "subphylum"),
-			Phylum:                    fieldVal(headers, row, "phylum"),
-			Kingdom:                   fieldVal(headers, row, "kingdom"),
-			Link:                      fieldVal(headers, row, "link"),
-			NameRemarks:               fieldVal(headers, row, "nameremarks"),
-			Remarks:                   fieldVal(headers, row, "remarks"),
-			Modified:                  fieldVal(headers, row, "modified"),
-			ModifiedBy:                fieldVal(headers, row, "modifiedby"),
+			ScientificName:            getVal(headers, row, "scientificname"),
+			Authorship:                getVal(headers, row, "authorship"),
+			ScientificNameString:      getVal(headers, row, "scientificnamestring"),
+			Rank:                      coldp.NewRank(getVal(headers, row, "rank")),
+			Notho:                     coldp.NewNamePart(getVal(headers, row, "notho")),
+			Uninomial:                 getVal(headers, row, "uninomial"),
+			GenericName:               getVal(headers, row, "genericname"),
+			InfragenericEpithet:       getVal(headers, row, "infragenericepithet"),
+			SpecificEpithet:           getVal(headers, row, "specificepithet"),
+			InfraspecificEpithet:      getVal(headers, row, "infraspecificepithet"),
+			CultivarEpithet:           getVal(headers, row, "cultivarepithet"),
+			CombinationAuthorship:     getVal(headers, row, "combinationauthorship"),
+			CombinationAuthorshipID:   getVal(headers, row, "combinationauthorshipid"),
+			CombinationExAuthorship:   getVal(headers, row, "combinationexauthorship"),
+			CombinationExAuthorshipID: getVal(headers, row, "combinationexauthorshipid"),
+			CombinationAuthorshipYear: getVal(headers, row, "combinationauthorshipyear"),
+			BasionymAuthorship:        getVal(headers, row, "basionymauthorship"),
+			BasionymAuthorshipID:      getVal(headers, row, "basionymauthorshipid"),
+			BasionymExAuthorship:      getVal(headers, row, "basionymexauthorship"),
+			BasionymExAuthorshipID:    getVal(headers, row, "basionymexauthorshipid"),
+			BasionymAuthorshipYear:    getVal(headers, row, "basionymauthorshipyear"),
+			NamePhrase:                getVal(headers, row, "namephrase"),
+			NameReferenceID:           getVal(headers, row, "namereferenceid"),
+			PublishedInYear:           getVal(headers, row, "publishedinyear"),
+			PublishedInPage:           getVal(headers, row, "publishedinpage"),
+			PublishedInPageLink:       getVal(headers, row, "publishedinpagelink"),
+			Gender:                    coldp.NewGender(getVal(headers, row, "gender")),
+			Etymology:                 getVal(headers, row, "etymology"),
+			Code:                      coldp.NewNomCode(getVal(headers, row, "code")),
+			NameStatus:                coldp.NewNomStatus(getVal(headers, row, "namestatus")),
+			AccordingToID:             getVal(headers, row, "accordingtoid"),
+			AccordingToPage:           getVal(headers, row, "accordingtopage"),
+			AccordingToPageLink:       getVal(headers, row, "accordingtopagelink"),
+			ReferenceID:               getVal(headers, row, "referenceid"),
+			Scrutinizer:               getVal(headers, row, "scrutinizer"),
+			ScrutinizerID:             getVal(headers, row, "scrutinizerid"),
+			ScrutinizerDate:           getVal(headers, row, "scrutinizerdate"),
+			Species:                   getVal(headers, row, "species"),
+			Section:                   getVal(headers, row, "section"),
+			Subgenus:                  getVal(headers, row, "subgenus"),
+			Genus:                     getVal(headers, row, "genus"),
+			Subtribe:                  getVal(headers, row, "subtribe"),
+			Tribe:                     getVal(headers, row, "tribe"),
+			Subfamily:                 getVal(headers, row, "subfamily"),
+			Family:                    getVal(headers, row, "family"),
+			Superfamily:               getVal(headers, row, "superfamily"),
+			Suborder:                  getVal(headers, row, "suborder"),
+			Order:                     getVal(headers, row, "order"),
+			Subclass:                  getVal(headers, row, "subclass"),
+			Class:                     getVal(headers, row, "class"),
+			Subphylum:                 getVal(headers, row, "subphylum"),
+			Phylum:                    getVal(headers, row, "phylum"),
+			Kingdom:                   getVal(headers, row, "kingdom"),
+			Link:                      getVal(headers, row, "link"),
+			NameRemarks:               getVal(headers, row, "nameremarks"),
+			Remarks:                   getVal(headers, row, "remarks"),
+			Modified:                  getVal(headers, row, "modified"),
+			ModifiedBy:                getVal(headers, row, "modifiedby"),
 		}
 
 		nu.ScientificNameString = nu.ScientificName
@@ -161,6 +161,25 @@ func (x *xsv) reader(
 			nu.CanonicalSimple = prsd.CanonicalSimple
 			nu.CanonicalFull = prsd.CanonicalFull
 			nu.CanonicalStemmed = prsd.CanonicalStemmed
+			nu.Rank = coldp.NewRank(pick(nu.Rank.String(), prsd.Rank))
+			nu.Uninomial = pick(nu.Uninomial, prsd.Uninomial)
+			nu.GenericName = pick(nu.GenericName, prsd.Genus)
+			nu.InfragenericEpithet = pick(nu.InfragenericEpithet, prsd.Subgenus)
+			nu.SpecificEpithet = pick(nu.SpecificEpithet, prsd.Species)
+			nu.InfraspecificEpithet = pick(nu.InfraspecificEpithet, prsd.Infraspecies)
+			nu.CultivarEpithet = pick(nu.CultivarEpithet, prsd.CultivarEpithet)
+			nu.CombinationAuthorship = pick(nu.CombinationAuthorship, prsd.CombinationAuthorship)
+			nu.CombinationExAuthorship = pick(
+				nu.CombinationExAuthorship,
+				prsd.CombinationExAuthorship,
+			)
+			nu.CombinationAuthorshipYear = pick(
+				nu.CombinationAuthorshipYear,
+				prsd.CombinationAuthorshipYear,
+			)
+			nu.BasionymAuthorship = pick(nu.BasionymAuthorship, prsd.BasionymAuthorship)
+			nu.BasionymExAuthorship = pick(nu.BasionymExAuthorship, prsd.BasionymExAuthorship)
+			nu.BasionymAuthorshipYear = pick(nu.BasionymAuthorshipYear, prsd.BasionymAuthorshipYear)
 		}
 
 		chOut <- nu
@@ -173,4 +192,11 @@ func (x *xsv) writer(chOut <-chan coldp.NameUsage, wg *sync.WaitGroup) {
 	for chunk := range ch {
 		x.sfga.InsertNameUsages(chunk)
 	}
+}
+
+func pick(a, b string) string {
+	if a != "" {
+		return a
+	}
+	return b
 }
