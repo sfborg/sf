@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/gnames/coldp/ent/coldp"
 	"github.com/gnames/gnfmt"
 )
 
@@ -45,6 +46,12 @@ type Config struct {
 	// to the children of the taxon.
 	DiffTargetTaxon string
 
+	// NomCode tells which Nomenclatural Code to insert to all records of
+	// coldp.Name records, as well as setting up GNparser code mode.
+	// If imported data alread has the Code information, the data has a
+	// precedence.
+	NomCode coldp.NomCode
+
 	// BadRow sets how to process rows with wrong number of fields in CSV
 	// files. By default it is set to process such rows. Other options are
 	// to return an error, or skip them.
@@ -53,12 +60,20 @@ type Config struct {
 	// BatchSize determines the size of slices to import into SFGA.
 	BatchSize int
 
+	// Number of concurrent jobs.
+	JobsNum int
+
 	// WithoutQuotes can be used to parse faster tab- or pipe-delimited
 	// files where fields never escaped by quotes.
 	WithoutQuotes bool
 
 	// WithZipOutput indicates that zipped archives have to be created.
 	WithZipOutput bool
+
+	// WithDetails indicates that GNparser detailed data will be used to
+	// populate name fields (eg. data like  Uninomial, Genus, SpecificEpithet,
+	// CombinationAuthorship etc).
+	WithDetails bool
 }
 
 // Option type is used for all options sent to the config file.
@@ -82,6 +97,12 @@ func OptDiffTargetTaxon(s string) Option {
 	}
 }
 
+func OptNomCode(code coldp.NomCode) Option {
+	return func(c *Config) {
+		c.NomCode = code
+	}
+}
+
 func OptWithoutQuotes(b bool) Option {
 	return func(c *Config) {
 		c.WithoutQuotes = b
@@ -91,6 +112,12 @@ func OptWithoutQuotes(b bool) Option {
 func OptBadRow(br gnfmt.BadRow) Option {
 	return func(c *Config) {
 		c.BadRow = br
+	}
+}
+
+func OptWithDetails(b bool) Option {
+	return func(c *Config) {
+		c.WithDetails = b
 	}
 }
 
@@ -114,7 +141,8 @@ func New(opts ...Option) Config {
 		CacheDir:    cacheDir,
 		DiffWorkDir: workDir,
 		BadRow:      gnfmt.ProcessBadRow,
-		BatchSize:   50_000,
+		BatchSize:   50, //_000,
+		JobsNum:     5,
 	}
 
 	for _, opt := range opts {

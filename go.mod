@@ -2,11 +2,17 @@ module github.com/sfborg/sf
 
 go 1.23.6
 
+replace github.com/sfborg/sflib => ../sflib
+
+replace github.com/gnames/coldp => ../coldp
+
+replace github.com/gnames/gnparser => ../gnparser
+
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
 	github.com/gnames/coldp v0.3.12
-	github.com/gnames/gnfmt v0.5.4
+	github.com/gnames/gnfmt v0.5.5
 	github.com/gnames/gnlib v0.46.0
 	github.com/gnames/gnparser v1.11.3
 	github.com/gnames/gnsys v0.3.8
@@ -18,6 +24,7 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/cobra-cli v1.3.0
 	github.com/stretchr/testify v1.10.0
+	golang.org/x/sync v0.12.0
 )
 
 require (

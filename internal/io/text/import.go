@@ -20,7 +20,7 @@ func (t *text) Import(src, out string) error {
 		return fmt.Errorf("file does not exist '%s'", src)
 	}
 
-	t.txtPath = src
+	t.textPath = src
 
 	t.sfga, err = t.InitSfga()
 	if err != nil {

@@ -1,6 +1,7 @@
 package text
 
 import (
+	"github.com/gnames/gnparser"
 	"github.com/sfborg/sf/internal/io/fromx"
 	sf "github.com/sfborg/sf/pkg"
 	"github.com/sfborg/sf/pkg/config"
@@ -11,13 +12,15 @@ type text struct {
 	cfg  config.Config
 	sfga sfga.Archive
 	sf.FromX
-	txtPath string
+	textPath   string
+	parserPool map[string]chan gnparser.GNparser
 }
 
 func New(cfg config.Config) sf.FromX {
 	res := text{
-		cfg:   cfg,
-		FromX: fromx.New(cfg),
+		cfg:        cfg,
+		FromX:      fromx.New(cfg),
+		parserPool: sf.ParserPool(cfg.JobsNum, cfg.WithDetails),
 	}
 	return &res
 }
