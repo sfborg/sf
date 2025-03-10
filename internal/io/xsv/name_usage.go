@@ -5,9 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"log/slog"
+	"os"
 	"strings"
 	"sync"
 
+	"github.com/dustin/go-humanize"
 	"github.com/gnames/coldp/ent/coldp"
 	"github.com/gnames/gnfmt/gncsv"
 	csvConfig "github.com/gnames/gnfmt/gncsv/config"
@@ -118,17 +120,21 @@ func (x *xsv) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 	var err error
 	ch := gnlib.ChunkChannel(chOut, x.cfg.BatchSize)
 
-	var count int
+	var rows int
 	for {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
 		case chunk, ok := <-ch:
 			if !ok {
+				rows += len(chunk)
+				fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
+				fmt.Fprintf(os.Stderr, "\rProcessed %s rows\n", humanize.Comma(int64(rows)))
 				return nil
 			}
-			count++
-			fmt.Printf("Processed %d rows\n", x.cfg.BatchSize*count)
+			rows += len(chunk)
+			fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
+			fmt.Fprintf(os.Stderr, "\rProcessed %s rows", humanize.Comma(int64(rows)))
 			err = x.sfga.InsertNameUsages(chunk)
 			if err != nil {
 				return err
@@ -260,9 +266,17 @@ func getNameUsage(
 	}
 	prsd := p.ParseName(res.ScientificNameString).Flatten()
 	if prsd.Parsed {
+		res.ParseQuality = coldp.ToInt(prsd.ParseQuality)
 		res.CanonicalSimple = prsd.CanonicalSimple
 		res.CanonicalFull = prsd.CanonicalFull
 		res.CanonicalStemmed = prsd.CanonicalStemmed
+		res.Cardinality = coldp.ToInt(prsd.Cardinality)
+		res.Virus = coldp.ToBool(prsd.Virus)
+		res.Hybrid = prsd.Hybrid
+		res.Surrogate = prsd.Surrogate
+		res.Authors = prsd.Authors
+		res.GnID = prsd.VerbatimID
+
 		res.Rank = coldp.NewRank(pick(res.Rank.String(), prsd.Rank))
 		res.Uninomial = pick(res.Uninomial, prsd.Uninomial)
 		res.GenericName = pick(res.GenericName, prsd.Genus)
@@ -273,6 +287,7 @@ func getNameUsage(
 			prsd.Infraspecies,
 		)
 		res.CultivarEpithet = pick(res.CultivarEpithet, prsd.CultivarEpithet)
+
 		res.CombinationAuthorship = pick(
 			res.CombinationAuthorship,
 			prsd.CombinationAuthorship,
@@ -285,9 +300,19 @@ func getNameUsage(
 			res.CombinationAuthorshipYear,
 			prsd.CombinationAuthorshipYear,
 		)
-		res.BasionymAuthorship = pick(res.BasionymAuthorship, prsd.BasionymAuthorship)
-		res.BasionymExAuthorship = pick(res.BasionymExAuthorship, prsd.BasionymExAuthorship)
-		res.BasionymAuthorshipYear = pick(res.BasionymAuthorshipYear, prsd.BasionymAuthorshipYear)
+
+		res.BasionymAuthorship = pick(
+			res.BasionymAuthorship,
+			prsd.BasionymAuthorship,
+		)
+		res.BasionymExAuthorship = pick(
+			res.BasionymExAuthorship,
+			prsd.BasionymExAuthorship,
+		)
+		res.BasionymAuthorshipYear = pick(
+			res.BasionymAuthorshipYear,
+			prsd.BasionymAuthorshipYear,
+		)
 	}
 	return res
 }

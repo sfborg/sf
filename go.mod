@@ -10,6 +10,7 @@ replace github.com/gnames/gnparser => ../gnparser
 
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
+	github.com/dustin/go-humanize v1.0.1
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
 	github.com/gnames/coldp v0.3.12
 	github.com/gnames/gnfmt v0.5.5
@@ -32,7 +33,6 @@ require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/cheggaaa/pb/v3 v3.1.7 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
-	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
 	github.com/gnames/gnstats v0.2.1 // indirect

@@ -141,7 +141,7 @@ func New(opts ...Option) Config {
 		CacheDir:    cacheDir,
 		DiffWorkDir: workDir,
 		BadRow:      gnfmt.ProcessBadRow,
-		BatchSize:   50, //_000,
+		BatchSize:   500, //_000,
 		JobsNum:     5,
 	}
 

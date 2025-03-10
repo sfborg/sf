@@ -67,8 +67,8 @@ func init() {
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	fromCmd.Flags().BoolP("zip-output", "z", false, "compress output with zip")
-	fromCmd.Flags().BoolP("parse-details", "d", false, "use detailed parsing of names")
+	fromCmd.PersistentFlags().BoolP("zip-output", "z", false, "compress output with zip")
+	fromCmd.PersistentFlags().BoolP("parse-details", "p", false, "use detailed parsing of names")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
