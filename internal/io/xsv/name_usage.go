@@ -2,6 +2,7 @@ package xsv
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log/slog"
 	"strings"
@@ -27,11 +28,11 @@ func (x *xsv) importNamesUsage() error {
 
 	headers := coldp.NormalizeHeaders(csv.Headers())
 
-	g, _ := errgroup.WithContext(context.Background())
+	g, ctx := errgroup.WithContext(context.Background())
 
 	// loader
 	g.Go(func() error {
-		_, err := csv.Read(context.Background(), chIn)
+		_, err := csv.Read(ctx, chIn)
 		close(chIn)
 		return err
 	})
@@ -40,24 +41,23 @@ func (x *xsv) importNamesUsage() error {
 		wgProcess.Add(1)
 		g.Go(func() error {
 			defer wgProcess.Done()
-			x.process(headers, chIn, chOut)
-			return nil
+			return x.process(ctx, headers, chIn, chOut)
 		})
 	}
 
 	g.Go(func() error {
-		x.write(chOut)
-		return nil
+		return x.write(ctx, chOut)
 	})
 
 	wgProcess.Wait()
 	close(chOut)
 
 	err = g.Wait()
-	if err != nil {
+	if err != nil && !errors.Is(err, context.Canceled) {
 		return err
 	}
-	return err
+
+	return nil
 }
 
 func getVal(headers map[string]int, row []string, field string) string {
@@ -69,41 +69,71 @@ func getVal(headers map[string]int, row []string, field string) string {
 }
 
 func (x *xsv) process(
+	ctx context.Context,
 	headers map[string]int, // headers is normalized headers
 	chIn <-chan []string,
 	chOut chan<- coldp.NameUsage,
-) {
+) error {
 
 	var ids = make(map[string]struct{})
-	for row := range chIn {
-		id := getVal(headers, row, "id")
-		if _, ok := ids[id]; ok {
-			slog.Error("Duplicate ID", "ID", id)
-			continue
-		} else {
-			ids[id] = struct{}{}
+	for {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case row, ok := <-chIn:
+			if !ok {
+				return nil
+			}
+			x.processRow(row, headers, ids, chOut)
 		}
-
-		rowCode := coldp.NewNomCode(getVal(headers, row, "code"))
-		code := x.getNomCode(rowCode)
-
-		p := <-x.parserPool[code]
-
-		nu := processRow(p, headers, row)
-
-		x.parserPool[code] <- p
-		chOut <- nu
 	}
 }
 
-func (x *xsv) write(chOut <-chan coldp.NameUsage) {
+func (x *xsv) processRow(
+	row []string,
+	headers map[string]int,
+	ids map[string]struct{},
+	chOut chan<- coldp.NameUsage,
+) {
+	id := getVal(headers, row, "id")
+	if _, ok := ids[id]; ok {
+		slog.Error("Duplicate ID", "ID", id)
+		return
+	} else {
+		ids[id] = struct{}{}
+	}
+
+	rowCode := coldp.NewNomCode(getVal(headers, row, "code"))
+	code := x.getNomCode(rowCode)
+
+	p := <-x.parserPool[code]
+
+	nu := getNameUsage(p, headers, row)
+	x.parserPool[code] <- p
+
+	chOut <- nu
+}
+
+func (x *xsv) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
+	var err error
 	ch := gnlib.ChunkChannel(chOut, x.cfg.BatchSize)
 
 	var count int
-	for chunk := range ch {
-		count++
-		fmt.Printf("Processed %d rows\n", x.cfg.BatchSize*count)
-		x.sfga.InsertNameUsages(chunk)
+	for {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case chunk, ok := <-ch:
+			if !ok {
+				return nil
+			}
+			count++
+			fmt.Printf("Processed %d rows\n", x.cfg.BatchSize*count)
+			err = x.sfga.InsertNameUsages(chunk)
+			if err != nil {
+				return err
+			}
+		}
 	}
 }
 
@@ -142,7 +172,7 @@ func (x *xsv) getNomCode(rowCode coldp.NomCode) string {
 	return res
 }
 
-func processRow(
+func getNameUsage(
 	p gnparser.GNparser,
 	headers map[string]int,
 	row []string,
