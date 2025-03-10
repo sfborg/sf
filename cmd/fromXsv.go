@@ -63,7 +63,14 @@ ScientificName Field: A column named "ScientificName" is *mandatory*.
 		src := args[0]
 		out := args[1]
 
-		cfg := config.New()
+		flags := []flagFunc{
+			zipFlag, detailsFlag,
+		}
+		// append opts using flags input
+		for _, v := range flags {
+			v(cmd)
+		}
+		cfg := config.New(opts...)
 		xsv := xsv.New(cfg)
 
 		err := xsv.Import(src, out)

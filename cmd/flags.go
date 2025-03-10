@@ -37,3 +37,18 @@ func versionFlag(cmd *cobra.Command) {
 		os.Exit(0)
 	}
 }
+
+func zipFlag(cmd *cobra.Command) {
+	b, _ := cmd.Flags().GetBool("version")
+	if b {
+		opts = append(opts, config.OptWithZipOutput(true))
+	}
+}
+
+func detailsFlag(cmd *cobra.Command) {
+	b, _ := cmd.Flags().GetBool("version")
+	if b {
+		opts = append(opts, config.OptWithDetails(true))
+	}
+
+}
