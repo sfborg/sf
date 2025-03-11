@@ -115,6 +115,12 @@ func OptBadRow(br gnfmt.BadRow) Option {
 	}
 }
 
+func OptJobsNum(i int) Option {
+	return func(c *Config) {
+		c.JobsNum = i
+	}
+}
+
 func OptWithDetails(b bool) Option {
 	return func(c *Config) {
 		c.WithDetails = b

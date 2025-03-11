@@ -64,5 +64,8 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolP("version", "V", false, "Show harvester's version")
+	rootCmd.PersistentFlags().IntP(
+		"jobs-number", "j", 0, "set the number of concurrent jobs",
+	)
+	rootCmd.Flags().BoolP("version", "V", false, "show harvester's version")
 }

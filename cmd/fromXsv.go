@@ -26,7 +26,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/internal/io/xsv"
+	"github.com/sfborg/sf/internal/io/fxsv"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -64,14 +64,14 @@ ScientificName Field: A column named "ScientificName" is *mandatory*.
 		out := args[1]
 
 		flags := []flagFunc{
-			zipFlag, detailsFlag,
+			zipFlag, detailsFlag, jobsFlag,
 		}
 		// append opts using flags input
 		for _, v := range flags {
 			v(cmd)
 		}
 		cfg := config.New(opts...)
-		xsv := xsv.New(cfg)
+		xsv := fxsv.New(cfg)
 
 		err := xsv.Import(src, out)
 		if err != nil {

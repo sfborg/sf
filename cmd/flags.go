@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 
 	sf "github.com/sfborg/sf/pkg"
@@ -15,6 +16,18 @@ func srcTaxonFlag(cmd *cobra.Command) {
 	taxon, _ := cmd.Flags().GetString("source-taxon")
 	if taxon != "" {
 		opts = append(opts, config.OptCacheDir(taxon))
+	}
+}
+
+func jobsFlag(cmd *cobra.Command) {
+	i, _ := cmd.Flags().GetInt("jobs-number")
+	if i > 0 {
+		if i > 100 {
+			slog.Error("Jobs number should be between 1 and 100")
+			slog.Info("Setting jobs number to 100")
+			i = 100
+		}
+		opts = append(opts, config.OptJobsNum(i))
 	}
 }
 

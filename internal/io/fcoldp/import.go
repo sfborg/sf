@@ -1,4 +1,4 @@
-package text
+package fcoldp
 
 import (
 	"fmt"
@@ -6,10 +6,10 @@ import (
 	"github.com/gnames/gnsys"
 )
 
-func (t *text) Import(src, out string) error {
+func (cd *fcoldp) Import(src, out string) error {
 	var err error
 
-	src, err = t.Download(src)
+	src, err = cd.Download(src)
 	if err != nil {
 		return err
 	}
@@ -20,19 +20,22 @@ func (t *text) Import(src, out string) error {
 		return fmt.Errorf("file does not exist '%s'", src)
 	}
 
-	t.textPath = src
-
-	t.sfga, err = t.InitSfga()
+	err = cd.Extract(src)
 	if err != nil {
 		return err
 	}
 
-	err = t.importNamesUsage()
+	cd.sfga, err = cd.InitSfga()
 	if err != nil {
 		return err
 	}
 
-	err = t.sfga.Export(out, t.cfg.WithZipOutput)
+	err = cd.importColdp()
+	if err != nil {
+		return err
+	}
+
+	err = cd.sfga.Export(out, cd.cfg.WithZipOutput)
 	if err != nil {
 		return err
 	}

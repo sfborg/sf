@@ -1,4 +1,4 @@
-package xsv
+package fxsv
 
 import (
 	"github.com/gnames/gnparser"
@@ -8,7 +8,7 @@ import (
 	"github.com/sfborg/sflib/ent/sfga"
 )
 
-type xsv struct {
+type fxsv struct {
 	cfg     config.Config
 	sfga    sfga.Archive
 	csvPath string
@@ -17,7 +17,7 @@ type xsv struct {
 }
 
 func New(cfg config.Config) sf.FromX {
-	res := xsv{
+	res := fxsv{
 		cfg:        cfg,
 		FromX:      fromx.New(cfg),
 		parserPool: sf.ParserPool(cfg.JobsNum, cfg.WithDetails),

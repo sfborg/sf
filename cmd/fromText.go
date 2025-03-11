@@ -26,7 +26,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/internal/io/text"
+	"github.com/sfborg/sf/internal/io/ftext"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -53,14 +53,14 @@ other checklists.
 		out := args[1]
 
 		flags := []flagFunc{
-			zipFlag, detailsFlag,
+			zipFlag, detailsFlag, jobsFlag,
 		}
 		// append opts using flags input
 		for _, v := range flags {
 			v(cmd)
 		}
 		cfg := config.New(opts...)
-		txt := text.New(cfg)
+		txt := ftext.New(cfg)
 
 		err := txt.Import(src, out)
 		if err != nil {

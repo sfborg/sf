@@ -1,4 +1,4 @@
-package xsv
+package fxsv
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/gnames/gnsys"
 )
 
-func (x *xsv) Import(src, out string) error {
+func (x *fxsv) Import(src, out string) error {
 	var err error
 
 	src, err = x.Download(src)

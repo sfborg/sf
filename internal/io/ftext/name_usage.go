@@ -1,4 +1,4 @@
-package text
+package ftext
 
 import (
 	"bufio"
@@ -14,10 +14,11 @@ import (
 	"github.com/gnames/coldp/ent/coldp"
 	"github.com/gnames/gnlib"
 	"github.com/gnames/gnparser"
+	"github.com/sfborg/sflib/ent/sfga"
 	"golang.org/x/sync/errgroup"
 )
 
-func (t *text) importNamesUsage() error {
+func (t *ftext) importNamesUsage() error {
 	var err error
 	slog.Info("Importing names from file", "file", t.textPath)
 	chIn := make(chan string)
@@ -56,7 +57,7 @@ func (t *text) importNamesUsage() error {
 	return nil
 }
 
-func (t *text) read(ctx context.Context, chIn chan<- string, path string) error {
+func (t *ftext) read(ctx context.Context, chIn chan<- string, path string) error {
 	f, err := os.Open(path)
 	if err != nil {
 		return err
@@ -79,7 +80,7 @@ func (t *text) read(ctx context.Context, chIn chan<- string, path string) error 
 	return nil
 }
 
-func (t *text) process(
+func (t *ftext) process(
 	ctx context.Context,
 	chIn <-chan string,
 	chOut chan<- coldp.NameUsage,
@@ -100,12 +101,33 @@ func (t *text) process(
 	}
 }
 
-func (t *text) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
+func (t *ftext) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 	var err error
 	ch := gnlib.ChunkChannel(chOut, t.cfg.BatchSize)
 
 	var rows int
 	ids := make(map[string]struct{})
+
+	_, err = t.sfga.Db().Exec("PRAGMA foreign_keys = OFF")
+	if err != nil {
+		return err
+	}
+	_, err = t.sfga.Db().Exec("PRAGMA journal_mode = MEMORY")
+	if err != nil {
+		return err
+	}
+	_, err = t.sfga.Db().Exec("PRAGMA synchronous = OFF")
+	if err != nil {
+		return err
+	}
+	_, err = t.sfga.Db().Exec("DROP INDEX idx_name_scientific_name")
+	if err != nil {
+		return err
+	}
+	_, err = t.sfga.Db().Exec("DROP INDEX idx_name_canonical_simple")
+	if err != nil {
+		return &sfga.ErrSQLitePragma{Err: err}
+	}
 
 	for {
 		select {
@@ -113,6 +135,31 @@ func (t *text) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 			return ctx.Err()
 		case chunk, ok := <-ch:
 			if !ok {
+
+				_, err = t.sfga.Db().Exec("PRAGMA foreign_keys = ON")
+				if err != nil {
+					return err
+				}
+				_, err = t.sfga.Db().Exec("PRAGMA journal_mode = WAL")
+				if err != nil {
+					return err
+				}
+				_, err = t.sfga.Db().Exec("PRAGMA synchronous = NORMAL")
+				if err != nil {
+					return err
+				}
+				_, err = t.sfga.Db().Exec(
+					"CREATE INDEX idx_name_scientific_name ON name (col__scientific_name)",
+				)
+				if err != nil {
+					return err
+				}
+				_, err = t.sfga.Db().Exec(
+					"CREATE INDEX idx_name_canonical_simple ON name (gn__canonical_simple)",
+				)
+				if err != nil {
+					return &sfga.ErrSQLitePragma{Err: err}
+				}
 				rows += len(chunk)
 				fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
 				fmt.Fprintf(os.Stderr, "\rProcessed %s rows\n", humanize.Comma(int64(rows)))
@@ -138,7 +185,7 @@ func (t *text) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 	}
 }
 
-func (t *text) getNomCode() string {
+func (t *ftext) getNomCode() string {
 	res := "any"
 	codeVal := t.cfg.NomCode
 	switch codeVal {
@@ -148,7 +195,7 @@ func (t *text) getNomCode() string {
 	return res
 }
 
-func (t *text) processLine(p gnparser.GNparser, line string) coldp.NameUsage {
+func (t *ftext) processLine(p gnparser.GNparser, line string) coldp.NameUsage {
 	prsd := p.ParseName(line).Flatten()
 	res := coldp.NameUsage{
 		ID:                        prsd.VerbatimID,

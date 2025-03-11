@@ -42,18 +42,18 @@ func (f *fromx) Download(src string) (string, error) {
 
 func (f *fromx) Extract(src string) error {
 	var err error
-	var e gnsys.Extractor
+	var extr gnsys.Extractor
 	switch gnsys.GetFileType(src) {
 	case gnsys.ZipFT:
-		e = gnsys.ExtractZip
+		extr = gnsys.ExtractZip
 	case gnsys.TarFT:
-		e = gnsys.ExtractTar
+		extr = gnsys.ExtractTar
 	case gnsys.TarGzFT:
-		e = gnsys.ExtractTarGz
+		extr = gnsys.ExtractTarGz
 	case gnsys.TarBzFT:
-		e = gnsys.ExtractTarBz2
+		extr = gnsys.ExtractTarBz2
 	case gnsys.TarXzFt:
-		e = gnsys.ExtractTarXz
+		extr = gnsys.ExtractTarXz
 	default:
 		err = f.copy(src)
 		if err != nil {
@@ -61,7 +61,7 @@ func (f *fromx) Extract(src string) error {
 		}
 		return nil
 	}
-	err = e(src, f.cfg.DataDir)
+	err = extr(src, f.cfg.DataDir)
 	if err != nil {
 		return err
 	}
