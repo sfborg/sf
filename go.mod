@@ -1,12 +1,15 @@
 module github.com/sfborg/sf
 
-go 1.23.6
+go 1.24.1
+
+replace github.com/sfborg/sflib => ../sflib
+
+replace github.com/gnames/gnfmt => ../gnfmt
 
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
-	github.com/gnames/coldp v0.3.14
 	github.com/gnames/gnfmt v0.5.5
 	github.com/gnames/gnlib v0.46.0
 	github.com/gnames/gnparser v1.11.4
@@ -69,6 +72,7 @@ require (
 	golang.org/x/sys v0.31.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.61.13 // indirect
 	modernc.org/mathutil v1.7.1 // indirect

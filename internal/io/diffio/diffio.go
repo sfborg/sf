@@ -4,7 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/sfborg/sf/internal/ent/diff"
 	"github.com/sfborg/sf/pkg/config"
-	"github.com/sfborg/sflib/ent/sfga"
+	"github.com/sfborg/sflib/pkg/sfga"
 )
 
 type diffio struct {

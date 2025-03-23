@@ -1,4 +1,4 @@
-package text
+package ftext
 
 import (
 	"bufio"
@@ -11,13 +11,13 @@ import (
 	"sync"
 
 	"github.com/dustin/go-humanize"
-	"github.com/gnames/coldp/ent/coldp"
 	"github.com/gnames/gnlib"
 	"github.com/gnames/gnparser"
+	"github.com/sfborg/sflib/pkg/coldp"
 	"golang.org/x/sync/errgroup"
 )
 
-func (t *text) importNamesUsage() error {
+func (t *ftext) importNamesUsage() error {
 	var err error
 	slog.Info("Importing names from file", "file", t.textPath)
 	chIn := make(chan string)
@@ -56,7 +56,7 @@ func (t *text) importNamesUsage() error {
 	return nil
 }
 
-func (t *text) read(ctx context.Context, chIn chan<- string, path string) error {
+func (t *ftext) read(ctx context.Context, chIn chan<- string, path string) error {
 	f, err := os.Open(path)
 	if err != nil {
 		return err
@@ -79,7 +79,7 @@ func (t *text) read(ctx context.Context, chIn chan<- string, path string) error 
 	return nil
 }
 
-func (t *text) process(
+func (t *ftext) process(
 	ctx context.Context,
 	chIn <-chan string,
 	chOut chan<- coldp.NameUsage,
@@ -100,7 +100,7 @@ func (t *text) process(
 	}
 }
 
-func (t *text) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
+func (t *ftext) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 	var err error
 	ch := gnlib.ChunkChannel(chOut, t.cfg.BatchSize)
 
@@ -138,7 +138,7 @@ func (t *text) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 	}
 }
 
-func (t *text) getNomCode() string {
+func (t *ftext) getNomCode() string {
 	res := "any"
 	codeVal := t.cfg.NomCode
 	switch codeVal {
@@ -148,7 +148,7 @@ func (t *text) getNomCode() string {
 	return res
 }
 
-func (t *text) processLine(p gnparser.GNparser, line string) coldp.NameUsage {
+func (t *ftext) processLine(p gnparser.GNparser, line string) coldp.NameUsage {
 	prsd := p.ParseName(line).Flatten()
 	res := coldp.NameUsage{
 		ID:                        prsd.VerbatimID,

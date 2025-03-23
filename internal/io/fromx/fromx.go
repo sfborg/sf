@@ -10,8 +10,8 @@ import (
 	"github.com/gnames/gnsys"
 	sf "github.com/sfborg/sf/pkg"
 	"github.com/sfborg/sf/pkg/config"
-	"github.com/sfborg/sflib/ent/sfga"
-	"github.com/sfborg/sflib/io/sfgaio"
+	"github.com/sfborg/sflib/pkg/sfga"
+	"github.com/sfborg/sflib/pkg/sflib"
 )
 
 type fromx struct {
@@ -70,7 +70,7 @@ func (f *fromx) Extract(src string) error {
 
 func (f *fromx) InitSfga() (sfga.Archive, error) {
 	slog.Info("Creating SFGA database")
-	sfga := sfgaio.New()
+	sfga := sflib.NewSfga()
 	err := sfga.Create(f.cfg.SfgaDir)
 	if err != nil {
 		return nil, err

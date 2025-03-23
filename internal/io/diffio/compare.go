@@ -11,8 +11,8 @@ import (
 	"github.com/gnames/gnuuid"
 	"github.com/sfborg/sf/internal/ent/diff"
 	"github.com/sfborg/sf/internal/io/diffio/matchio"
-	"github.com/sfborg/sflib/ent/sfga"
-	"github.com/sfborg/sflib/io/sfgaio"
+	"github.com/sfborg/sflib/pkg/sfga"
+	"github.com/sfborg/sflib/pkg/sflib"
 )
 
 var recQ = `
@@ -225,7 +225,7 @@ func copyFile(path1, path2 string) error {
 }
 
 func (d *diffio) initSfga(path, dir string) (sfga.Archive, error) {
-	sfga := sfgaio.New()
+	sfga := sflib.NewSfga()
 	err := sfga.Import(path, dir)
 	if err != nil {
 		return nil, err

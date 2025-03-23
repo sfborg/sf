@@ -1,4 +1,4 @@
-package text
+package ftext
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"github.com/gnames/gnsys"
 )
 
-func (t *text) Import(src, out string) error {
+func (t *ftext) Import(src, out string) error {
 	var err error
 
 	src, err = t.Download(src)

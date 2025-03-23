@@ -1,4 +1,4 @@
-package xsv
+package fxsv
 
 import (
 	"context"
@@ -10,15 +10,15 @@ import (
 	"sync"
 
 	"github.com/dustin/go-humanize"
-	"github.com/gnames/coldp/ent/coldp"
 	"github.com/gnames/gnfmt/gncsv"
 	csvConfig "github.com/gnames/gnfmt/gncsv/config"
 	"github.com/gnames/gnlib"
 	"github.com/gnames/gnparser"
+	"github.com/sfborg/sflib/pkg/coldp"
 	"golang.org/x/sync/errgroup"
 )
 
-func (x *xsv) importNamesUsage() error {
+func (x *fxsv) importNamesUsage() error {
 	slog.Info("Importing data from file", "file", x.csvPath)
 	chIn := make(chan []string)
 	chOut := make(chan coldp.NameUsage)
@@ -71,7 +71,7 @@ func getVal(headers map[string]int, row []string, field string) string {
 	return ""
 }
 
-func (x *xsv) process(
+func (x *fxsv) process(
 	ctx context.Context,
 	headers map[string]int, // headers is normalized headers
 	chIn <-chan []string,
@@ -90,7 +90,7 @@ func (x *xsv) process(
 	}
 }
 
-func (x *xsv) processRow(
+func (x *fxsv) processRow(
 	row []string,
 	headers map[string]int,
 	chOut chan<- coldp.NameUsage,
@@ -106,7 +106,7 @@ func (x *xsv) processRow(
 	chOut <- nu
 }
 
-func (x *xsv) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
+func (x *fxsv) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 	var err error
 	ch := gnlib.ChunkChannel(chOut, x.cfg.BatchSize)
 
@@ -151,11 +151,10 @@ func pick(a, b string) string {
 	return b
 }
 
-func (x *xsv) getCSV() (gncsv.GnCSV, error) {
+func (x *fxsv) getCSV() (gncsv.GnCSV, error) {
 	opts := []csvConfig.Option{
 		csvConfig.OptPath(x.csvPath),
 		csvConfig.OptBadRowMode(x.cfg.BadRow),
-		csvConfig.OptWithQuotes(!x.cfg.WithoutQuotes),
 	}
 	cfg, err := csvConfig.New(opts...)
 	if err != nil {
@@ -165,7 +164,7 @@ func (x *xsv) getCSV() (gncsv.GnCSV, error) {
 	return gncsv.New(cfg), nil
 }
 
-func (x *xsv) getNomCode(rowCode coldp.NomCode) string {
+func (x *fxsv) getNomCode(rowCode coldp.NomCode) string {
 	res := "any"
 	codeVal := x.cfg.NomCode
 	switch codeVal {

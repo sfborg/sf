@@ -4,8 +4,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gnames/coldp/ent/coldp"
 	"github.com/gnames/gnfmt"
+	"github.com/sfborg/sflib/pkg/coldp"
 )
 
 // Config contains configuration data of the app.
