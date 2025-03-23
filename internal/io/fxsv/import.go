@@ -1,15 +1,14 @@
 package fxsv
 
 import (
-	"fmt"
-
 	"github.com/gnames/gnsys"
+	"github.com/sfborg/sflib/pkg/arch"
 )
 
-func (x *fxsv) Import(src, out string) error {
+func (fx *fxsv) Import(src, out string) error {
 	var err error
 
-	src, err = x.Download(src)
+	src, err = fx.Download(src)
 	if err != nil {
 		return err
 	}
@@ -17,22 +16,22 @@ func (x *fxsv) Import(src, out string) error {
 	exists, _ := gnsys.FileExists(src)
 
 	if !exists {
-		return fmt.Errorf("file does not exist '%s'", src)
+		return &arch.ErrFileNotFound{Path: src}
 	}
 
-	x.csvPath = src
+	fx.csvPath = src
 
-	x.sfga, err = x.InitSfga()
+	fx.sfga, err = fx.InitSfga()
 	if err != nil {
 		return err
 	}
 
-	err = x.importNamesUsage()
+	err = fx.importNamesUsage()
 	if err != nil {
 		return err
 	}
 
-	err = x.sfga.Export(out, x.cfg.WithZipOutput)
+	err = fx.sfga.Export(out, fx.cfg.WithZipOutput)
 	if err != nil {
 		return err
 	}

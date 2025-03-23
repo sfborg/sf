@@ -1,4 +1,4 @@
-package fdwca
+package fcoldp
 
 import (
 	"github.com/gnames/gnsys"
@@ -6,10 +6,10 @@ import (
 	"github.com/sfborg/sflib/pkg/sflib"
 )
 
-func (fd *fdwca) Import(src, out string) error {
+func (fc *fcoldp) Import(src, out string) error {
 	var err error
 
-	src, err = fd.Download(src)
+	src, err = fc.Download(src)
 	if err != nil {
 		return err
 	}
@@ -20,24 +20,29 @@ func (fd *fdwca) Import(src, out string) error {
 		return &arch.ErrFileNotFound{Path: src}
 	}
 
-	fd.sfga, err = fd.InitSfga()
+	fc.sfga, err = fc.InitSfga()
 	if err != nil {
 		return err
 	}
 
-	dwca := sflib.NewDwca()
+	coldp := sflib.NewColdp()
 
-	err = dwca.Import(src, fd.cfg.DataDir)
+	err = coldp.Import(src, fc.cfg.DataDir)
 	if err != nil {
 		return &arch.ErrExtract{Path: src, Err: err}
 	}
 
-	err = fd.importNamesUsage()
+	err = fc.importMeta(coldp)
 	if err != nil {
 		return err
 	}
 
-	err = fd.sfga.Export(out, fd.cfg.WithZipOutput)
+	err = fc.importData(coldp)
+	if err != nil {
+		return err
+	}
+
+	err = fc.sfga.Export(out, fc.cfg.WithZipOutput)
 	if err != nil {
 		return err
 	}

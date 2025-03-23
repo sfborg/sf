@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.0] -
+
+Add [#12]: add "from coldp" functionality.
 Add: refactor "from xsv" to have a better concurrency.
 Add [#11]: add "from text" functionality.
 
@@ -28,6 +31,7 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.2.0]: https://github.com/sfborg/sf/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/sfborg/sf/compare/v0.0.0...v0.1.0
 [v0.0.0]: https://github.com/sfborg/sf/tree/v0.0.0
 [#20]: https://github.com/sfborg/sf/issues/20

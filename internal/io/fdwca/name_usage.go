@@ -1,5 +1,5 @@
 package fdwca
 
-func (d *fdwca) importNamesUsage() error {
+func (fd *fdwca) importNamesUsage() error {
 	return nil
 }

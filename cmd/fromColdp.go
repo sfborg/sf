@@ -22,8 +22,12 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"log/slog"
+	"os"
+	"path/filepath"
 
+	"github.com/sfborg/sf/internal/io/fcoldp"
+	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
 
@@ -38,7 +42,27 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("fromColdp called")
+		if len(args) != 2 {
+			cmd.Help()
+			os.Exit(0)
+		}
+		src := args[0]
+		out := args[1]
+
+		flags := []flagFunc{}
+		// append opts using flags input
+		for _, v := range flags {
+			v(cmd)
+		}
+		cfg := config.New(opts...)
+		fc := fcoldp.New(cfg)
+
+		err := fc.Import(src, out)
+		if err != nil {
+			file := filepath.Base(src)
+			slog.Error("Cannot import XSV file", "file", file, "error", err)
+			os.Exit(1)
+		}
 	},
 }
 
