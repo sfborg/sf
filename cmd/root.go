@@ -25,7 +25,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/sfborg/sf/internal/io/sysio"
+	"github.com/sfborg/sf/internal/util"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -46,7 +46,7 @@ Compares data from two SFGA files.`,
 	},
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		cfg := config.New()
-		err := sysio.PrepareFileStructure(cfg)
+		err := util.PrepareFileStructure(cfg)
 		if err != nil {
 			slog.Error("Unable do create cache directories", "error", err)
 			os.Exit(1)

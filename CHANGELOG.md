@@ -5,8 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [v0.2.0] -
+## [v0.2.0] - 2025-03-26 Wed
 
+Add [#14]: simplify interface, move most of io functionality to sflib.
 Add [#12]: add "from coldp" functionality.
 Add: refactor "from xsv" to have a better concurrency.
 Add [#11]: add "from text" functionality.

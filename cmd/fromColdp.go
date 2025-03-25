@@ -26,8 +26,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/internal/io/fcoldp"
 	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/pkg/from/fcoldp"
 	"github.com/spf13/cobra"
 )
 
@@ -35,12 +35,7 @@ import (
 var fromColdpCmd = &cobra.Command{
 	Use:   "coldp",
 	Short: "Converts CoLDP format to SFGA format",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {
 			cmd.Help()
@@ -60,7 +55,7 @@ to quickly create a Cobra application.`,
 		err := fc.Import(src, out)
 		if err != nil {
 			file := filepath.Base(src)
-			slog.Error("Cannot import XSV file", "file", file, "error", err)
+			slog.Error("Cannot import CoLDP file", "file", file, "error", err)
 			os.Exit(1)
 		}
 	},

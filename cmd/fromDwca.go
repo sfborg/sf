@@ -26,8 +26,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/internal/io/fdwca"
 	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/pkg/from/fdwca"
 	"github.com/spf13/cobra"
 )
 
@@ -35,12 +35,7 @@ import (
 var fromDwcaCmd = &cobra.Command{
 	Use:   "dwca",
 	Short: "Converts DwCA format to SFGA format",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {
 			cmd.Help()
@@ -60,7 +55,7 @@ to quickly create a Cobra application.`,
 		err := dwca.Import(src, out)
 		if err != nil {
 			file := filepath.Base(src)
-			slog.Error("Cannot import XSV file", "file", file, "error", err)
+			slog.Error("Cannot import DwCA file", "file", file, "error", err)
 			os.Exit(1)
 		}
 	},
@@ -68,14 +63,4 @@ to quickly create a Cobra application.`,
 
 func init() {
 	fromCmd.AddCommand(fromDwcaCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// fromDwcaCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// fromDwcaCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

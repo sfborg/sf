@@ -31,7 +31,7 @@ import (
 var fromTwCmd = &cobra.Command{
 	Use:   "tw",
 	Short: "Converts a TaxonWorks project data to SFGA file.",
-	Long:  ``,
+	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("from tw called")
 		fmt.Println("not implemented yet")

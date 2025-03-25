@@ -31,7 +31,7 @@ import (
 var toTwCmd = &cobra.Command{
 	Use:   "tw",
 	Short: "Merges SFGA data with a TaxonWorks project",
-	Long:  ``,
+	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("toTw called")
 	},

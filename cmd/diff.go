@@ -25,7 +25,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/sfborg/sf/internal/io/diffio"
+	"github.com/sfborg/sf/internal/idiff"
 	"github.com/sfborg/sf/pkg/config"
 	"github.com/spf13/cobra"
 )
@@ -65,7 +65,7 @@ Files can be local or remote. Remote files can be accessed via HTTP URL.
 		out := args[2]
 
 		cfg := config.New(opts...)
-		diff := diffio.New(cfg)
+		diff := idiff.New(cfg)
 		err := diff.Compare(src, dst, out)
 		if err != nil {
 			slog.Error("Cannot compare files", "src", src, "ref", dst, "error", err)

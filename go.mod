@@ -2,25 +2,19 @@ module github.com/sfborg/sf
 
 go 1.24.1
 
-replace github.com/sfborg/sflib => ../sflib
-
-replace github.com/gnames/gnfmt => ../gnfmt
-
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
-	github.com/gnames/gnfmt v0.5.5
-	github.com/gnames/gnlib v0.46.0
-	github.com/gnames/gnparser v1.11.4
+	github.com/gnames/gnfmt v0.5.6
+	github.com/gnames/gnlib v0.47.0
 	github.com/gnames/gnsys v0.3.8
 	github.com/gnames/gnuuid v0.2.0
 	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.0.7
-	github.com/sfborg/sflib v0.2.8
+	github.com/sfborg/sflib v0.3.1
 	github.com/spf13/cobra v1.9.1
-	github.com/spf13/cobra-cli v1.3.0
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/sync v0.12.0
 )
@@ -32,6 +26,7 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
+	github.com/gnames/gnparser v1.11.4 // indirect
 	github.com/gnames/gnstats v0.2.1 // indirect
 	github.com/gnames/organizer v0.1.1 // indirect
 	github.com/gnames/tribool v0.1.1 // indirect
@@ -55,6 +50,7 @@ require (
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.12.0 // indirect
 	github.com/spf13/cast v1.7.1 // indirect
+	github.com/spf13/cobra-cli v1.3.0 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/spf13/viper v1.19.0 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
@@ -76,6 +72,8 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	modernc.org/libc v1.61.13 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
-	modernc.org/memory v1.8.2 // indirect
-	modernc.org/sqlite v1.36.0 // indirect
+	modernc.org/memory v1.9.1 // indirect
+	modernc.org/sqlite v1.36.2 // indirect
 )
+
+tool github.com/spf13/cobra-cli

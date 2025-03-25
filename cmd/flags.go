@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	sf "github.com/sfborg/sf/pkg"
 	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/pkg/sf"
 	"github.com/spf13/cobra"
 )
 
