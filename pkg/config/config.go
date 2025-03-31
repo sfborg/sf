@@ -63,9 +63,9 @@ type Config struct {
 	// Number of concurrent jobs.
 	JobsNum int
 
-	// WithoutQuotes can be used to parse faster tab- or pipe-delimited
+	// WithQuotes can be used to parse faster tab- or pipe-delimited
 	// files where fields never escaped by quotes.
-	WithoutQuotes bool
+	WithQuotes bool
 
 	// WithZipOutput indicates that zipped archives have to be created.
 	WithZipOutput bool
@@ -105,7 +105,7 @@ func OptNomCode(code coldp.NomCode) Option {
 
 func OptWithoutQuotes(b bool) Option {
 	return func(c *Config) {
-		c.WithoutQuotes = b
+		c.WithQuotes = b
 	}
 }
 
