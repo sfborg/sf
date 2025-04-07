@@ -20,7 +20,7 @@ func New(cfg config.Config) sf.FromConvertor {
 	res := fcoldp{
 		cfg:    cfg,
 		coldp:  sflib.NewColdp(),
-		Shared: from.NewShared(cfg),
+		Shared: from.New(cfg),
 	}
 	return &res
 }

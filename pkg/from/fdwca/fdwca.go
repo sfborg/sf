@@ -20,7 +20,7 @@ func New(cfg config.Config) sf.FromConvertor {
 	res := fdwca{
 		cfg:    cfg,
 		dwca:   sflib.NewDwca(),
-		Shared: from.NewShared(cfg),
+		Shared: from.New(cfg),
 	}
 	return &res
 }

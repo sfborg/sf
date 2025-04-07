@@ -12,7 +12,7 @@ func (fc *fcoldp) Import(src, out string) error {
 		return err
 	}
 
-	err = fc.coldp.Fetch(src, fc.cfg.DataDir)
+	err = fc.coldp.Fetch(src, fc.cfg.ImportDir)
 	if err != nil {
 		return &arch.ErrExtract{Path: src, Err: err}
 	}

@@ -19,7 +19,7 @@ type ftext struct {
 func New(cfg config.Config) sf.FromConvertor {
 	res := ftext{
 		cfg:    cfg,
-		Shared: from.NewShared(cfg),
+		Shared: from.New(cfg),
 		text:   sflib.NewText(),
 	}
 	return &res

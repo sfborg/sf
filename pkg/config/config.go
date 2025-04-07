@@ -18,13 +18,13 @@ type Config struct {
 	// stored
 	DownloadDir string
 
-	// DataDir is a path to a directory where source files are moved
+	// ImportDir is a path to a directory where source files are moved
 	// or extracted to.
-	DataDir string
+	ImportDir string
 
-	// SfgaDir is a path where SFGA database is created. When
+	// OutputDir is a path where SFGA database is created. When
 	// the database is ready it is exported to output file.
-	SfgaDir string
+	OutputDir string
 
 	// DiffSrcDir is a path of a directory where the source SFGA file resides.
 	// This file is to be compared with the target SFGA file.
@@ -45,6 +45,10 @@ type Config struct {
 	// DiffTargetTaxon defines a taxon in the target file that limits comparison
 	// to the children of the taxon.
 	DiffTargetTaxon string
+
+	// ColdpNameUsage tells ToColdp covertor to combine name, taxon, synonym
+	// data into name usage.
+	ColdpNameUsage bool
 
 	// NomCode tells which Nomenclatural Code to insert to all records of
 	// coldp.Name records, as well as setting up GNparser code mode.
@@ -94,6 +98,12 @@ func OptDiffSourceTaxon(s string) Option {
 func OptDiffTargetTaxon(s string) Option {
 	return func(c *Config) {
 		c.DiffTargetTaxon = s
+	}
+}
+
+func OptColdpNameUsage(b bool) Option {
+	return func(c *Config) {
+		c.ColdpNameUsage = b
 	}
 }
 
@@ -150,8 +160,8 @@ func New(opts ...Option) Config {
 	}
 
 	res.DownloadDir = filepath.Join(res.CacheDir, "import", "download")
-	res.DataDir = filepath.Join(res.CacheDir, "import", "src")
-	res.SfgaDir = filepath.Join(res.CacheDir, "import", "sfga")
+	res.ImportDir = filepath.Join(res.CacheDir, "import", "src")
+	res.OutputDir = filepath.Join(res.CacheDir, "import", "sfga")
 	res.DiffSrcDir = filepath.Join(res.CacheDir, "diff", "src")
 	res.DiffRefDir = filepath.Join(res.CacheDir, "diff", "trg")
 

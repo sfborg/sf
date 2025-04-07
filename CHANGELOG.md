@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Add [#15]: convert SFGA to CoLDP.
+
 ## [v0.2.0] - 2025-03-26 Wed
 
 Add [#14]: simplify interface, move most of io functionality to sflib.

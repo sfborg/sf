@@ -13,3 +13,15 @@ type FromConvertor interface {
 	// It returns an error if some part of the process fails.
 	Import(src, output string) error
 }
+
+// ToConvertor provides methods for coverting an SFGA file to one of the
+// supported formats.
+type ToConvertor interface {
+	// Export takes a source SFGA file (either a local path or URL) and an
+	// output (a local path). It transforms SFGA into a required format and
+	// saves the result into the output file. If the result contains several
+	// files, they are compressed with Zip. If the result is one file, the
+	// Zip conversion is optional.
+	// It returns an error if some part of the process fails.
+	Export(src, output string) error
+}

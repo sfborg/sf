@@ -22,8 +22,11 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"log/slog"
+	"os"
 
+	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/pkg/to/tcoldp"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +36,31 @@ var toColdpCmd = &cobra.Command{
 	Short: "Converts SFGA file to CoLDP format",
 	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("toColdp called")
+		flags := []flagFunc{
+			coldpNameUsageFlag,
+		}
+		for _, v := range flags {
+			v(cmd)
+		}
+
+		cfg := config.New(opts...)
+
+		if len(args) != 2 {
+			cmd.Help()
+			os.Exit(0)
+		}
+
+		sfgaPath := args[0]
+		coldpPath := args[1]
+
+		slog.Info("Extracting SFGA data", "path", sfgaPath)
+
+		coldp := tcoldp.New(cfg)
+		err := coldp.Export(sfgaPath, coldpPath)
+		if err != nil {
+			slog.Error("Cannot export SFGA", "error", err)
+			os.Exit(1)
+		}
 	},
 }
 
@@ -48,5 +75,8 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// toColdpCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	toColdpCmd.Flags().BoolP(
+		"name-usage", "u", false,
+		"combine name, taxon, synonym to name_usage",
+	)
 }

@@ -45,10 +45,16 @@ func zipFlag(cmd *cobra.Command) {
 	}
 }
 
+func coldpNameUsageFlag(cmd *cobra.Command) {
+	b, _ := cmd.Flags().GetBool("name-usage")
+	if b {
+		opts = append(opts, config.OptColdpNameUsage(true))
+	}
+}
+
 func detailsFlag(cmd *cobra.Command) {
 	b, _ := cmd.Flags().GetBool("parse-details")
 	if b {
 		opts = append(opts, config.OptWithDetails(true))
 	}
-
 }

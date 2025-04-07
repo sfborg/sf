@@ -19,7 +19,7 @@ type fxsv struct {
 func New(cfg config.Config) sf.FromConvertor {
 	res := fxsv{
 		cfg:    cfg,
-		Shared: from.NewShared(cfg),
+		Shared: from.New(cfg),
 		xsv:    sflib.NewXsv(),
 	}
 	return &res

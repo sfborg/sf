@@ -14,7 +14,7 @@ type Shared struct {
 	cfg config.Config
 }
 
-func NewShared(cfg config.Config) *Shared {
+func New(cfg config.Config) *Shared {
 	res := Shared{cfg: cfg}
 	return &res
 }
@@ -22,7 +22,7 @@ func NewShared(cfg config.Config) *Shared {
 func (fs *Shared) InitSfga() (sfga.Archive, error) {
 	slog.Info("Creating SFGA database")
 	sfga := sflib.NewSfga()
-	err := sfga.Create(fs.cfg.SfgaDir)
+	err := sfga.Create(fs.cfg.OutputDir)
 	if err != nil {
 		return nil, err
 	}
