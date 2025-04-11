@@ -1,6 +1,8 @@
 package fcoldp
 
 import (
+	"fmt"
+
 	"github.com/sfborg/sflib/pkg/arch"
 )
 
@@ -26,6 +28,7 @@ func (fc *fcoldp) Import(src, out string) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println("HERE")
 
 	err = fc.sfga.Export(out, fc.cfg.WithZipOutput)
 	if err != nil {
