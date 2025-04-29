@@ -26,15 +26,15 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from/fxsv"
 	"github.com/spf13/cobra"
 )
 
 // fromXsvCmd represents the fromXsv command
 var fromXsvCmd = &cobra.Command{
-	Use:   "xsv src-file-or-url output-file",
-	Short: "Converts CSV/TSV/PSV fiels to SFGA format",
+	Use:   "xsv <src-file-or-url> [output-file] [options]",
+	Short: "Converts CSV/TSV/PSV files to SFGA format",
 	Long: `Imports data from Comma-Separated Value (CSV), Tab-Separated
 Value (TSV), or Pipe-Separated Value (PSV) files and converts it into
 the Species File Group Archive (SFGA) format.
@@ -54,6 +54,10 @@ Column Names: Column names should correspond to either Darwin Core or
 ScientificName Field: A column named "ScientificName" is *mandatory*.
   This field contains the scientific names of taxa. Other columns, while
   optional, allow for a more comprehensive dataset.
+	
+Example:
+    
+    sf from xsv my-data.csv /path/to/output-sfga
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {

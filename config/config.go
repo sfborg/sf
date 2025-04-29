@@ -5,7 +5,8 @@ import (
 	"path/filepath"
 
 	"github.com/gnames/gnfmt"
-	"github.com/sfborg/sflib/pkg/coldp"
+	"github.com/gnames/gnlib/ent/nomcode"
+	libCfg "github.com/sfborg/sflib/config"
 )
 
 // Config contains configuration data of the app.
@@ -54,7 +55,7 @@ type Config struct {
 	// coldp.Name records, as well as setting up GNparser code mode.
 	// If imported data alread has the Code information, the data has a
 	// precedence.
-	NomCode coldp.NomCode
+	NomCode nomcode.Code
 
 	// BadRow sets how to process rows with wrong number of fields in CSV
 	// files. By default it is set to process such rows. Other options are
@@ -107,13 +108,25 @@ func OptColdpNameUsage(b bool) Option {
 	}
 }
 
-func OptNomCode(code coldp.NomCode) Option {
+func OptNomCode(code nomcode.Code) Option {
 	return func(c *Config) {
 		c.NomCode = code
 	}
 }
 
-func OptWithoutQuotes(b bool) Option {
+func OptBatchSize(i int) Option {
+	return func(c *Config) {
+		c.BatchSize = i
+	}
+}
+
+func OptJobsNum(i int) Option {
+	return func(c *Config) {
+		c.JobsNum = i
+	}
+}
+
+func OptWithQuotes(b bool) Option {
 	return func(c *Config) {
 		c.WithQuotes = b
 	}
@@ -135,6 +148,17 @@ func OptWithZipOutput(b bool) Option {
 	return func(c *Config) {
 		c.WithZipOutput = b
 	}
+}
+
+func (c Config) ToSflib() []libCfg.Option {
+	opts := []libCfg.Option{
+		libCfg.OptBadRow(c.BadRow),
+		libCfg.OptWithQuotes(c.WithQuotes),
+		libCfg.OptBatchSize(c.BatchSize),
+		libCfg.OptJobsNum(c.JobsNum),
+		libCfg.OptCode(c.NomCode),
+	}
+	return opts
 }
 
 func New(opts ...Option) Config {

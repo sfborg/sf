@@ -26,23 +26,28 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from/ftext"
 	"github.com/spf13/cobra"
 )
 
 // fromTextCmd represents the fromText command
 var fromTextCmd = &cobra.Command{
-	Use:   "text text-file output-file",
+	Use:   "text <text-file> [output-file] [options]",
 	Short: "Converts a list of scientific names to SFGA format",
 	Long: `This command imports a list of scientific names from a plain text
-file and converts it into the Species File Group Archive (SFGA) format. Each
-line in the input text file should contain a single scientific name. The
-output of this command will be a new SFGA database containing the
-supplied names and parsed information.
+file and converts it into the Species File Group Archive (SFGA) format.
 
-Names with authorship would perform better for further comparison with 
-other checklists.
+The command requires the path to the input text file (which should be a
+ZIP archive) and the desired path for the output SFGA file.
+
+Example:
+
+  sf from text names.txt path/to/output-sfga
+
+Input can be either a local file or a URL to a remote text file.
+If an output path is not provided, it will be generated in the the current
+directory.	
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {

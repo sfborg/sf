@@ -15,7 +15,7 @@ func (t *tcoldp) convertMeta() error {
 		return err
 	}
 
-	filePath := filepath.Join(t.cfg.OutputDir, "meta.json")
+	filePath := filepath.Join(t.cfg.OutputDir, "meta.yaml")
 	err = t.coldp.WriteMeta(meta, filePath)
 	if err != nil {
 		return err

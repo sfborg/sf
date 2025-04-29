@@ -26,16 +26,30 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from/fcoldp"
 	"github.com/spf13/cobra"
 )
 
 // fromColdpCmd represents the fromColdp command
 var fromColdpCmd = &cobra.Command{
-	Use:   "coldp",
+	Use:   "coldp <coldp-input.zip> [output-sfga] [options]",
 	Short: "Converts CoLDP format to SFGA format",
-	Long:  `TODO`,
+	Long: `This command imports data from a Catalogue of Life Data Package (CoLDP)
+file and converts it into the Species File Group Archive (SFGA) format.
+CoLDP is a standardized format for taxonomic data, and this command
+allows you to integrate such data into the SFGA ecosystem.
+
+The command requires the path to the input CoLDP file (which should be a
+ZIP archive) and the desired path for the output SFGA file.
+
+Example:
+
+  sf from coldp my_coldp_data.zip /path/to/output-sfga
+
+Input can be either a local file or a URL to a remote CoLDP file.
+If an output path is not provided, it will be generated in the current
+directory.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {
 			cmd.Help()
@@ -63,14 +77,4 @@ var fromColdpCmd = &cobra.Command{
 
 func init() {
 	fromCmd.AddCommand(fromColdpCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// fromColdpCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// fromColdpCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

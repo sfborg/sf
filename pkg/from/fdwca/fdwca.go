@@ -1,7 +1,7 @@
 package fdwca
 
 import (
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from"
 	"github.com/sfborg/sf/pkg/sf"
 	"github.com/sfborg/sflib"
@@ -19,7 +19,7 @@ type fdwca struct {
 func New(cfg config.Config) sf.FromConvertor {
 	res := fdwca{
 		cfg:    cfg,
-		dwca:   sflib.NewDwca(),
+		dwca:   sflib.NewDwca(cfg.ToSflib()...),
 		Shared: from.New(cfg),
 	}
 	return &res

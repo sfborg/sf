@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/gnames/gnsys"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/internal/util"
-	"github.com/sfborg/sf/pkg/config"
 	"github.com/sfborg/sf/pkg/from/fxsv"
 	"github.com/sfborg/sflib"
 	"github.com/stretchr/testify/assert"

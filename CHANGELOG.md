@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.2] - 2025-05-12 Mon
+
+Add [#10]: add from dwca.
+
 ## [v0.2.1] - 2025-04-15 Tue
 
 Add [#16]: add update command to convert old SFGA to current schema.

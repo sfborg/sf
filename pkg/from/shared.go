@@ -3,7 +3,7 @@ package from
 import (
 	"log/slog"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sflib"
 	"github.com/sfborg/sflib/pkg/sfga"
 )
@@ -21,7 +21,7 @@ func New(cfg config.Config) *Shared {
 
 func (fs *Shared) InitSfga() (sfga.Archive, error) {
 	slog.Info("Creating SFGA database")
-	sfga := sflib.NewSfga()
+	sfga := sflib.NewSfga(fs.cfg.ToSflib()...)
 	err := sfga.Create(fs.cfg.OutputDir)
 	if err != nil {
 		return nil, err

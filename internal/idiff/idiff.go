@@ -2,7 +2,7 @@ package idiff
 
 import (
 	"github.com/google/uuid"
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/diff"
 	"github.com/sfborg/sflib/pkg/sfga"
 )

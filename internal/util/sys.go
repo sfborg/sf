@@ -2,7 +2,7 @@ package util
 
 import (
 	"github.com/gnames/gnsys"
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 )
 
 func PrepareFileStructure(cfg config.Config) error {

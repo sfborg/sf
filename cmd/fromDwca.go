@@ -26,16 +26,31 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from/fdwca"
 	"github.com/spf13/cobra"
 )
 
 // fromDwcaCmd represents the fromDwca command
 var fromDwcaCmd = &cobra.Command{
-	Use:   "dwca",
+	Use:   "dwca <input-dwca.zip> [output-sfga] [options]",
 	Short: "Converts DwCA format to SFGA format",
-	Long:  `TODO`,
+	Long: `This command imports data from a Darwin Core Archive (DwCA) file and
+converts it into the Species File Group Archive (SFGA) format. DwCA is a
+common format for sharing biodiversity data, and this command allows you
+to integrate such data into the SFGA ecosystem.
+
+The command requires the path to the input DwCA file (which should be a
+ZIP archive) and the desired path for the output SFGA file.
+
+Example:
+
+  sf from dwca my_dwca_data.zip /path/to/output-sfga
+
+Input can be either a local file or a URL to a remote DwCA file.
+If an output path is not provided, it will be generated in the the current
+directory.
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {
 			cmd.Help()
@@ -44,7 +59,7 @@ var fromDwcaCmd = &cobra.Command{
 		src := args[0]
 		out := args[1]
 
-		flags := []flagFunc{}
+		flags := []flagFunc{jobsFlag, zipFlag}
 		// append opts using flags input
 		for _, v := range flags {
 			v(cmd)

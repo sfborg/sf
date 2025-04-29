@@ -69,6 +69,7 @@ func init() {
 	// and all subcommands, e.g.:
 	fromCmd.PersistentFlags().BoolP("zip-output", "z", false, "compress output with zip")
 	fromCmd.PersistentFlags().BoolP("parse-details", "p", false, "use detailed parsing of names")
+	fromCmd.PersistentFlags().IntP("jobs-number", "j", 0, "number of concurrent jobs")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

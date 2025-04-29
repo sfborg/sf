@@ -25,16 +25,20 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/to/tcoldp"
 	"github.com/spf13/cobra"
 )
 
 // toColdpCmd represents the toColdp command
 var toColdpCmd = &cobra.Command{
-	Use:   "coldp",
-	Short: "Converts SFGA file to CoLDP format",
-	Long:  `TODO`,
+	Use:   "coldp <input-coldp.zip> [output-coldp.zip] [options]",
+	Short: "Converts an SFGA file to CoLDP format",
+	Long: `This command converts a Species File Group Archive (SFGA) file into
+the Catalogue of Life Data Package (CoLDP) format. The command requires the
+path to the input SFGA file and the desired path for the output CoLDP file.
+The SFGA file can be compressed (Zip, Tar) and is provided in binary and
+SQL dump format.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
 			coldpNameUsageFlag,
