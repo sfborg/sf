@@ -59,6 +59,7 @@ func TestImport(t *testing.T) {
 		}
 		cfg := config.New(opts...)
 		util.PrepareFileStructure(cfg)
+
 		fd := fdwca.New(cfg)
 		err := fd.Import(path, out)
 		assert.Nil(err)
