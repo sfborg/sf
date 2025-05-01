@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 
 	"github.com/gnames/gnfmt"
-	"github.com/sfborg/sflib/pkg/coldp"
+	"github.com/gnames/gnlib/ent/nomcode"
 )
 
 // Config contains configuration data of the app.
@@ -54,7 +54,7 @@ type Config struct {
 	// coldp.Name records, as well as setting up GNparser code mode.
 	// If imported data alread has the Code information, the data has a
 	// precedence.
-	NomCode coldp.NomCode
+	NomCode nomcode.Code
 
 	// BadRow sets how to process rows with wrong number of fields in CSV
 	// files. By default it is set to process such rows. Other options are
@@ -107,13 +107,13 @@ func OptColdpNameUsage(b bool) Option {
 	}
 }
 
-func OptNomCode(code coldp.NomCode) Option {
+func OptNomCode(code nomcode.Code) Option {
 	return func(c *Config) {
 		c.NomCode = code
 	}
 }
 
-func OptWithoutQuotes(b bool) Option {
+func OptWithQuotes(b bool) Option {
 	return func(c *Config) {
 		c.WithQuotes = b
 	}

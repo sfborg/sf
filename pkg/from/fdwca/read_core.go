@@ -20,7 +20,7 @@ type NuRef struct {
 	References []coldp.Reference
 }
 
-func (fd *fdwca) importNamesUsage() error {
+func (fd *fdwca) importCore() error {
 	var err error
 	slog.Info("Importing names from DwCA core")
 	ch := make(chan coldp.Data)

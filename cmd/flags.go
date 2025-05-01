@@ -38,6 +38,13 @@ func versionFlag(cmd *cobra.Command) {
 	}
 }
 
+func withQuotesFlag(cmd *cobra.Command) {
+	b, _ := cmd.Flags().GetBool("with-quotes")
+	if b {
+		opts = append(opts, config.OptWithQuotes(true))
+	}
+}
+
 func zipFlag(cmd *cobra.Command) {
 	b, _ := cmd.Flags().GetBool("zip-output")
 	if b {
