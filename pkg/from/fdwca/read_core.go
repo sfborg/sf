@@ -34,7 +34,7 @@ func (fd *fdwca) importCore() error {
 	})
 
 	g.Go(func() error {
-		return fd.write(ctx, ch)
+		return fd.writeCoreData(ctx, ch)
 	})
 
 	err = g.Wait()
@@ -45,7 +45,7 @@ func (fd *fdwca) importCore() error {
 	return nil
 }
 
-func (fd *fdwca) write(
+func (fd *fdwca) writeCoreData(
 	ctx context.Context,
 	ch <-chan coldp.Data,
 ) error {

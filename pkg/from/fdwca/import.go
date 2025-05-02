@@ -1,5 +1,7 @@
 package fdwca
 
+import "log/slog"
+
 func (fd *fdwca) Import(src, out string) error {
 	var err error
 
@@ -18,6 +20,12 @@ func (fd *fdwca) Import(src, out string) error {
 		return err
 	}
 
+	err = fd.importExtensions()
+	if err != nil {
+		return err
+	}
+
+	slog.Info("Preparing SFGA file")
 	err = fd.sfga.Export(out, fd.cfg.WithZipOutput)
 	if err != nil {
 		return err
