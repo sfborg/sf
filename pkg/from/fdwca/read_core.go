@@ -59,16 +59,15 @@ func (fd *fdwca) write(
 			return ctx.Err()
 		case data, ok := <-ch:
 			if !ok {
-				rows += len(data.NameUsages)
 				fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
-				fmt.Fprintf(os.Stderr, "\rProcessed %s rows\n", humanize.Comma(int64(rows)))
+				fmt.Fprintf(os.Stderr, "\rSaved %s core records\n", humanize.Comma(int64(rows)))
 				return nil
 			}
 			if len(data.NameUsages) > 0 {
 				dedup := make([]coldp.NameUsage, 0, len(data.NameUsages))
 				rows += len(data.NameUsages)
 				fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
-				fmt.Fprintf(os.Stderr, "\rProcessed %s rows", humanize.Comma(int64(rows)))
+				fmt.Fprintf(os.Stderr, "\rSaved %s records", humanize.Comma(int64(rows)))
 				for _, v := range data.NameUsages {
 					if _, ok := ids[v.ID]; ok {
 						slog.Error("Duplicated TaxonID, skipping", "id", v.ID)

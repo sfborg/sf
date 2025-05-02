@@ -8,7 +8,7 @@ require (
 	github.com/devopsfaith/bloomfilter v1.4.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
-	github.com/gnames/gnfmt v0.6.0
+	github.com/gnames/gnfmt v0.6.1
 	github.com/gnames/gnlib v0.48.0
 	github.com/gnames/gnsys v0.3.8
 	github.com/gnames/gnuuid v0.2.0
