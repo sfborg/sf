@@ -29,7 +29,7 @@ func (fd *fdwca) importCore() error {
 	// loader
 	g.Go(func() error {
 		defer close(ch)
-		err := fd.dwca.LoadCore(ctx, ch, fd.cfg.JobsNum, fd.cfg.NomCode)
+		err := fd.dwca.LoadCore(ctx, ch)
 		return err
 	})
 
