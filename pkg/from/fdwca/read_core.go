@@ -57,19 +57,19 @@ func (fd *fdwca) write(
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
-		case d, ok := <-ch:
+		case data, ok := <-ch:
 			if !ok {
-				rows += len(d.NameUsages)
+				rows += len(data.NameUsages)
 				fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
 				fmt.Fprintf(os.Stderr, "\rProcessed %s rows\n", humanize.Comma(int64(rows)))
 				return nil
 			}
-			if len(d.NameUsages) > 0 {
-				dedup := make([]coldp.NameUsage, 0, len(d.NameUsages))
-				rows += len(d.NameUsages)
+			if len(data.NameUsages) > 0 {
+				dedup := make([]coldp.NameUsage, 0, len(data.NameUsages))
+				rows += len(data.NameUsages)
 				fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
 				fmt.Fprintf(os.Stderr, "\rProcessed %s rows", humanize.Comma(int64(rows)))
-				for _, v := range d.NameUsages {
+				for _, v := range data.NameUsages {
 					if _, ok := ids[v.ID]; ok {
 						slog.Error("Duplicated TaxonID, skipping", "id", v.ID)
 					} else {
@@ -77,13 +77,13 @@ func (fd *fdwca) write(
 						dedup = append(dedup, v)
 					}
 				}
-				err = fd.sfga.InsertNameUsages(d.NameUsages)
+				err = fd.sfga.InsertNameUsages(data.NameUsages)
 				if err != nil {
 					return err
 				}
 			}
-			if len(d.References) > 0 {
-				err = fd.sfga.InsertReferences(d.References)
+			if len(data.References) > 0 {
+				err = fd.sfga.InsertReferences(data.References)
 				if err != nil {
 					return err
 				}
