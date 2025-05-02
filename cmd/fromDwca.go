@@ -22,11 +22,12 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
 	"path/filepath"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from/fdwca"
 	"github.com/spf13/cobra"
 )
@@ -44,11 +45,13 @@ var fromDwcaCmd = &cobra.Command{
 		src := args[0]
 		out := args[1]
 
-		flags := []flagFunc{}
+		var opts []config.Option
+		flags := []flagFunc{jobsFlag, zipFlag}
 		// append opts using flags input
 		for _, v := range flags {
 			v(cmd)
 		}
+		fmt.Printf("OPT: %d\n", len(opts))
 		cfg := config.New(opts...)
 		dwca := fdwca.New(cfg)
 

@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/internal/util"
-	"github.com/sfborg/sf/pkg/config"
 	"github.com/sfborg/sf/pkg/from/fsfga"
 	"github.com/sfborg/sflib"
 	"github.com/stretchr/testify/assert"

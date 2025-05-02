@@ -22,7 +22,7 @@ type NuRef struct {
 
 func (fd *fdwca) importCore() error {
 	var err error
-	slog.Info("Importing names from DwCA core")
+	slog.Info("Importing data from DwCA core")
 	ch := make(chan coldp.Data)
 	g, ctx := errgroup.WithContext(context.Background())
 

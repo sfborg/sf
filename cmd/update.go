@@ -25,7 +25,7 @@ import (
 	"log/slog"
 	"os"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from/fsfga"
 	"github.com/spf13/cobra"
 )

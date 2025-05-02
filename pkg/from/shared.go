@@ -3,7 +3,7 @@ package from
 import (
 	"log/slog"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sflib"
 	"github.com/sfborg/sflib/pkg/sfga"
 )

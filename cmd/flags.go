@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/sf"
 	"github.com/spf13/cobra"
 )
@@ -56,6 +56,13 @@ func coldpNameUsageFlag(cmd *cobra.Command) {
 	b, _ := cmd.Flags().GetBool("name-usage")
 	if b {
 		opts = append(opts, config.OptColdpNameUsage(true))
+	}
+}
+
+func jobsFlag(cmd *cobra.Command) {
+	i, _ := cmd.Flags().GetInt("jobs-number")
+	if i > 0 {
+		opts = append(opts, config.OptJobsNum(i))
 	}
 }
 

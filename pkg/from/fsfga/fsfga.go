@@ -3,7 +3,7 @@ package fsfga
 import (
 	"log/slog"
 
-	"github.com/sfborg/sf/pkg/config"
+	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from"
 	"github.com/sfborg/sf/pkg/sf"
 	"github.com/sfborg/sflib"
