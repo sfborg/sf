@@ -46,10 +46,12 @@ func TestImport(t *testing.T) {
 	defer os.RemoveAll(dir)
 
 	tests := []struct {
-		msg, file               string
-		taxons, names, synonyms int
+		msg, file                            string
+		taxons, synonyms, names, vern, distr int
 	}{
-		{"col", "col-mini.zip", 0, 0, 0},
+		{"col", "col-mini.zip", 73, 6, 79, 19, 18},
+		// two vernacular files
+		{"2vern", "two-vern.tar.gz", 73, 6, 79, 19, 18},
 	}
 
 	for _, v := range tests {
@@ -71,12 +73,26 @@ func TestImport(t *testing.T) {
 		sf.SetDb(out + ".sqlite")
 		db, err := sf.Connect()
 		assert.Nil(err)
+
 		var count int
 		err = db.QueryRow("select count(*) from taxon").Scan(&count)
 		assert.Nil(err)
-		assert.Equal(73, count)
+		assert.Equal(v.taxons, count)
+
+		err = db.QueryRow("select count(*) from synonym").Scan(&count)
+		assert.Nil(err)
+		assert.Equal(v.synonyms, count)
+
+		err = db.QueryRow("select count(*) from name").Scan(&count)
+		assert.Nil(err)
+		assert.Equal(v.names, count)
+
 		err = db.QueryRow("select count(*) from vernacular").Scan(&count)
 		assert.Nil(err)
-		assert.Equal(19, count)
+		assert.Equal(v.vern, count)
+
+		err = db.QueryRow("select count(*) from distribution").Scan(&count)
+		assert.Nil(err)
+		assert.Equal(v.distr, count)
 	}
 }

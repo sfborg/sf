@@ -6,12 +6,11 @@ import (
 	"log/slog"
 
 	"github.com/sfborg/sflib/pkg/coldp"
-	"github.com/sfborg/sflib/pkg/dwca"
 	"golang.org/x/sync/errgroup"
 )
 
 // importVernacular imports data from DwCA vernacular extension.
-func (fd *fdwca) importDistr(idx int, ext *dwca.Extension) error {
+func (fd *fdwca) importDistr(idx int) error {
 	var err error
 	slog.Info("Importing data from DwCA distribution extension")
 	chOut := make(chan coldp.Data)
@@ -20,7 +19,7 @@ func (fd *fdwca) importDistr(idx int, ext *dwca.Extension) error {
 	// loader
 	g.Go(func() error {
 		defer close(chOut)
-		err := fd.dwca.LoadDistribution(ctx, idx, ext, chOut)
+		err := fd.dwca.LoadDistribution(ctx, idx, chOut)
 		return err
 	})
 

@@ -58,12 +58,13 @@ directory.`,
 		src := args[0]
 		out := args[1]
 
-		flags := []flagFunc{}
+		flags := []flagFunc{zipFlag, jobsFlag}
 		// append opts using flags input
 		for _, v := range flags {
 			v(cmd)
 		}
 		cfg := config.New(opts...)
+		cfg.WithDetails = true
 		fc := fcoldp.New(cfg)
 
 		err := fc.Import(src, out)

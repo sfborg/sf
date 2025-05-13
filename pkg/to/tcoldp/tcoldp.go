@@ -142,7 +142,6 @@ func (t *tcoldp) Export(src, dst string) error {
 		return err
 	}
 
-	slog.Info("Creating Zip file")
-	t.coldp.Export(dst, false)
+	t.coldp.Export(dst, true)
 	return nil
 }

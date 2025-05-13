@@ -14,9 +14,9 @@ func (fd *fdwca) importExtensions() error {
 		rowType := filepath.Base(ext.RowType)
 		rowType = strings.ToLower(rowType)
 		if strings.Contains(rowType, "vernacular") {
-			fd.importVernacular(i, ext)
+			fd.importVernacular(i)
 		} else if strings.Contains(rowType, "distribution") {
-			fd.importDistr(i, ext)
+			fd.importDistr(i)
 		} else {
 			continue
 		}
