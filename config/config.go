@@ -138,9 +138,9 @@ func OptBadRow(br gnfmt.BadRow) Option {
 	}
 }
 
-func OptWithDetails(b bool) Option {
+func OptNoParser(b bool) Option {
 	return func(c *Config) {
-		c.WithDetails = b
+		c.WithDetails = !b
 	}
 }
 
@@ -177,6 +177,7 @@ func New(opts ...Option) Config {
 		BadRow:      gnfmt.ProcessBadRow,
 		BatchSize:   50_000,
 		JobsNum:     5,
+		WithDetails: true,
 	}
 
 	for _, opt := range opts {

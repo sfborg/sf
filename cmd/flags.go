@@ -67,8 +67,8 @@ func jobsFlag(cmd *cobra.Command) {
 }
 
 func detailsFlag(cmd *cobra.Command) {
-	b, _ := cmd.Flags().GetBool("parse-details")
+	b, _ := cmd.Flags().GetBool("no-parse-details")
 	if b {
-		opts = append(opts, config.OptWithDetails(true))
+		opts = append(opts, config.OptNoParser(true))
 	}
 }

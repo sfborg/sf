@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.3] - 2025-05-15 Thu
+
+Add [#20]: parsed data for SFGA names.
+
 ## [v0.2.2] - 2025-05-12 Mon
 
 Add [#10]: add from dwca.

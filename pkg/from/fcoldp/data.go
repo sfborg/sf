@@ -27,7 +27,7 @@ func (fc *fcoldp) importData() error {
 		}
 	}
 	if res, ok := paths[coldp.NameDT]; ok {
-		if err = importData(fc, res, c, insertNames); err != nil {
+		if err = fc.importNameData(res); err != nil {
 			return err
 		}
 	}
@@ -42,7 +42,7 @@ func (fc *fcoldp) importData() error {
 		}
 	}
 	if res, ok := paths[coldp.NameUsageDT]; ok {
-		if err = importData(fc, res, c, insertNameUsages); err != nil {
+		if err = fc.importNameUsageData(res); err != nil {
 			return err
 		}
 	}
