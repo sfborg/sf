@@ -1,6 +1,6 @@
 module github.com/sfborg/sf
 
-go 1.24.3
+go 1.24.6
 
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
@@ -14,7 +14,7 @@ require (
 	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.0.7
-	github.com/sfborg/sflib v0.4.0
+	github.com/sfborg/sflib v0.4.4
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/sync v0.14.0
