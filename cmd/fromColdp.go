@@ -58,7 +58,7 @@ directory.`,
 		src := args[0]
 		out := args[1]
 
-		flags := []flagFunc{zipFlag, jobsFlag}
+		flags := []flagFunc{zipFlag, jobsFlag, withQuotesFlag}
 		// append opts using flags input
 		for _, v := range flags {
 			v(cmd)

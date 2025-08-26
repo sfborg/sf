@@ -2,6 +2,8 @@ module github.com/sfborg/sf
 
 go 1.24.6
 
+replace github.com/sfborg/sflib => ../sflib
+
 require (
 	github.com/devopsfaith/bloomfilter v1.4.0
 	github.com/dustin/go-humanize v1.0.1

@@ -39,7 +39,7 @@ func versionFlag(cmd *cobra.Command) {
 }
 
 func withQuotesFlag(cmd *cobra.Command) {
-	b, _ := cmd.Flags().GetBool("with-quotes")
+	b, _ := cmd.Flags().GetBool("quotes-allowed")
 	if b {
 		opts = append(opts, config.OptWithQuotes(true))
 	}

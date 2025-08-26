@@ -8,6 +8,7 @@ import (
 	"github.com/sfborg/sf/pkg/from"
 	"github.com/sfborg/sf/pkg/sf"
 	"github.com/sfborg/sflib"
+	sflCfg "github.com/sfborg/sflib/config"
 	"github.com/sfborg/sflib/pkg/coldp"
 	"github.com/sfborg/sflib/pkg/parser"
 	"github.com/sfborg/sflib/pkg/sfga"
@@ -22,9 +23,12 @@ type fcoldp struct {
 }
 
 func New(cfg config.Config) sf.FromConvertor {
+	opts := []sflCfg.Option{
+		sflCfg.OptWithQuotes(cfg.WithQuotes),
+	}
 	res := fcoldp{
 		cfg:        cfg,
-		coldp:      sflib.NewColdp(),
+		coldp:      sflib.NewColdp(opts...),
 		Shared:     from.New(cfg),
 		parserPool: parser.Pool(cfg.JobsNum),
 	}

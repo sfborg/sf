@@ -73,6 +73,7 @@ func init() {
 		"do not use name parsing to populate SFGA name fields",
 	)
 	fromCmd.PersistentFlags().IntP("jobs-number", "j", 0, "number of concurrent jobs")
+	fromCmd.PersistentFlags().BoolP("quotes-allowed", "q", false, "fields in pipe or tsv file might be escaped by quotes")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
