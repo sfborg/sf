@@ -30,8 +30,11 @@ ver := `git describe --tags --abbrev=0`
 date := `date -u '+%Y-%m-%d_%H:%M:%S%Z'`
 
 # LD flags with version and build date
-flags_ld := "-ldflags \"-X github.com/sfborg/" + PROJ_NAME + "/pkg.Build=" + date + " -X github.com/sfborg/" + PROJ_NAME + "/pkg.Version=" + version + "\""
-flags_rel := "-trimpath -ldflags \"-s -w -X github.com/sfborg/" + PROJ_NAME + "/pkg.Build=" + date + "\""
+flags_ld := "-ldflags \"-X github.com/sfborg/" + PROJ_NAME + \
+    "/pkg.Build=" + date + " -X github.com/sfborg/" + PROJ_NAME + \
+    "/pkg.Version=" + version + "\""
+flags_rel := "-trimpath -ldflags \"-s -w -X github.com/sfborg/" + \
+    PROJ_NAME + "/pkg.Build=" + date + "\""
 
 # Default recipe (runs when just is called without arguments)
 default: install
@@ -79,16 +82,20 @@ install:
 release: buildrel
     {{GOCLEAN}}
     {{FLAGS_LINUX}} {{GOCMD}} build {{flags_rel}}
-    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-linux.tar.gz {{PROJ_NAME}}
+    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-linux.tar.gz \
+        {{PROJ_NAME}}
     {{GOCLEAN}}
     {{FLAGS_MAC}} {{GOCMD}} build {{flags_rel}}
-    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-mac.tar.gz {{PROJ_NAME}}
+    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-mac.tar.gz \
+        {{PROJ_NAME}}
     {{GOCLEAN}}
     {{FLAGS_MAC_ARM}} {{GOCMD}} build {{flags_rel}}
-    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-mac-arm.tar.gz {{PROJ_NAME}}
+    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-mac-arm.tar.gz \
+        {{PROJ_NAME}}
     {{GOCLEAN}}
     {{FLAGS_WIN}} {{GOCMD}} build {{flags_rel}}
-    zip -9 {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-win-64.zip {{PROJ_NAME}}.exe
+    zip -9 {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-win-64.zip \
+        {{PROJ_NAME}}.exe
     {{GOCLEAN}}
 
 # Clean all the files and binaries generated
@@ -101,5 +108,6 @@ test:
 
 # Run the tests of the project and export the coverage
 coverage:
-    {{GOTEST}} -cover -covermode=count -coverprofile=profile.cov ./...
+    {{GOTEST}} -cover -covermode=count -coverprofile=profile.cov \
+        ./...
     {{GOCMD}} tool cover -func profile.cov
