@@ -1,7 +1,8 @@
 # sf project justfile
 
 # Variables
-PROJ_NAME := "sf"
+APP := "sf"
+ORG := "github.com/sfborg/"
 RELEASE_DIR := "/tmp"
 TEST_OPTS := "-count=1 -p 1 -shuffle=on -coverprofile=coverage.txt -covermode=atomic"
 
@@ -12,10 +13,9 @@ FLAGS_MAC := FLAGS_SHARED + " GOOS=darwin"
 FLAGS_MAC_ARM := "GOARCH=arm64 GOOS=darwin"
 FLAGS_WIN := FLAGS_SHARED + " GOOS=windows"
 
-GOCMD := "go"
-GOTEST := GOCMD + " test"
-GOVET := GOCMD + " vet"
-GOCLEAN := GOCMD + " clean"
+GOTEST := "go test"
+GOVET := "go vet"
+GOCLEAN := "go clean"
 
 # Colors
 GREEN := `tput -Txterm setaf 2`
@@ -30,11 +30,11 @@ ver := `git describe --tags --abbrev=0`
 date := `date -u '+%Y-%m-%d_%H:%M:%S%Z'`
 
 # LD flags with version and build date
-flags_ld := "-ldflags \"-X github.com/sfborg/" + PROJ_NAME + \
-    "/pkg.Build=" + date + " -X github.com/sfborg/" + PROJ_NAME + \
-    "/pkg.Version=" + version + "\""
-flags_rel := "-trimpath -ldflags \"-s -w -X github.com/sfborg/" + \
-    PROJ_NAME + "/pkg.Build=" + date + "\""
+flags_ld := "-trimpath -ldflags '-X " + ORG + APP + \
+    "/pkg/sf.Build=" + date + " -X " + ORG + APP + \
+    "/pkg/sf.Version=" + version + "'"
+flags_rel := "-trimpath -ldflags '-s -w -X " + ORG + \
+    APP + "/pkg/sf.Build=" + date + "'"
 
 # Default recipe (runs when just is called without arguments)
 default: install
@@ -54,7 +54,7 @@ version:
 
 # Download dependencies
 deps:
-    {{GOCMD}} mod download
+    go mod download
 
 # Install tools
 tools: deps
@@ -62,40 +62,40 @@ tools: deps
 
 # Build binary
 build:
-    {{NO_C}} {{GOCMD}} build \
-        -o {{PROJ_NAME}} \
+    {{NO_C}} go build \
+        -o {{APP}} \
         {{flags_ld}} \
         .
 
 # Build binary without debug info and with hardcoded version
 buildrel:
-    {{NO_C}} {{GOCMD}} build \
-        -o {{PROJ_NAME}} \
+    {{NO_C}} go build \
+        -o {{APP}} \
         {{flags_rel}} \
         .
 
 # Build and install binary
 install:
-    {{NO_C}} {{GOCMD}} install {{flags_ld}}
+    {{NO_C}} go install {{flags_ld}}
 
 # Build and package binaries for a release
 release: buildrel
     {{GOCLEAN}}
-    {{FLAGS_LINUX}} {{GOCMD}} build {{flags_rel}}
-    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-linux.tar.gz \
-        {{PROJ_NAME}}
+    {{FLAGS_LINUX}} go build {{flags_rel}}
+    tar zcvf {{RELEASE_DIR}}/{{APP}}-{{ver}}-linux.tar.gz \
+        {{APP}}
     {{GOCLEAN}}
-    {{FLAGS_MAC}} {{GOCMD}} build {{flags_rel}}
-    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-mac.tar.gz \
-        {{PROJ_NAME}}
+    {{FLAGS_MAC}} go build {{flags_rel}}
+    tar zcvf {{RELEASE_DIR}}/{{APP}}-{{ver}}-mac.tar.gz \
+        {{APP}}
     {{GOCLEAN}}
-    {{FLAGS_MAC_ARM}} {{GOCMD}} build {{flags_rel}}
-    tar zcvf {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-mac-arm.tar.gz \
-        {{PROJ_NAME}}
+    {{FLAGS_MAC_ARM}} go build {{flags_rel}}
+    tar zcvf {{RELEASE_DIR}}/{{APP}}-{{ver}}-mac-arm.tar.gz \
+        {{APP}}
     {{GOCLEAN}}
-    {{FLAGS_WIN}} {{GOCMD}} build {{flags_rel}}
-    zip -9 {{RELEASE_DIR}}/{{PROJ_NAME}}-{{ver}}-win-64.zip \
-        {{PROJ_NAME}}.exe
+    {{FLAGS_WIN}} go build {{flags_rel}}
+    zip -9 {{RELEASE_DIR}}/{{APP}}-{{ver}}-win-64.zip \
+        {{APP}}.exe
     {{GOCLEAN}}
 
 # Clean all the files and binaries generated
@@ -110,4 +110,4 @@ test:
 coverage:
     {{GOTEST}} -cover -covermode=count -coverprofile=profile.cov \
         ./...
-    {{GOCMD}} tool cover -func profile.cov
+    go tool cover -func profile.cov
