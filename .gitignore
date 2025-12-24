@@ -8,6 +8,9 @@
 *.so
 *.dylib
 coverage.txt
+/sf
+/out/*
+/profile.*
 
 # Test binary, built with `go test -c`
 *.test
