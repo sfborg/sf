@@ -59,11 +59,7 @@ directory.
 		src := args[0]
 		out := args[1]
 
-		flags := []flagFunc{jobsFlag, zipFlag}
-		// append opts using flags input
-		for _, v := range flags {
-			v(cmd)
-		}
+		// flags are processed in fromCmd
 		cfg := config.New(opts...)
 		dwca := fdwca.New(cfg)
 

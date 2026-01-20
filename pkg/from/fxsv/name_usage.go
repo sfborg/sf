@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/dustin/go-humanize"
@@ -47,7 +48,8 @@ func (fx *fxsv) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 	ch := gnlib.ChunkChannel(ctx, chOut, fx.cfg.BatchSize)
 
 	var rows int
-	ids := make(map[string]struct{})
+	ids := make(map[string]string)
+	var sfID int
 
 	for {
 		select {
@@ -65,14 +67,19 @@ func (fx *fxsv) write(ctx context.Context, chOut <-chan coldp.NameUsage) error {
 			fmt.Fprintf(os.Stderr, "\r%s", strings.Repeat(" ", 50))
 			fmt.Fprintf(os.Stderr, "\rProcessed %s rows", humanize.Comma(int64(rows)))
 			for _, v := range chunk {
-				if _, ok := ids[v.ID]; ok {
-					slog.Error("Duplicate ID, skipping", "id", v.ID)
+				if id, ok := ids[v.ID]; ok {
+					slog.Error("Duplicate ID, skipping", "id", id, "name", v.ScientificName)
 				} else {
-					ids[v.ID] = struct{}{}
+					id := v.ID
+					if strings.HasPrefix(v.ID, "sf-") {
+						sfID++
+						v.ID = "sf-" + strconv.Itoa(sfID)
+					}
+					ids[id] = v.ID
 					dedup = append(dedup, v)
 				}
 			}
-			err = fx.sfga.InsertNameUsages(chunk)
+			err = fx.sfga.InsertNameUsages(dedup)
 			if err != nil {
 				return err
 			}

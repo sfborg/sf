@@ -2,14 +2,35 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 
+	"github.com/gnames/gnlib/ent/nomcode"
 	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/sf"
 	"github.com/spf13/cobra"
 )
 
 type flagFunc func(cmd *cobra.Command)
+
+func addParentsFlag(cmd *cobra.Command) {
+	b, _ := cmd.Flags().GetBool("add-parents")
+	if b {
+		opts = append(opts, config.OptWithParents(b))
+	}
+}
+
+func codeFlag(cmd *cobra.Command) {
+	s, _ := cmd.Flags().GetString("code-of-nomenclature")
+	if s == "" {
+		return
+	}
+	code := nomcode.New(s)
+	if code == nomcode.Unknown && s != "any" {
+		slog.Warn("Cannot determine nomenclatural-code from input", "input", s)
+	}
+	opts = append(opts, config.OptNomCode(code))
+}
 
 func srcTaxonFlag(cmd *cobra.Command) {
 	taxon, _ := cmd.Flags().GetString("source-taxon")

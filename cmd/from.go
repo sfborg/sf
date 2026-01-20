@@ -55,9 +55,16 @@ other datasets, or conversion to other formats supported by this program.
 
     sf from xsv mydata.csv output.sfga
 `,
-	// Run: func(cmd *cobra.Command, args []string) {
-	// 	_ = cmd.Help()
-	// },
+	PersistentPreRun: func(cmd *cobra.Command, args []string) {
+		// Process all persistent flags for all child commands
+		flags := []flagFunc{
+			zipFlag, detailsFlag, codeFlag, jobsFlag,
+			withQuotesFlag, addParentsFlag,
+		}
+		for _, v := range flags {
+			v(cmd)
+		}
+	},
 }
 
 func init() {
@@ -73,7 +80,25 @@ func init() {
 		"do not use name parsing to populate SFGA name fields",
 	)
 	fromCmd.PersistentFlags().IntP("jobs-number", "j", 0, "number of concurrent jobs")
-	fromCmd.PersistentFlags().BoolP("quotes-allowed", "q", false, "fields in pipe or tsv file might be escaped by quotes")
+	fromCmd.PersistentFlags().
+		BoolP("quotes-allowed", "q", false, "fields in pipe or tsv file might be escaped by quotes")
+
+	nomCodeHelp := `Sets the nomenclatural code for entries where code is not
+provided and changes name parsing rules accordingly
+
+Accepted values are:
+  - 'bact', 'icnp', 'bacterial' for bacterial code
+  - 'bot', 'icn', 'botanical' for botanical code
+  - 'cult', 'icncp', 'cultivar' for cultivar code
+  - 'vir', 'virus', 'viral', 'ictv', 'icvcn' for viral code
+  - 'zoo', 'iczn', 'zoological' for zoological code
+`
+
+	fromCmd.PersistentFlags().StringP("code-of-nomenclature", "c", "",
+		nomCodeHelp)
+
+	fromCmd.PersistentFlags().BoolP("add-parents", "p", false,
+		"convert flat hierarchy to parent/child tree")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

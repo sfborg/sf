@@ -68,6 +68,10 @@ type Config struct {
 	// Number of concurrent jobs.
 	JobsNum int
 
+	// WithParents can be used to attempt creation of parent/child tree out of
+	// flat classification.
+	WithParents bool
+
 	// WithQuotes can be used to parse faster tab- or pipe-delimited
 	// files where fields never escaped by quotes.
 	WithQuotes bool
@@ -144,6 +148,12 @@ func OptNoParser(b bool) Option {
 	}
 }
 
+func OptWithParents(b bool) Option {
+	return func(c *Config) {
+		c.WithParents = b
+	}
+}
+
 func OptWithZipOutput(b bool) Option {
 	return func(c *Config) {
 		c.WithZipOutput = b
@@ -156,7 +166,7 @@ func (c Config) ToSflib() []libCfg.Option {
 		libCfg.OptWithQuotes(c.WithQuotes),
 		libCfg.OptBatchSize(c.BatchSize),
 		libCfg.OptJobsNum(c.JobsNum),
-		libCfg.OptCode(c.NomCode),
+		libCfg.OptNomCode(c.NomCode),
 	}
 	return opts
 }

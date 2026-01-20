@@ -31,8 +31,10 @@ import (
 )
 
 // updateCmd represents the "update" command which updates a backward-compatible
-// SFGA file to the latest SFGA version. This command reads data from an input
-// SFGA file and saves it to an output SFGA file with the latest schema.
+// SFGA file to the latest SFGA version or silently keeps already latest one.
+// Optionally it converts flat clssification to parent/child nested hierarchy.
+// This command reads data from an input SFGA file and saves it to an output
+// SFGA file with the latest schema.
 //
 // Usage:
 //
@@ -69,7 +71,8 @@ var updateCmd = &cobra.Command{
 	Long: `The command processes an input SFGA file, which can be provided as a file path
 or via standard input (pipe). If the output file path is not specified, the
 updated file will be saved in the current directory with the same name as the
-original file. This command updates SFGA schema to the latest available.
+original file. This command updates SFGA schema to the latest available if
+needed.
 
 Examples:
 
@@ -78,6 +81,10 @@ Examples:
 
     # Update multiple SFGA files using a pipe
     ls /path/to/*.sqlite.zip | xargs -I {} sf update {}
+
+	  # Update SFGA and convert its flat hierarchy to a nested parent/child
+	  # tree.
+	  sf update flat.sqlite /tmp/tree.sqlite --add-parents
 
 Arguments:
 
@@ -110,7 +117,7 @@ This command requires at least one argument (input-sfga) to be provided.
 		oldSfgaPath := args[0]
 		sfgaPath := args[1]
 
-		slog.Info("Updatting SFGA schema.", "path", sfgaPath)
+		slog.Info("Updatting SFGA.", "path", sfgaPath)
 
 		// making sfga for old data source
 		fs := fsfga.New(cfg)
@@ -134,5 +141,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-	updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	updateCmd.Flags().BoolP("add-parents", "p", false,
+		"create nested hierarchy from flat one",
+	)
 }

@@ -1,9 +1,8 @@
 package fcoldp
 
 import (
-	"sync"
-
 	"github.com/gnames/gnlib/ent/nomcode"
+	"github.com/gnames/gnparser"
 	"github.com/sfborg/sf/config"
 	"github.com/sfborg/sf/pkg/from"
 	"github.com/sfborg/sf/pkg/sf"
@@ -19,7 +18,7 @@ type fcoldp struct {
 	sfga  sfga.Archive
 	coldp coldp.Archive
 	*from.Shared
-	parserPool map[nomcode.Code]*sync.Pool
+	parserPool map[nomcode.Code]chan gnparser.GNparser
 }
 
 func New(cfg config.Config) sf.FromConvertor {

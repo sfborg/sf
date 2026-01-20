@@ -4,7 +4,6 @@ import (
 	"context"
 	"path/filepath"
 
-	"github.com/gnames/gnparser"
 	"github.com/sfborg/sflib/pkg/coldp"
 	"github.com/sfborg/sflib/pkg/parser"
 	"github.com/sfborg/sflib/pkg/sfga"
@@ -37,9 +36,9 @@ func (fc *fcoldp) importNameData(path string) error {
 		for n := range chIn {
 			if fc.cfg.WithDetails {
 				code := parser.ParserCode(fc.cfg.NomCode, n.Code)
-				p := fc.parserPool[code].Get().(gnparser.GNparser)
+				p := <-fc.parserPool[code]
 				n.Amend(p)
-				fc.parserPool[code].Put(p)
+				fc.parserPool[code] <- p
 			}
 			names = append(names, n)
 			if len(names) >= fc.cfg.BatchSize {
@@ -92,9 +91,9 @@ func (fc *fcoldp) importNameUsageData(path string) error {
 		for n := range chIn {
 			if fc.cfg.WithDetails {
 				code := parser.ParserCode(fc.cfg.NomCode, n.Code)
-				p := fc.parserPool[code].Get().(gnparser.GNparser)
+				p := <-fc.parserPool[code]
 				n.Amend(p)
-				fc.parserPool[code].Put(p)
+				fc.parserPool[code] <- p
 			}
 			nus = append(nus, n)
 			if len(nus) >= fc.cfg.BatchSize {
