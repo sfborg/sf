@@ -64,7 +64,7 @@ func TestImport(t *testing.T) {
 		cfg := config.New(opts...)
 		util.PrepareFileStructure(cfg)
 
-		libOpts := cfg.ToSflib()
+		libOpts := cfg.OptsSflib()
 
 		fd := fdwca.New(cfg)
 		err := fd.Import(path, out)

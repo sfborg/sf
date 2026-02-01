@@ -101,7 +101,7 @@ This command requires at least one argument (input-sfga) to be provided.
 	Args: cobra.MinimumNArgs(1), // Ensures at least one argument (input-sfga) is provided
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
-			zipFlag,
+			zipFlag, addParentsFlag,
 		}
 		for _, v := range flags {
 			v(cmd)
@@ -131,17 +131,10 @@ This command requires at least one argument (input-sfga) to be provided.
 
 func init() {
 	rootCmd.AddCommand(updateCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// updateCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	updateCmd.Flags().BoolP("add-parents", "p", false,
 		"create nested hierarchy from flat one",
+	)
+	updateCmd.Flags().BoolP("zip-output", "z", false,
+		"compress output with zip",
 	)
 }

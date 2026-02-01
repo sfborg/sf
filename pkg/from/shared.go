@@ -21,7 +21,7 @@ func New(cfg config.Config) *Shared {
 
 func (fs *Shared) InitSfga() (sfga.Archive, error) {
 	slog.Info("Creating SFGA database")
-	sfga := sflib.NewSfga(fs.cfg.ToSflib()...)
+	sfga := sflib.NewSfga(fs.cfg.OptsSflib()...)
 	err := sfga.Create(fs.cfg.OutputDir)
 	if err != nil {
 		return nil, err

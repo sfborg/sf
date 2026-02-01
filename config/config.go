@@ -6,7 +6,7 @@ import (
 
 	"github.com/gnames/gnfmt"
 	"github.com/gnames/gnlib/ent/nomcode"
-	libCfg "github.com/sfborg/sflib/config"
+	sflibCfg "github.com/sfborg/sflib/config"
 )
 
 // Config contains configuration data of the app.
@@ -160,13 +160,14 @@ func OptWithZipOutput(b bool) Option {
 	}
 }
 
-func (c Config) ToSflib() []libCfg.Option {
-	opts := []libCfg.Option{
-		libCfg.OptBadRow(c.BadRow),
-		libCfg.OptWithQuotes(c.WithQuotes),
-		libCfg.OptBatchSize(c.BatchSize),
-		libCfg.OptJobsNum(c.JobsNum),
-		libCfg.OptNomCode(c.NomCode),
+func (c Config) OptsSflib() []sflibCfg.Option {
+	opts := []sflibCfg.Option{
+		sflibCfg.OptBadRow(c.BadRow),
+		sflibCfg.OptWithQuotes(c.WithQuotes),
+		sflibCfg.OptBatchSize(c.BatchSize),
+		sflibCfg.OptJobsNum(c.JobsNum),
+		sflibCfg.OptNomCode(c.NomCode),
+		sflibCfg.OptWithParents(c.WithParents),
 	}
 	return opts
 }

@@ -52,7 +52,10 @@ func (d *idiff) Compare(src, ref, out string) error {
 	d.workDir = filepath.Join(d.cfg.DiffWorkDir, d.refUUID.String())
 	// dirState := gnsys.GetDirState(d.workDir)
 	// if dirState != gnsys.DirNotEmpty {
-	d.setRefSpace()
+	err = d.setRefSpace()
+	if err != nil {
+		return err
+	}
 	// }
 
 	defer d.src.Close()

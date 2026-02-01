@@ -19,7 +19,7 @@ type fdwca struct {
 func New(cfg config.Config) sf.FromConvertor {
 	res := fdwca{
 		cfg:    cfg,
-		dwca:   sflib.NewDwca(cfg.ToSflib()...),
+		dwca:   sflib.NewDwca(cfg.OptsSflib()...),
 		Shared: from.New(cfg),
 	}
 	return &res

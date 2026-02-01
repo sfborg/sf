@@ -12,9 +12,9 @@ import (
 )
 
 type fsfga struct {
-	cfg         config.Config
-	sfga        sfga.Archive
-	sfgaCurrent sfga.Archive
+	cfg            config.Config
+	sfga           sfga.Archive
+	sfgaCurrentVer sfga.Archive
 	*from.Shared
 }
 
@@ -31,12 +31,12 @@ func (fs *fsfga) Import(src, dst string) error {
 	var err error
 
 	slog.Info("Creating empty SFGA of the current version")
-	fs.sfgaCurrent, err = fs.InitSfga()
+	fs.sfgaCurrentVer, err = fs.InitSfga()
 	if err != nil {
 		return err
 	}
 
-	slog.Info("Downloading outdated SFGA archive")
+	slog.Info("Getting SFGA archive")
 	err = fs.sfga.Fetch(src, fs.cfg.ImportDir)
 	if err != nil {
 		return &arch.ErrExtract{Path: src, Err: err}
@@ -47,13 +47,25 @@ func (fs *fsfga) Import(src, dst string) error {
 		return err
 	}
 
-	slog.Info("Transferring data from outdated to current SFGA")
-	err = fs.sfga.Update(fs.sfgaCurrent)
+	slog.Info("Transferring data from to current SFGA version")
+	err = fs.sfga.Update(fs.sfgaCurrentVer, fs.cfg.WithParents)
 	if err != nil {
 		return err
 	}
+	withZip := fs.cfg.WithZipOutput && !fs.cfg.WithParents
 
-	err = fs.sfgaCurrent.Export(dst, fs.cfg.WithZipOutput)
+	err = fs.sfgaCurrentVer.Export(dst, withZip)
+	if err != nil {
+		return err
+	}
+	if !fs.cfg.WithParents {
+		return nil
+	}
+
+	slog.Info("Creating parent/child hierarchy")
+
+	slog.Info("Creating empty SFGA for parent/child relationships")
+	fs.sfgaCurrentVer, err = fs.InitSfga()
 	if err != nil {
 		return err
 	}

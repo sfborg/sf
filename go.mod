@@ -7,14 +7,14 @@ require (
 	github.com/dustin/go-humanize v1.0.1
 	github.com/dvirsky/levenshtein v0.0.0-20200624034316-59b26b61c3c8
 	github.com/gnames/gnfmt v0.6.4
-	github.com/gnames/gnlib v0.63.0
+	github.com/gnames/gnlib v0.64.0
 	github.com/gnames/gnparser v1.14.2
 	github.com/gnames/gnsys v0.4.3
 	github.com/gnames/gnuuid v0.2.0
 	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.1.2
-	github.com/sfborg/sflib v0.4.9
+	github.com/sfborg/sflib v0.5.0
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/sync v0.19.0
@@ -25,7 +25,7 @@ require (
 	github.com/VividCortex/ewma v1.2.0 // indirect
 	github.com/cheggaaa/pb/v3 v3.1.7 // indirect
 	github.com/clipperhouse/stringish v0.1.1 // indirect
-	github.com/clipperhouse/uax29/v2 v2.3.1 // indirect
+	github.com/clipperhouse/uax29/v2 v2.4.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.8.0 // indirect
@@ -74,7 +74,7 @@ require (
 	modernc.org/libc v1.67.6 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.44.2 // indirect
+	modernc.org/sqlite v1.44.3 // indirect
 )
 
 tool github.com/spf13/cobra-cli
