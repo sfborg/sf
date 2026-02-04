@@ -142,6 +142,10 @@ func (t *tcoldp) Export(src, dst string) error {
 		return err
 	}
 
-	t.coldp.Export(dst, true)
+	err = t.coldp.Export(dst, true)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

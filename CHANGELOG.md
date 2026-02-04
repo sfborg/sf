@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.6] - 2026-02-04 Wed
+
+Add [#22]: add `to xsv` command to convert SFGA to CSV file.
+
 ## [v0.2.5] - 2026-02-01 Sun
 
 Add [#23]: `--add-parents` flag for `update` command to convert flat

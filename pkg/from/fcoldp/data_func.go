@@ -34,7 +34,7 @@ func (fc *fcoldp) importNameData(path string) error {
 			close(chOut)
 		}()
 		for n := range chIn {
-			if fc.cfg.WithDetails {
+			if fc.cfg.WithParser {
 				code := parser.ParserCode(fc.cfg.NomCode, n.Code)
 				p := <-fc.parserPool[code]
 				n.Amend(p)
@@ -89,7 +89,7 @@ func (fc *fcoldp) importNameUsageData(path string) error {
 			close(chOut)
 		}()
 		for n := range chIn {
-			if fc.cfg.WithDetails {
+			if fc.cfg.WithParser {
 				code := parser.ParserCode(fc.cfg.NomCode, n.Code)
 				p := <-fc.parserPool[code]
 				n.Amend(p)

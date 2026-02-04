@@ -23,8 +23,8 @@ type Config struct {
 	// or extracted to.
 	ImportDir string
 
-	// OutputDir is a path where SFGA database is created. When
-	// the database is ready it is exported to output file.
+	// OutputDir is a cache directory where new archive files are created. When
+	// all is ready the files will be exported to an output file.
 	OutputDir string
 
 	// DiffSrcDir is a path of a directory where the source SFGA file resides.
@@ -79,10 +79,10 @@ type Config struct {
 	// WithZipOutput indicates that zipped archives have to be created.
 	WithZipOutput bool
 
-	// WithDetails indicates that GNparser detailed data will be used to
+	// WithParser indicates that GNparser detailed data will be used to
 	// populate name fields (eg. data like  Uninomial, Genus, SpecificEpithet,
 	// CombinationAuthorship etc).
-	WithDetails bool
+	WithParser bool
 }
 
 // Option type is used for all options sent to the config file.
@@ -144,7 +144,7 @@ func OptBadRow(br gnfmt.BadRow) Option {
 
 func OptNoParser(b bool) Option {
 	return func(c *Config) {
-		c.WithDetails = !b
+		c.WithParser = !b
 	}
 }
 
@@ -188,7 +188,7 @@ func New(opts ...Option) Config {
 		BadRow:      gnfmt.ProcessBadRow,
 		BatchSize:   50_000,
 		JobsNum:     5,
-		WithDetails: true,
+		WithParser:  true,
 	}
 
 	for _, opt := range opts {

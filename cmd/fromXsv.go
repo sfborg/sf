@@ -68,7 +68,7 @@ Example:
 		out := args[1]
 
 		flags := []flagFunc{
-			zipFlag, detailsFlag, codeFlag,
+			zipFlag, noParseDetailsFlag, codeFlag,
 		}
 		// append opts using flags input
 		for _, v := range flags {

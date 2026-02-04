@@ -87,7 +87,7 @@ func jobsFlag(cmd *cobra.Command) {
 	}
 }
 
-func detailsFlag(cmd *cobra.Command) {
+func noParseDetailsFlag(cmd *cobra.Command) {
 	b, _ := cmd.Flags().GetBool("no-parse-details")
 	if b {
 		opts = append(opts, config.OptNoParser(true))

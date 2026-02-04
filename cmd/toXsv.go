@@ -1,5 +1,5 @@
 /*
-Copyright © 2025 Dmitry Mozzherin <dmozzherin@gmail.com>
+copyright © 2026 Dmitry Mozzherin <dmozzherin@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,22 +26,18 @@ import (
 	"os"
 
 	"github.com/sfborg/sf/config"
-	"github.com/sfborg/sf/pkg/to/tcoldp"
+	"github.com/sfborg/sf/pkg/to/txsv"
 	"github.com/spf13/cobra"
 )
 
-// toColdpCmd represents the toColdp command
-var toColdpCmd = &cobra.Command{
-	Use:   "coldp <input-coldp.zip> [output-coldp.zip] [options]",
-	Short: "Converts an SFGA file to CoLDP format",
-	Long: `This command converts a Species File Group Archive (SFGA) file into
-the Catalogue of Life Data Package (CoLDP) format. The command requires the
-path to the input SFGA file and the desired path for the output CoLDP file.
-The SFGA file can be compressed (Zip, Tar) and is provided in binary and
-SQL dump format.`,
+// toXsvCmd represents the toXsv command
+var toXsvCmd = &cobra.Command{
+	Use:   "xsv",
+	Short: "converts SFGA file to CSV format",
+	Long:  `TODO: long description .`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
-			coldpNameUsageFlag,
+			zipFlag,
 		}
 		for _, v := range flags {
 			v(cmd)
@@ -53,34 +49,23 @@ SQL dump format.`,
 			cmd.Help()
 			os.Exit(0)
 		}
-
 		sfgaPath := args[0]
-		coldpPath := args[1]
+		xsvPath := args[1]
 
 		slog.Info("Extracting SFGA data", "path", sfgaPath)
 
-		coldp := tcoldp.New(cfg)
-		err := coldp.Export(sfgaPath, coldpPath)
+		xsv := txsv.New(cfg)
+		err := xsv.Export(sfgaPath, xsvPath)
 		if err != nil {
-			slog.Error("Cannot export CoLDP", "error", err)
+			slog.Error("Cannot export CSV", "error", err)
 			os.Exit(1)
 		}
+
 	},
 }
 
 func init() {
-	toCmd.AddCommand(toColdpCmd)
+	toCmd.AddCommand(toXsvCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// toColdpCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	toColdpCmd.Flags().BoolP(
-		"name-usage", "u", false,
-		"combine name, taxon, synonym to name_usage",
-	)
+	toXsvCmd.Flags().BoolP("zip-output", "z", false, "compress output with zip")
 }

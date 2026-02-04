@@ -58,7 +58,7 @@ other datasets, or conversion to other formats supported by this program.
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		// Process all persistent flags for all child commands
 		flags := []flagFunc{
-			zipFlag, detailsFlag, codeFlag, jobsFlag,
+			zipFlag, noParseDetailsFlag, codeFlag, jobsFlag,
 			withQuotesFlag, addParentsFlag,
 		}
 		for _, v := range flags {

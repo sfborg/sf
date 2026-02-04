@@ -60,7 +60,7 @@ directory.`,
 
 		// flags are processed in fromCmd
 		cfg := config.New(opts...)
-		cfg.WithDetails = true
+		cfg.WithParser = true
 		fc := fcoldp.New(cfg)
 
 		err := fc.Import(src, out)
