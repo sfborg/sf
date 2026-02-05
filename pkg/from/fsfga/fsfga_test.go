@@ -39,7 +39,7 @@ func teardownGlobal() {
 
 func TestUpdate(t *testing.T) {
 	assert := assert.New(t)
-	src := "../../../testdata/sfga/ptero_v0.3.31.sqlite"
+	src := "../../../testdata/sfga/ptero-v0.4.1.sqlite"
 	dst := filepath.Join(testDir, "test")
 	cfg := config.New()
 	err := util.PrepareFileStructure(cfg)

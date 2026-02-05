@@ -22,8 +22,11 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"log/slog"
+	"os"
 
+	"github.com/sfborg/sf/config"
+	"github.com/sfborg/sf/pkg/to/tdwca"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +36,31 @@ var toDwcaCmd = &cobra.Command{
 	Short: "Converts SFGA file to DwCA format",
 	Long:  `TODO`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("toDwca called")
+		flags := []flagFunc{
+			// placeholder for flags
+		}
+		for _, v := range flags {
+			v(cmd)
+		}
+
+		cfg := config.New(opts...)
+
+		if len(args) != 2 {
+			cmd.Help()
+			os.Exit(0)
+		}
+
+		sfgaPath := args[0]
+		coldpPath := args[1]
+
+		slog.Info("Extracting SFGA data", "path", sfgaPath)
+
+		coldp := tdwca.New(cfg)
+		err := coldp.Export(sfgaPath, coldpPath)
+		if err != nil {
+			slog.Error("Cannot export DwCA", "error", err)
+			os.Exit(1)
+		}
 	},
 }
 

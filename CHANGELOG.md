@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.7] - 2026-02-05 Thu
+
+Add [#26]: add `to dwca` command to convert SFGA to DwCA file.
+
 ## [v0.2.6] - 2026-02-04 Wed
 
 Add [#22]: add `to xsv` command to convert SFGA to CSV file.
@@ -63,6 +67,9 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.2.7]: https://github.com/sfborg/sf/compare/v0.2.6...v0.2.7
+[v0.2.6]: https://github.com/sfborg/sf/compare/v0.2.5...v0.2.6
+[v0.2.5]: https://github.com/sfborg/sf/compare/v0.2.4...v0.2.5
 [v0.2.4]: https://github.com/sfborg/sf/compare/v0.2.3...v0.2.4
 [v0.2.3]: https://github.com/sfborg/sf/compare/v0.2.2...v0.2.3
 [v0.2.2]: https://github.com/sfborg/sf/compare/v0.2.1...v0.2.2
@@ -70,6 +77,7 @@ This document follows [changelog guidelines]
 [v0.2.0]: https://github.com/sfborg/sf/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/sfborg/sf/compare/v0.0.0...v0.1.0
 [v0.0.0]: https://github.com/sfborg/sf/tree/v0.0.0
+[#26]: https://github.com/sfborg/sf/issues/26
 [#23]: https://github.com/sfborg/sf/issues/23
 [#22]: https://github.com/sfborg/sf/issues/22
 [#21]: https://github.com/sfborg/sf/issues/21

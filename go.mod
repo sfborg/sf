@@ -14,7 +14,7 @@ require (
 	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.1.3
-	github.com/sfborg/sflib v0.5.1
+	github.com/sfborg/sflib v0.5.2
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/sync v0.19.0
