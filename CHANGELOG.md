@@ -5,13 +5,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.8] - 2026-02-07 Sat
+
+Add [#17]: `to text` command to convert SFGA to text file.
+
 ## [v0.2.7] - 2026-02-05 Thu
 
-Add [#26]: add `to dwca` command to convert SFGA to DwCA file.
+Add [#26]: `to dwca` command to convert SFGA to DwCA file.
 
 ## [v0.2.6] - 2026-02-04 Wed
 
-Add [#22]: add `to xsv` command to convert SFGA to CSV file.
+Add [#22]: `to xsv` command to convert SFGA to CSV file.
 
 ## [v0.2.5] - 2026-02-01 Sun
 
@@ -67,6 +71,7 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.2.8]: https://github.com/sfborg/sf/compare/v0.2.7...v0.2.8
 [v0.2.7]: https://github.com/sfborg/sf/compare/v0.2.6...v0.2.7
 [v0.2.6]: https://github.com/sfborg/sf/compare/v0.2.5...v0.2.6
 [v0.2.5]: https://github.com/sfborg/sf/compare/v0.2.4...v0.2.5

@@ -33,7 +33,7 @@ import (
 // toXsvCmd represents the toXsv command
 var toXsvCmd = &cobra.Command{
 	Use:   "xsv",
-	Short: "converts SFGA file to CSV format",
+	Short: "Converts SFGA file to CSV format",
 	Long:  `TODO: long description .`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{

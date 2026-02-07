@@ -1,5 +1,5 @@
 /*
-Copyright © 2025 Dmitry Mozzherin <dmozzherin@gmail.com>
+Copyright © 2026 Dmitry Mozzherin <dmozzherin@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,26 +22,23 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"github.com/spf13/cobra"
 	"log/slog"
 	"os"
 
 	"github.com/sfborg/sf/config"
-	"github.com/sfborg/sf/pkg/to/tcoldp"
-	"github.com/spf13/cobra"
+	"github.com/sfborg/sf/pkg/to/ttext"
 )
 
-// toColdpCmd represents the toColdp command
-var toColdpCmd = &cobra.Command{
-	Use:   "coldp <input-coldp.zip> [output-coldp.zip] [options]",
-	Short: "Converts SFGA file to CoLDP format",
-	Long: `This command converts a Species File Group Archive (SFGA) file into
-the Catalogue of Life Data Package (CoLDP) format. The command requires the
-path to the input SFGA file and the desired path for the output CoLDP file.
-The SFGA file can be compressed with Zip and is provided in binary and
-SQL dump format.`,
+// toTextCmd represents the toText command
+var toTextCmd = &cobra.Command{
+	Use:   "text",
+	Short: "Converts SFGA file to list of names.",
+	Long: `TODO: add long
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
-			coldpNameUsageFlag,
+			zipFlag,
 		}
 		for _, v := range flags {
 			v(cmd)
@@ -53,34 +50,21 @@ SQL dump format.`,
 			cmd.Help()
 			os.Exit(0)
 		}
-
 		sfgaPath := args[0]
-		coldpPath := args[1]
+		xsvPath := args[1]
 
 		slog.Info("Extracting SFGA data", "path", sfgaPath)
 
-		coldp := tcoldp.New(cfg)
-		err := coldp.Export(sfgaPath, coldpPath)
+		txt := ttext.New(cfg)
+		err := txt.Export(sfgaPath, xsvPath)
 		if err != nil {
-			slog.Error("Cannot export CoLDP", "error", err)
+			slog.Error("Cannot export to text", "error", err)
 			os.Exit(1)
 		}
+
 	},
 }
 
 func init() {
-	toCmd.AddCommand(toColdpCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// toColdpCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	toColdpCmd.Flags().BoolP(
-		"name-usage", "u", false,
-		"combine name, taxon, synonym to name_usage",
-	)
+	toCmd.AddCommand(toTextCmd)
 }
