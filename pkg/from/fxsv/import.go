@@ -1,5 +1,11 @@
 package fxsv
 
+import (
+	"log/slog"
+
+	"github.com/sfborg/sf/pkg/from/fsfga"
+)
+
 func (fx *fxsv) Import(src, out string) error {
 	var err error
 
@@ -18,10 +24,16 @@ func (fx *fxsv) Import(src, out string) error {
 		return err
 	}
 
-	err = fx.sfga.Export(out, fx.cfg.WithZipOutput)
+	if !fx.cfg.WithParents {
+		return fx.sfga.Export(out, fx.cfg.WithZipOutput)
+	}
+
+	err = fx.sfga.Export(out, false)
 	if err != nil {
 		return err
 	}
 
-	return nil
+	slog.Info("Converting flat hierarchy to parent/child tree")
+	fs := fsfga.New(fx.cfg)
+	return fs.Import(out+".sqlite", out)
 }
