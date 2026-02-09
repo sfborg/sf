@@ -34,17 +34,24 @@ import (
 var diffCmd = &cobra.Command{
 	Use:   "diff src.sfga ref.sfga output.sfga",
 	Short: "Compares data from two SFGA files",
-	Long: `Compares data from two SFGA files. It is possible to do comparison
+	Long: `Compares data from two SFGA files.
+
+	sf diff sfga1.sqlite.zip sfga2.sqlite.zip diff.sqlite
+
+It is possible to do comparison
 between specific taxon in the files, providing either name or taxon.id,
 for example:
 
-  sf diff sfga1.sqlite.zip sfga2.sqlite.zip out.sqlite --taxon1 Plantae --taxon2 Plantae
+  sf diff sfga1.sqlite.zip sfga2.sqlite.zip out.sqlite --taxon1 Plantae \
+	  --taxon2 Plantae
 
   or
 
-  sf diff sfga1.sqlite.zip sfga2.sqlite.zip out.sqlite --taxon1 2938 --taxon2 taxon-3343
+  sf diff sfga1.sqlite.zip sfga2.sqlite.zip out.sqlite --taxon1 2938 \
+	  --taxon2 taxon-3343
 
-Files can be local or remote. Remote files can be accessed via HTTP URL.
+Files can be local or remote. Remote files can be accessed
+via HTTP URL.
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		versionFlag(cmd)

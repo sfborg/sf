@@ -34,7 +34,18 @@ import (
 var toDwcaCmd = &cobra.Command{
 	Use:   "dwca",
 	Short: "Converts SFGA file to DwCA format",
-	Long:  `TODO`,
+	Long: `Converts a Species File Group Archive (SFGA) file into the Darwin
+Core Archive (DwCA) format, a widely used standard for sharing biodiversity
+data.
+
+The command requires two arguments: the path to the input SFGA file (local
+path or URL) and the desired path for the output DwCA zip file.
+
+Examples:
+    sf to dwca input.sfga.sql output.zip
+    sf to dwca input.sfga.sqlite.zip output.zip
+    sf to dwca https://example.com/data.sfga.sql output.zip
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
 			// placeholder for flags

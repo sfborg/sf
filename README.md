@@ -105,53 +105,89 @@ You do need your `PATH` to include `$HOME/go/bin`
 
 ## Usage
 
-### Conversions
+### Importing from other formats to SFGA (`sf from`)
 
-The `sf` app supports conversions from DarwinCore Archive (DwCA),
-Catalogue of Life Data Package (CoLDP), comma-separated, tab-separated,
-pipe-separated files, or texts where scientific name strings are placed one
-name per line. All these formats are converted to SQLite-based Species
-File Group Archive (SFGA). The resulting SFGA file can then be converted to
-DwCA, CoLDP, CSV, or plain text.
+The `sf` app supports importing from the following formats into the
+SQLite-based Species File Group Archive (SFGA):
+
+- **DwCA** — Darwin Core Archive
+- **CoLDP** — Catalogue of Life Data Package
+- **CSV/TSV/PSV** — Comma-, tab-, or pipe-separated value files
+  (with Darwin Core or CoLDP headers)
+- **Text** — Plain text with one scientific name per line
 
 ```bash
 sf from coldp /path_to/coldp/dataset.zip /path_to/output/dataset
-sf to dwca /path_to/sfga/dataset.sqlite.zip /path_to/output/dwca/dataset
+sf from dwca /path_to/dataset.dwca.zip /path_to/output/dataset
+sf from xsv /path_to/dataset.csv /path_to/output/dataset
+sf from text /path_to/names.txt /path_to/output/dataset
 ```
 
 Note that file extensions will be added automatically, so output like
 `dataset` would create SFGA outputs as `dataset.sql` and `dataset.sqlite`,
-where the `dataset.sql` file is a text dump of sql statements required
+where the `dataset.sql` file is a text dump of SQL statements required
 for generation of the dataset, and `dataset.sqlite` is a binary file that
 can be used directly as a SQLite database.
 
-It is also possible to use remote input files by providing their URLs.
+Input can be either a local file or a URL to a remote file. If the output
+path is not provided, output files will be generated in the current directory.
 
-### Datasets Comparison
+### Exporting from SFGA to other formats (`sf to`)
 
-For example we want to compare a DwCA dataset with a checklist of names in a
-CSV file. First both files need to be converted to SFGA archives which we can
-then compare. The resulting difference between the files is going to be saved
-as a SQLite database which can be queried with SQL statements.
+SFGA files can be exported to the following formats:
+
+- **CoLDP** — Catalogue of Life Data Package
+- **DwCA** — Darwin Core Archive
+- **CSV** — Comma-separated value file
+- **Text** — Plain text with one scientific name per line
 
 ```bash
-sf from dwca /path_to/dadaset1.dwca.zip /path_to/sfga/dataset1
+sf to coldp /path_to/sfga/dataset.sqlite.zip /path_to/output/dataset.zip
+sf to dwca /path_to/sfga/dataset.sqlite.zip /path_to/output/dataset.zip
+sf to xsv /path_to/sfga/dataset.sqlite /path_to/output/dataset.csv
+sf to text /path_to/sfga/dataset.sqlite /path_to/output/names.txt
+```
+
+### Datasets Comparison (`sf diff`)
+
+Two SFGA files can be compared to find taxonomic differences. For example,
+to compare a DwCA dataset with a checklist of names in a CSV file, first
+convert both to SFGA and then run the diff:
+
+```bash
+sf from dwca /path_to/dataset1.dwca.zip /path_to/sfga/dataset1
 sf from xsv /path_to/dataset2.csv /path_to/sfga/dataset2
 sf diff /path_to/sfga/dataset1.sqlite /path_to/sfga/dataset2.sqlite diff.sqlite
 ```
 
-### Updating older SFGA files to the latest schema.
+The comparison can be scoped to a specific taxon in each file:
 
-To be able to use `sf` the SFGA files should correspond to the latest version
-of [SFGA schema], so `sf` has a convenience command that seamlessly converts
-older SFGA versions to the latest ones migrating all the data.
+```bash
+sf diff dataset1.sqlite dataset2.sqlite diff.sqlite \
+    --source-taxon Plantae --target-taxon Plantae
+```
+
+### Updating SFGA Files (`sf update`)
+
+To be able to use `sf`, SFGA files should correspond to the latest version
+of the [SFGA schema]. The `update` command seamlessly converts older SFGA
+versions to the latest schema, migrating all the data:
 
 ```bash
 sf update /path_to/outdated/dataset.sqlite /path_to/updated/dataset
 ```
 
+It can also convert a flat classification into a nested parent/child
+hierarchy:
+
+```bash
+sf update flat.sqlite /path_to/tree.sqlite --add-parents
+```
+
+[Homebrew]: https://brew.sh/
+[LICENSE]: ./LICENSE
+[SFGA schema]: https://github.com/sfborg/sfga
+[just]: https://github.com/casey/just
+[releases]: https://github.com/sfborg/sf/releases
 [winpath]: https://www.computerhope.com/issues/ch000549.htm
 [wsl]: https://docs.microsoft.com/en-us/windows/wsl/
-[Homebrew]: https://brew.sh/
-[just]: https://github.com/casey/just
-[LICENSE]: ./LICENSE

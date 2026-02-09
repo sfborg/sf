@@ -34,7 +34,19 @@ import (
 var toXsvCmd = &cobra.Command{
 	Use:   "xsv",
 	Short: "Converts SFGA file to CSV format",
-	Long:  `TODO: long description .`,
+	Long: `Converts a Species File Group Archive (SFGA) file into a
+Comma-Separated Value (CSV) file.
+
+The command requires two arguments: the path to the input SFGA file (local
+path or URL) and the desired path for the output CSV file.
+
+Use the --zip-output flag to compress the output file.
+
+Examples:
+    sf to xsv input.sfga.sql output.csv
+    sf to xsv input.sfga.sqlite.zip output.csv.zip --zip-output
+    sf to xsv https://example.com/data.sfga.sql output.csv
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
 			zipFlag,

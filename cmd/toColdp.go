@@ -34,11 +34,20 @@ import (
 var toColdpCmd = &cobra.Command{
 	Use:   "coldp <input-coldp.zip> [output-coldp.zip] [options]",
 	Short: "Converts SFGA file to CoLDP format",
-	Long: `This command converts a Species File Group Archive (SFGA) file into
-the Catalogue of Life Data Package (CoLDP) format. The command requires the
-path to the input SFGA file and the desired path for the output CoLDP file.
-The SFGA file can be compressed with Zip and is provided in binary and
-SQL dump format.`,
+	Long: `Converts a Species File Group Archive (SFGA) file into the Catalogue
+of Life Data Package (CoLDP) format.
+
+The command requires two arguments: the path to the input SFGA file (local
+path or URL) and the desired path for the output CoLDP zip file.
+
+By default, the output contains separate Name, Taxon, and Synonym files.
+Use the --name-usage flag to combine them into a single NameUsage file.
+
+Examples:
+    sf to coldp input.sfga.sql output.zip
+    sf to coldp input.sfga.sqlite.zip output.zip --name-usage
+    sf to coldp https://example.com/data.sfga.sql output.zip
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
 			coldpNameUsageFlag,

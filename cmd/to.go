@@ -29,12 +29,26 @@ import (
 var toCmd = &cobra.Command{
 	Use:   "to",
 	Short: "Converts SFGA file to a variety of formats",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Long: `Converts a Species File Group Archive (SFGA) file into a variety of
+output formats.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+This command offers several subcommands to facilitate the conversion from
+SFGA to various targets:
+
+coldp: Exports data to the Catalogue of Life Data Package (CoLDP) format,
+	used for taxonomic data exchange.
+
+dwca: Exports data to the Darwin Core Archive (DwCA) format, a standard
+	format for sharing biodiversity data.
+
+text: Exports a simple text file with one scientific name per line.
+
+xsv: Exports data to Comma-Separated Value (CSV).
+
+The source SFGA file can be a local file path or a remote URL.
+
+    sf to coldp input.sfga /path_to/output_coldp/output.zip
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		_ = cmd.Help()
 	},

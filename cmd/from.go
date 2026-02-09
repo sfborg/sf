@@ -48,8 +48,6 @@ coldp: Imports data structured in the Catalogue of Life Data Package
 dwca: Imports data from Darwin Core Archive (DwCA) files, a common
 	format for sharing biodiversity data.
 
-tw: Imports data from a TaxonWorks project.
-
 The resulting SFGA files can be used for further analysis, comparison with
 other datasets, or conversion to other formats supported by this program.
 

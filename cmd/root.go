@@ -39,7 +39,8 @@ var rootCmd = &cobra.Command{
 	Long: `Converts a variety of formats often used in biodiversity
 informatics to and from the Species File Group Archive (SFGA) format.
 
-Compares data from two SFGA files.`,
+Compares data from two SFGA files. Updates SFGA files to the latest
+schema version.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		versionFlag(cmd)
 		_ = cmd.Help()

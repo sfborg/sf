@@ -34,7 +34,16 @@ import (
 var toTextCmd = &cobra.Command{
 	Use:   "text",
 	Short: "Converts SFGA file to list of names.",
-	Long: `TODO: add long
+	Long: `Converts a Species File Group Archive (SFGA) file into a plain text
+file containing one scientific name per line.
+
+The command requires two arguments: the path to the input SFGA file (local
+path or URL) and the desired path for the output text file.
+
+Examples:
+    sf to text input.sfga.sql names.txt
+    sf to text input.sfga.sqlite.zip names.txt
+    sf to text https://example.com/data.sfga.sql names.txt
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		flags := []flagFunc{
