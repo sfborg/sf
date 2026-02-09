@@ -11,6 +11,23 @@ SFGA is based on SQLite database, easily exchangeable (just one file) stable
 modify (via SQL language) and even can be used as a standard backend for an
 ecosystem of applications.
 
+<!-- TOC GFM -->
+
+* [Installation](#installation)
+   * [Install with Homebrew (Mac OS X, Linux)](#install-with-homebrew-mac-os-x-linux)
+   * [Linux or Mac OS X](#linux-or-mac-os-x)
+   * [Windows](#windows)
+   * [Install with Go](#install-with-go)
+* [Usage](#usage)
+   * [Importing from other formats to SFGA (`sf from`)](#importing-from-other-formats-to-sfga-sf-from)
+   * [Exporting from SFGA to other formats (`sf to`)](#exporting-from-sfga-to-other-formats-sf-to)
+   * [Datasets Comparison (`sf diff`)](#datasets-comparison-sf-diff)
+   * [Updating SFGA Files (`sf update`)](#updating-sfga-files-sf-update)
+* [Authors](#authors)
+* [License](#license)
+
+<!-- /TOC -->
+
 ## Installation
 
 Compiled programs in Go are self-sufficient and small (`sf` is only a
@@ -184,8 +201,19 @@ hierarchy:
 sf update flat.sqlite /path_to/tree.sqlite --add-parents
 ```
 
+## Authors
+
+* [Dmitry Mozzherin]
+* [Geoffrey Ower]
+
+## License
+
+Released under [MIT license]
+
 [Homebrew]: https://brew.sh/
-[LICENSE]: ./LICENSE
+[Dmitry Mozzherin]: https://github.com/dimus
+[Geoffrey Ower]: https://github.com/gdower
+[MIT license]: ./LICENSE
 [SFGA schema]: https://github.com/sfborg/sfga
 [just]: https://github.com/casey/just
 [releases]: https://github.com/sfborg/sf/releases
