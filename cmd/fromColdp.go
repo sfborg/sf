@@ -52,7 +52,7 @@ If an output path is not provided, it will be generated in the current
 directory.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 2 {
-			cmd.Help()
+			_ = cmd.Help()
 			os.Exit(0)
 		}
 		src := args[0]

@@ -14,9 +14,13 @@ func (fd *fdwca) importExtensions() error {
 		rowType := filepath.Base(ext.RowType)
 		rowType = strings.ToLower(rowType)
 		if strings.Contains(rowType, "vernacular") {
-			fd.importVernacular(i)
+			if err := fd.importVernacular(i); err != nil {
+				return err
+			}
 		} else if strings.Contains(rowType, "distribution") {
-			fd.importDistr(i)
+			if err := fd.importDistr(i); err != nil {
+				return err
+			}
 		} else {
 			continue
 		}

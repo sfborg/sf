@@ -13,8 +13,6 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-var refs []coldp.Reference
-
 type NuRef struct {
 	NameUsages []coldp.NameUsage
 	References []coldp.Reference
@@ -76,7 +74,7 @@ func (fd *fdwca) writeCoreData(
 						dedup = append(dedup, v)
 					}
 				}
-				err = fd.sfga.InsertNameUsages(data.NameUsages)
+				err = fd.sfga.InsertNameUsages(dedup)
 				if err != nil {
 					return err
 				}

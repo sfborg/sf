@@ -7,6 +7,9 @@ import (
 func (ft *ftext) Import(src, out string) error {
 	var err error
 	err = util.PrepareFileStructure(ft.cfg)
+	if err != nil {
+		return err
+	}
 
 	err = ft.text.Fetch(src, ft.cfg.ImportDir)
 	if err != nil {

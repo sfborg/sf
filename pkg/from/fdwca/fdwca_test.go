@@ -30,8 +30,7 @@ func setupGlobal() {
 }
 
 func teardownGlobal() {
-	var err error
-	err = os.RemoveAll(testDir)
+	err := os.RemoveAll(testDir)
 	if err != nil {
 		panic(err)
 	}
@@ -62,7 +61,8 @@ func TestImport(t *testing.T) {
 			config.OptBatchSize(5),
 		}
 		cfg := config.New(opts...)
-		util.PrepareFileStructure(cfg)
+		err = util.PrepareFileStructure(cfg)
+		assert.Nil(err)
 
 		libOpts := cfg.OptsSflib()
 

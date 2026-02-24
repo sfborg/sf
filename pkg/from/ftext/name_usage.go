@@ -72,7 +72,7 @@ func (ft *ftext) write(ctx context.Context, chOut <-chan coldp.NameUsage) error 
 					dedup = append(dedup, v)
 				}
 			}
-			err = ft.sfga.InsertNameUsages(chunk)
+			err = ft.sfga.InsertNameUsages(dedup)
 			if err != nil {
 				return err
 			}

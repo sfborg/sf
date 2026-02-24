@@ -128,7 +128,7 @@ func importData[T coldp.DataLoader](
 	var err error
 
 	ctx, cancel := context.WithCancel(context.Background())
-	g, ctx := errgroup.WithContext(ctx)
+	g, _ := errgroup.WithContext(ctx)
 	defer cancel()
 
 	g.Go(func() error {

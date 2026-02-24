@@ -26,7 +26,8 @@ func TestCompare(t *testing.T) {
 	defer os.RemoveAll(dir)
 
 	out := filepath.Join(dir, "test")
-	util.PrepareFileStructure(cfg)
+	err = util.PrepareFileStructure(cfg)
+	assert.Nil(err)
 	diff := idiff.New(cfg)
 	err = diff.Compare(src, ref, out)
 	assert.Nil(err)

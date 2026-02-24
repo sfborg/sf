@@ -27,7 +27,9 @@ func New(cfg config.Config) sf.ToConvertor {
 
 func (t *txsv) Export(src, dst string) error {
 	var err error
-	t.xsv.Create(t.cfg.OutputDir)
+	if err = t.xsv.Create(t.cfg.OutputDir); err != nil {
+		return err
+	}
 
 	err = t.sfga.Fetch(src, t.cfg.ImportDir)
 	if err != nil {

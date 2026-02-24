@@ -59,7 +59,7 @@ Examples:
 		cfg := config.New(opts...)
 
 		if len(args) != 2 {
-			cmd.Help()
+			_ = cmd.Help()
 			os.Exit(0)
 		}
 

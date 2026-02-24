@@ -64,6 +64,9 @@ func (d *idiff) Compare(src, ref, out string) error {
 	file := filepath.Base(out) + ".sqlite"
 	slog.Info("Comparing, saving results to name_match table", "output", file)
 	srcRec, err := d.sourceRecords()
+	if err != nil {
+		return err
+	}
 	qRes := `
 INSERT INTO name_match
   (
@@ -165,7 +168,9 @@ func (d *idiff) setRefSpace() error {
 		return err
 	}
 	newRef := filepath.Join(dir, "schema.sqlite")
-	copyFile(d.ref.DbPath(), newRef)
+	if err = copyFile(d.ref.DbPath(), newRef); err != nil {
+		return err
+	}
 	d.ref.SetDb(newRef)
 	_, err = d.ref.Connect()
 	if err != nil {

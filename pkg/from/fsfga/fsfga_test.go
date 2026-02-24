@@ -30,8 +30,7 @@ func setupGlobal() {
 }
 
 func teardownGlobal() {
-	var err error
-	err = os.RemoveAll(testDir)
+	err := os.RemoveAll(testDir)
 	if err != nil {
 		panic(err)
 	}

@@ -63,7 +63,7 @@ via HTTP URL.
 		}
 
 		if len(args) != 3 {
-			cmd.Help()
+			_ = cmd.Help()
 			os.Exit(0)
 		}
 

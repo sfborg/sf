@@ -114,16 +114,8 @@ func insertMedia(s sfga.Archive, data []coldp.Media) error {
 	return s.InsertMedia(data)
 }
 
-func insertNames(s sfga.Archive, data []coldp.Name) error {
-	return s.InsertNames(data)
-}
-
 func insertNameRelations(s sfga.Archive, data []coldp.NameRelation) error {
 	return s.InsertNameRelations(data)
-}
-
-func insertNameUsages(s sfga.Archive, data []coldp.NameUsage) error {
-	return s.InsertNameUsages(data)
 }
 
 func insertReferences(s sfga.Archive, data []coldp.Reference) error {
