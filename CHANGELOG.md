@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Add: zenodo badge and CITATION.md.
+
 ## [v0.2.10] - 2026-03-09 Mon
 
 Add: zenodo metadata via .zenodo.json.

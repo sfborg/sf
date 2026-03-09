@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "sf: A CLI tool for converting and comparing biodiversity data formats"
+authors:
+  - family-names: Mozzherin
+    given-names: Dmitry
+    orcid: https://orcid.org/0000-0003-1593-1417
+    affiliation: "Species File Group, University of Illinois"
+  - family-names: Ower
+    given-names: Geoff
+    orcid: https://orcid.org/0000-0002-9770-2345
+    affiliation: "Species File Group, University of Illinois"
+version: v0.2.10
+date-released: 2026-03-09
+license: MIT
+repository-code: https://github.com/sfborg/sf
+doi: 10.5281/zenodo.18926836
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.18926836
+    description: Concept DOI — resolves to the latest version
+keywords:
+  - biodiversity
+  - taxonomy
+  - scientific names
+  - CoLDP
+  - Darwin Core
+  - DwCA
+  - SFGA
+  - format conversion
+  - CLI
+  - Go

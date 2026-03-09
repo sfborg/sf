@@ -1,4 +1,7 @@
 # sf
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18926836.svg)](https://doi.org/10.5281/zenodo.18926836)
+
 `sf` is a universal convertor between biodiversity exchange formats.
 
 The `sf` app converts most popular biodiversity formats to each other and
