@@ -4,7 +4,7 @@
 app := "sf"
 org := "github.com/sfborg/"
 build_dir := "out/"
-release_dir := build_dir + "releases/"
+release_dir := "/tmp/"
 test_opts := "-count=1 -p 1 -shuffle=on -coverprofile=coverage.txt -covermode=atomic"
 
 no_c := "CGO_ENABLED=0"

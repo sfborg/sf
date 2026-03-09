@@ -1,0 +1,37 @@
+{
+  "title": "sf: A CLI tool for converting and comparing biodiversity data formats",
+  "description": "sf is a universal converter between biodiversity exchange formats. It converts between plain text, CSV/TSV/PSV, CoLDP (Catalogue of Life Data Package), Darwin Core Archive (DwCA), and Species File Group Archive (SFGA). It also supports dataset comparison (diff) and SFGA schema updates. SFGA, based on SQLite, serves as the intermediary format.",
+  "license": "MIT",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Mozzherin, Dmitry",
+      "affiliation": "Species File Group",
+      "orcid": "0000-0003-1593-1417"
+    },
+    {
+      "name": "Ower, Geoff",
+      "affiliation": "Species File Group, University of Illinois",
+      "orcid": "0000-0002-9770-2345"
+    }
+  ],
+  "keywords": [
+    "biodiversity",
+    "taxonomy",
+    "scientific names",
+    "CoLDP",
+    "Darwin Core",
+    "DwCA",
+    "SFGA",
+    "format conversion",
+    "CLI",
+    "Go"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/sfborg/sf",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ]
+}

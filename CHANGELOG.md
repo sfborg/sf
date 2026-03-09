@@ -5,6 +5,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.10] - 2026-03-09 Mon
+
+Add: zenodo metadata via .zenodo.json.
+
+## [v0.2.9] - 2026-02-19 Thu
+
+Add: update modules.
+Add: improve documentation.
+Add [#27]: support generating parent/child ids when importing xsv file with
+    flat classification.
+
 ## [v0.2.8] - 2026-02-07 Sat
 
 Add [#17]: `to text` command to convert SFGA to text file.
@@ -71,6 +82,8 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.2.10]: https://github.com/sfborg/sf/compare/v0.2.9...v0.2.10
+[v0.2.9]: https://github.com/sfborg/sf/compare/v0.2.8...v0.2.9
 [v0.2.8]: https://github.com/sfborg/sf/compare/v0.2.7...v0.2.8
 [v0.2.7]: https://github.com/sfborg/sf/compare/v0.2.6...v0.2.7
 [v0.2.6]: https://github.com/sfborg/sf/compare/v0.2.5...v0.2.6
@@ -82,6 +95,10 @@ This document follows [changelog guidelines]
 [v0.2.0]: https://github.com/sfborg/sf/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/sfborg/sf/compare/v0.0.0...v0.1.0
 [v0.0.0]: https://github.com/sfborg/sf/tree/v0.0.0
+[#30]: https://github.com/sfborg/sf/issues/30
+[#29]: https://github.com/sfborg/sf/issues/29
+[#28]: https://github.com/sfborg/sf/issues/28
+[#27]: https://github.com/sfborg/sf/issues/27
 [#26]: https://github.com/sfborg/sf/issues/26
 [#23]: https://github.com/sfborg/sf/issues/23
 [#22]: https://github.com/sfborg/sf/issues/22
