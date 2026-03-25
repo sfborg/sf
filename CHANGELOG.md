@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.11] - 2026-03-25 Wed
+
+Add: sflib v0.5.9 and other modules update.
 Add: zenodo badge and CITATION.md.
 
 ## [v0.2.10] - 2026-03-09 Mon
@@ -84,6 +87,7 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.2.11]: https://github.com/sfborg/sf/compare/v0.2.10...v0.2.11
 [v0.2.10]: https://github.com/sfborg/sf/compare/v0.2.9...v0.2.10
 [v0.2.9]: https://github.com/sfborg/sf/compare/v0.2.8...v0.2.9
 [v0.2.8]: https://github.com/sfborg/sf/compare/v0.2.7...v0.2.8
