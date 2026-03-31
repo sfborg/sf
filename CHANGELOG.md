@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.2.12] - 2026-03-31 Tue
+
+Add: sflib v0.5.10, update other modules
+Fix: import of references when reference.bib file present.
+
 ## [v0.2.11] - 2026-03-25 Wed
 
 Add: sflib v0.5.9 and other modules update.
@@ -87,6 +92,7 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.2.12]: https://github.com/sfborg/sf/compare/v0.2.11...v0.2.12
 [v0.2.11]: https://github.com/sfborg/sf/compare/v0.2.10...v0.2.11
 [v0.2.10]: https://github.com/sfborg/sf/compare/v0.2.9...v0.2.10
 [v0.2.9]: https://github.com/sfborg/sf/compare/v0.2.8...v0.2.9

@@ -90,5 +90,10 @@ func TestImport(t *testing.T) {
 		err = db.QueryRow("SELECT count(*) FROM name").Scan(&count)
 		assert.Nil(err)
 		assert.Greater(count, 5, v.name)
+
+		var refCount int
+		err = db.QueryRow("SELECT count(*) FROM reference").Scan(&refCount)
+		assert.Nil(err)
+		assert.Greater(refCount, 5, v.name)
 	}
 }

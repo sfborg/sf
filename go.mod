@@ -14,7 +14,7 @@ require (
 	github.com/gnames/levenshtein v0.4.0
 	github.com/google/uuid v1.6.0
 	github.com/lmittmann/tint v1.1.3
-	github.com/sfborg/sflib v0.5.9
+	github.com/sfborg/sflib v0.5.10
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/sync v0.20.0
@@ -73,7 +73,7 @@ require (
 	modernc.org/libc v1.70.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.47.0 // indirect
+	modernc.org/sqlite v1.48.0 // indirect
 )
 
 tool github.com/spf13/cobra-cli
