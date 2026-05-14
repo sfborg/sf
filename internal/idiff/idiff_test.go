@@ -15,18 +15,24 @@ import (
 func TestCompare(t *testing.T) {
 	assert := assert.New(t)
 
+	cacheDir, err := os.UserCacheDir()
+	assert.Nil(err)
+	base := filepath.Join(cacheDir, "sfborg", "sf-test")
+	err = os.MkdirAll(base, 0755)
+	assert.Nil(err)
+	testDir, err := os.MkdirTemp(base, "idiff-test")
+	assert.Nil(err)
+	defer os.RemoveAll(testDir)
+	t.Setenv("TMPDIR", testDir)
+
 	src := filepath.Join("../../testdata", "diff",
 		"test-a.sqlite")
 	ref := filepath.Join("../../testdata", "diff",
 		"test-b.sqlite")
-	cfg := config.New()
+	cfg := config.New(config.OptCacheDir(testDir))
 
-	dir, err := os.MkdirTemp("", "sf-test")
-	assert.Nil(err)
-	defer os.RemoveAll(dir)
-
-	out := filepath.Join(dir, "test")
 	err = util.PrepareFileStructure(cfg)
+	out := filepath.Join(testDir, "test")
 	assert.Nil(err)
 	diff := idiff.New(cfg)
 	err = diff.Compare(src, ref, out)

@@ -39,7 +39,7 @@ func TestImport(t *testing.T) {
 	out := filepath.Join(dir, "test")
 	for _, v := range tests {
 		src := filepath.Join("..", "..", "..", "testdata", "text", v.src)
-		cfg := config.New()
+		cfg := config.New(config.OptCacheDir(dir))
 		a := ftext.New(cfg)
 
 		err = a.Import(src, out)

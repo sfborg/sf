@@ -3,7 +3,9 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v0.3.0] - 2026-05-14 Thu
+
+Add [#29]: use sflib v0.6.1 to auto-migrate SFGA files to the latest version.
 
 ## [v0.2.12] - 2026-03-31 Tue
 
@@ -92,6 +94,7 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.3.0]: https://github.com/sfborg/sf/compare/v0.2.12...v0.3.0
 [v0.2.12]: https://github.com/sfborg/sf/compare/v0.2.11...v0.2.12
 [v0.2.11]: https://github.com/sfborg/sf/compare/v0.2.10...v0.2.11
 [v0.2.10]: https://github.com/sfborg/sf/compare/v0.2.9...v0.2.10

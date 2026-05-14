@@ -50,7 +50,7 @@ func TestImport(t *testing.T) {
 	out := filepath.Join(dir, "test")
 	for _, v := range tests {
 		src := filepath.Join("..", "..", "..", "testdata", "csv", v.src)
-		cfg := config.New()
+		cfg := config.New(config.OptCacheDir(dir))
 		a := fxsv.New(cfg)
 		err := util.PrepareFileStructure(cfg)
 		assert.Nil(err)
