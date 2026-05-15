@@ -42,7 +42,7 @@ func TestExport(t *testing.T) {
 	err := os.Mkdir(dir, 0755)
 	assert.Nil(err)
 
-	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.4.1.sqlite")
+	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.5.1.sqlite")
 	out := filepath.Join(dir, "output.zip")
 
 	cfg := config.New(config.OptCacheDir(dir))
@@ -78,13 +78,13 @@ func TestExport(t *testing.T) {
 	// VernacularName.csv should NOT be present (0 vernaculars in source).
 	assert.NotContains(files, "VernacularName.csv")
 
-	// Verify Taxon.csv row count: 1700 taxa + 1282 synonyms = 2982 data + 1 header.
+	// Verify Taxon.csv row count: 1700 taxa + 1281 synonyms = 2981 data + 1 header.
 	coreRows := countCSVRows(t, files["Taxon.csv"])
-	assert.Equal(2983, coreRows)
+	assert.Equal(2982, coreRows)
 
-	// Verify Distribution.csv row count: 6118 data + 1 header.
+	// Verify Distribution.csv row count: 6117 data + 1 header.
 	distrRows := countCSVRows(t, files["Distribution.csv"])
-	assert.Equal(6119, distrRows)
+	assert.Equal(6118, distrRows)
 
 	// Verify meta.xml mentions Distribution but not VernacularName.
 	metaContent := readZipFile(t, files["meta.xml"])

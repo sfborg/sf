@@ -53,7 +53,7 @@ func setTmpDir(t *testing.T) {
 func TestMigrate(t *testing.T) {
 	setTmpDir(t)
 	assert := assert.New(t)
-	src := "../../../testdata/sfga/ptero-v0.4.1.sqlite"
+	src := "../../../testdata/sfga/ptero-v0.5.1.sqlite"
 	dst := filepath.Join(testDir, "test")
 	cfg := config.New(config.OptCacheDir(testDir))
 	err := util.PrepareFileStructure(cfg)

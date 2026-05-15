@@ -40,7 +40,7 @@ func TestExport(t *testing.T) {
 	err := os.Mkdir(dir, 0755)
 	assert.Nil(err)
 
-	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.4.1.sqlite")
+	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.5.1.sqlite")
 	out := filepath.Join(dir, "output.zip")
 
 	cfg := config.New(config.OptCacheDir(dir))
@@ -81,7 +81,7 @@ func TestExportNameUsageMode(t *testing.T) {
 	err := os.Mkdir(dir, 0755)
 	assert.Nil(err)
 
-	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.4.1.sqlite")
+	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.5.1.sqlite")
 	out := filepath.Join(dir, "output.zip")
 
 	cfg := config.New(

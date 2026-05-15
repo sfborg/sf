@@ -40,7 +40,7 @@ func TestExport(t *testing.T) {
 	err := os.Mkdir(dir, 0755)
 	assert.Nil(err)
 
-	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.4.1.sqlite")
+	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.5.1.sqlite")
 	out := filepath.Join(dir, "names.txt")
 
 	cfg := config.New(config.OptCacheDir(dir))
@@ -59,8 +59,8 @@ func TestExport(t *testing.T) {
 	// Count lines and verify content.
 	lines := readLines(t, out)
 
-	// The ptero-v0.4.1.sqlite has 2982 name usages (1700 taxa + 1282 synonyms).
-	assert.Equal(2982, len(lines))
+	// The ptero-v0.5.1.sqlite has 2981 name usages (1700 taxa + 1281 synonyms).
+	assert.Equal(2981, len(lines))
 
 	// Verify lines contain scientific names (non-empty strings).
 	for _, line := range lines {
@@ -75,7 +75,7 @@ func TestExportZip(t *testing.T) {
 	err := os.Mkdir(dir, 0755)
 	assert.Nil(err)
 
-	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.4.1.sqlite")
+	src := filepath.Join("..", "..", "..", "testdata", "sfga", "ptero-v0.5.1.sqlite")
 	out := filepath.Join(dir, "names.txt")
 
 	cfg := config.New(
