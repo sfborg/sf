@@ -4,7 +4,7 @@ import (
 	"github.com/gnames/gnlib/ent/gnvers"
 )
 
-var Version = "v0.2.12"
+var Version = "v0.3.1"
 var Build = "n/a"
 
 // GetVersion returns BHLnames version and build information.

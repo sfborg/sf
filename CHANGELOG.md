@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v0.3.1] - 2026-05-15 Fri
 
+Fix [#31]: allow conversion of SFGA to CoLDP when metadata table is empty.
+    In this case metadata.yaml contains the name of SFGA file as a metadata's
+    Title field.
 Add [#30]: introduce minimal version of SFGA file (v0.5.1) to eliminate need
     in patched version of atlas. The feature is introduced in sflib v0.6.2.
     If/when atlas fixes the sflib foreign keys problem we can change minimal
@@ -101,6 +104,7 @@ Add: initial commit
 
 This document follows [changelog guidelines]
 
+[v0.3.1]: https://github.com/sfborg/sf/compare/v0.3.0...v0.3.1
 [v0.3.0]: https://github.com/sfborg/sf/compare/v0.2.12...v0.3.0
 [v0.2.12]: https://github.com/sfborg/sf/compare/v0.2.11...v0.2.12
 [v0.2.11]: https://github.com/sfborg/sf/compare/v0.2.10...v0.2.11
@@ -117,6 +121,7 @@ This document follows [changelog guidelines]
 [v0.2.0]: https://github.com/sfborg/sf/compare/v0.1.0...v0.2.0
 [v0.1.0]: https://github.com/sfborg/sf/compare/v0.0.0...v0.1.0
 [v0.0.0]: https://github.com/sfborg/sf/tree/v0.0.0
+[#31]: https://github.com/sfborg/sf/issues/31
 [#30]: https://github.com/sfborg/sf/issues/30
 [#29]: https://github.com/sfborg/sf/issues/29
 [#28]: https://github.com/sfborg/sf/issues/28

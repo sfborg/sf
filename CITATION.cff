@@ -11,8 +11,8 @@ authors:
     given-names: Geoff
     orcid: https://orcid.org/0000-0002-9770-2345
     affiliation: "Species File Group, University of Illinois"
-version: 0.3.0
-date-released: 2026-05-14
+version: 0.3.1
+date-released: 2026-05-15
 license: MIT
 repository-code: https://github.com/sfborg/sf
 doi: 10.5281/zenodo.18926836
