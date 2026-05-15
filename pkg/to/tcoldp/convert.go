@@ -4,15 +4,20 @@ import (
 	"context"
 	"errors"
 	"path/filepath"
+	"strings"
 
 	"github.com/sfborg/sflib/pkg/coldp"
 	"golang.org/x/sync/errgroup"
 )
 
-func (t *tcoldp) convertMeta() error {
+func (t *tcoldp) convertMeta(src string) error {
 	meta, err := t.sfga.LoadMeta()
 	if err != nil {
 		return err
+	}
+	if meta == nil {
+		name := strings.TrimSuffix(filepath.Base(src), filepath.Ext(src))
+		meta = &coldp.Meta{Title: name}
 	}
 
 	filePath := filepath.Join(t.cfg.OutputDir, "meta.yaml")

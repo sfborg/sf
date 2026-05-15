@@ -41,7 +41,7 @@ func (t *tcoldp) Export(src, dst string) error {
 	}
 
 	slog.Info("Exporting Metadata file")
-	err = t.convertMeta()
+	err = t.convertMeta(src)
 	if err != nil {
 		return err
 	}
